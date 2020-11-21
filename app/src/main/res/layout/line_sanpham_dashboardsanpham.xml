@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:weightSum="10"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imgSanPhamDashboard"
+        android:layout_weight="4"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="0dp"
+        android:layout_height="160dp"></ImageView>
+
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical"
+        android:layout_weight="6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtvNameDashboard"
+            android:textColor="#3F51B5"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="Tên sản phẩm "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></TextView>
+
+        <TextView
+            android:id="@+id/txtvPriceDashboard"
+            android:layout_marginTop="5dp"
+            android:textColor="#E35F8C"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:text="Giá"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></TextView>
+
+        <TextView
+            android:id="@+id/txtvDescriptionDashboard"
+            android:layout_marginTop="5dp"
+            android:textColor="#636262"
+            android:textSize="15dp"
+            android:textStyle="italic"
+            android:text="Mô tả "
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+</LinearLayout>
