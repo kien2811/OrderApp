@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">KiTa Shop</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="all_sanPham_fragment">Fragment tất cả sản phẩm</string>
+    <string name="sale_sanPham_fragment">fragment trang sale sản phẩm</string>
+    <string name="hot_sanPham_fragment">fragment trang sản phẩm hot</string>
+    <string name="daxem_sanPham_fragment">fragment trang sản phẩm đã xem</string>
+</resources>
