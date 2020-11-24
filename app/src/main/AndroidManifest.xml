@@ -10,8 +10,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.OderApp">
+        android:theme="@style/Theme.OderApp"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Activity.CartActivity" />
         <activity android:name=".Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,8 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.SearchActivity" />
-        <activity android:name=".Activity.MainActivity"/>
-        <activity android:name=".Activity.DetailCartActivity"/>
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.DetailCartActivity" />
     </application>
 
 </manifest>
