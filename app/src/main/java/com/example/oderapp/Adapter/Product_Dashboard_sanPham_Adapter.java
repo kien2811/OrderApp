@@ -67,7 +67,8 @@ public class Product_Dashboard_sanPham_Adapter extends RecyclerView.Adapter<Prod
                     intent.putExtra("categoryid",p.getCategoryid());
                     context.startActivity(intent);
                     Toast.makeText(context, "long click"+p, Toast.LENGTH_SHORT).show();
-                }else {
+                }
+                else {
                     Intent intent = new Intent(context, DetailCartActivity.class);
                     intent.putExtra("id",p.getId());
                     intent.putExtra("getName",p.getName());

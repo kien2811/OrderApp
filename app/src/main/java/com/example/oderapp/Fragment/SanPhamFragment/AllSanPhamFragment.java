@@ -53,7 +53,11 @@ public class AllSanPhamFragment extends Fragment {
 
         product_sanPham_dashboard_adapter.notifyDataSetChanged();
         for (int i = 0 ;i < 10 ; i ++){
-            list.add(new DashboardSanPham(1,"Banh Ngon gì digf hâhha",2500,"https://image.flaticon.com/icons/png/128/2971/2971975.png","haha",1));
+            list.add(new DashboardSanPham(1,"Banh Ngon gì digf hâhha",2500,"https://image.flaticon.com/icons/png/128/2971/2971975.png","Bài văn về thầy giáo cũ gây xúc động\n" +
+                    "\n" +
+                    "Ngày 16/10, Vũ Phương Thảo (lớp 10A1, THPT Định Hóa) được biết đến với bài văn điểm 10 về người thầy có những cảm xúc trong sáng, chân thành.\n" +
+                    "\n" +
+                    "Trong bài văn, Thảo viết: “Máy quay dường như đang chậm lại, từng cảnh từng nét hiện lên rõ ràng. Tôi thấy thầy đang lụi hụi trồng rau, chăm sóc con chó lông trắng đen già khụ, thấy cả chúng tôi ngày đó, trong những ngày vất vả nhưng yên bình. Tôi nghĩ, có lẽ đó là những ngày hạnh phúc và vui vẻ nhất tôi từng có. Sau này, khi bước đi trên đường đời chông gai, có thể sẽ chẳng còn ai chỉ bảo, dạy dỗ tôi tận tình như thầy đã từng, có thể sẽ chẳng có ai lo tôi liệu có ngủ đủ giấc, liệu có stress khi nhồi nhét quá nhiều. Nhưng, cố nhân từng nói, cuộc đời chỉ cần một người khiến ta ngưỡng mộ, để cả đời noi gương, cả đời thương mến. Vậy là quá đủ rồi”.",1));
         }
 
 
