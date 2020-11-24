@@ -2,10 +2,13 @@ package com.example.oderapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -14,10 +17,11 @@ import com.example.oderapp.R;
 import com.example.oderapp.SessionManage.SessionManagement;
 
 public class LoginActivity extends AppCompatActivity {
-    RelativeLayout btn_login;
+    Button btn_login;
     EditText edutUsername,editPassword;
     SharedPreferences sharedPreferences;
     SessionManagement sessionManagement;
+    long backPressed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +64,42 @@ public class LoginActivity extends AppCompatActivity {
         if(sessionManagement.getLogin()){
             //location Main Activity
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            finish();
         }
     }
 
+    @Override
+    public void onBackPressed() {
 
+//        if(backPressed + 3000 > System.currentTimeMillis()){
+//            super.onBackPressed();
+//            return;
+//        }else{
+//            Toast.makeText(this, "Chạm Lần Nữa Để Thoát !", Toast.LENGTH_SHORT).show();
+//        }
+//        backPressed = System.currentTimeMillis();
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        // set title
+        // set message
+        builder.setMessage("Bạn Có Thực Sự Muốn Thoát !");
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                System.currentTimeMillis();
+            }
+        });
+        builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 
     private void mapping() {
         btn_login = findViewById(R.id.btn_login);

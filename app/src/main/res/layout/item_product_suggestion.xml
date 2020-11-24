@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:orientation="horizontal"
     android:padding="8dp"
     android:background="@drawable/background_circle"
@@ -9,39 +9,6 @@
     android:layout_marginRight="5dp"
     android:layout_marginLeft="5dp"
     android:layout_height="wrap_content">
-<!--    <ImageView-->
-<!--        android:id="@+id/imgproduct_suggestion"-->
-<!--        android:src="@drawable/home"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        android:layout_width="100dp"-->
-<!--        android:layout_height="100dp">-->
-<!--    </ImageView>-->
-<!--    <LinearLayout-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:layout_marginLeft="10dp"-->
-<!--        android:orientation="vertical"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content">-->
-<!--        <TextView-->
-<!--            android:id="@+id/txtproduct_suggestion_name"-->
-<!--            android:text="Tên Sản Phẩm"-->
-<!--            android:textColor="#000000"-->
-<!--            android:textSize="25sp"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--        </TextView>-->
-<!--        <TextView-->
-<!--            android:id="@+id/txtproduct_suggestion_price"-->
-<!--            android:text="Giá Sản Phẩm"-->
-<!--            android:textColor="#FF2525"-->
-<!--            android:textSize="18sp"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--        </TextView>-->
-<!--    </LinearLayout>-->
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
@@ -54,6 +21,7 @@
             android:layout_height="200dp">
         </ImageView>
         <TextView
+            android:layout_gravity="center"
             android:id="@+id/txtproduct_suggestion_name"
             android:text="Tên Sản Phẩm"
             android:textColor="#000000"
@@ -63,8 +31,9 @@
         </TextView>
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="10dp"/>
         <TextView
+            android:layout_gravity="center"
             android:id="@+id/txtproduct_suggestion_price"
             android:text="Giá Sản Phẩm"
             android:textColor="#FF2525"

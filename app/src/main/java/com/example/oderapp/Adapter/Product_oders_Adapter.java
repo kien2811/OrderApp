@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.oderapp.Model.Product_hot;
 import com.example.oderapp.Model.Product_oders;
 import com.example.oderapp.R;
 import com.squareup.picasso.Picasso;
@@ -30,7 +29,7 @@ public class Product_oders_Adapter extends RecyclerView.Adapter<Product_oders_Ad
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Product_oders_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(layout,null);
         Product_oders_Adapter.ViewHolder viewHolder = new Product_oders_Adapter.ViewHolder(view);
         return viewHolder;

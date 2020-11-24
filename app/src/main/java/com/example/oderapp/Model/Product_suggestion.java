@@ -2,16 +2,16 @@ package com.example.oderapp.Model;
 
 public
 class Product_suggestion {
-    private  int id;
+    private String id;
     private String name;
     private String image;
-    private int Price;
+    private String price;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -31,18 +31,18 @@ class Product_suggestion {
         this.image = image;
     }
 
-    public int getPrice() {
-        return Price;
+    public String getPrice() {
+        return price;
     }
 
-    public void setPrice(int price) {
-        Price = price;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public Product_suggestion(int id, String name, String image, int price) {
+    public Product_suggestion(String id, String name, String image, String price) {
         this.id = id;
         this.name = name;
         this.image = image;
-        Price = price;
+        this.price = price;
     }
 }

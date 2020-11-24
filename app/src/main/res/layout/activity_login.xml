@@ -59,21 +59,18 @@
         android:layout_marginBottom="70dp"
         android:layout_above="@+id/textView2"
         android:layout_centerHorizontal="true">
-
-        <RelativeLayout
+        <Button
+            android:background="#9BA6EA"
             android:id="@+id/btn_login"
+            android:text="Login"
+            android:layout_centerInParent="true"
+            android:textColor="#fff"
+            android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Login"
-                android:textColor="#fff"
-                android:textSize="18sp" />
-        </RelativeLayout>
+        </Button>
+
     </androidx.cardview.widget.CardView>
 
     <TextView

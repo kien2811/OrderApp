@@ -39,8 +39,6 @@ public class ProfileFragment extends Fragment {
         String username = sessionManagement.getUsername();
         TxtMessage.setText(username);
 
-
-
 //        sharedPreferences = getContext().getSharedPreferences(fileName, Context.MODE_PRIVATE);
 //        if(sharedPreferences.contains(Username)){
 //            TxtMessage.setText("Hell"+sharedPreferences.getString(Username,""));
@@ -53,15 +51,17 @@ public class ProfileFragment extends Fragment {
   // set title
   builder.setTitle("Đăng Xuất");
   // set message
-                builder.setMessage("Bạn Có Trắc Chắn Muốn Đăng Xuất");
+                builder.setMessage("Bạn Có Trắc Chắn Muốn Đăng Xuất Không ?");
 //set positive button
-                builder.setPositiveButton("Đúng", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         sessionManagement.setLogin(false);
                         sessionManagement.setUsername("");
-                        getContext().startActivity(new Intent(getContext().getApplicationContext(),LoginActivity.class));
-
+                        Intent intent = new Intent(getContext().getApplicationContext(),LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        getContext().startActivity(intent);
+                        getActivity().finish();
                     }
                 });
 //set negative button
