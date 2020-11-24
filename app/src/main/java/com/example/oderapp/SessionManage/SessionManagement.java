@@ -1,7 +1,11 @@
 package com.example.oderapp.SessionManage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+
+import com.example.oderapp.Activity.LoginActivity;
+import com.example.oderapp.Activity.MainActivity;
 
 public class SessionManagement {
     SharedPreferences sharedPreferences;
@@ -17,6 +21,7 @@ public class SessionManagement {
         editor.putBoolean("KEY_LOGIN",login);
         editor.commit();
     }
+
     // create get login method
     public  boolean getLogin(){
         return sharedPreferences.getBoolean("KEY_LOGIN",false);

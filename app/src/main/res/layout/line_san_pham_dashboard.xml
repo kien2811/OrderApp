@@ -13,7 +13,7 @@
             android:layout_height="match_parent">
             <ImageView
                 android:layout_gravity="right"
-                android:src="@drawable/newicon"
+                android:src="@drawable/cart"
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
             <LinearLayout

@@ -7,13 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,8 +27,9 @@ import com.example.oderapp.Adapter.Product_suggestion_Adapter;
 import com.example.oderapp.Model.Product_hot;
 import com.example.oderapp.Model.Product_oders;
 import com.example.oderapp.Model.Product_suggestion;
-import com.example.oderapp.Paginnation.PaginnationScrolListent;
+import com.example.oderapp.MySingleton.MySingleton;
 import com.example.oderapp.R;
+import com.example.oderapp.util.Api;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -37,14 +38,16 @@ import com.smarteist.autoimageslider.SliderLayout;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private SliderLayout sliderLayout;
-
+    private LinearLayoutManager layoutManager;
+    SwipeRefreshLayout swipeRefresh;
     Product_hot_Adapter product_hot_adapter;
     List<Product_hot> product_hots_list;
 
@@ -55,10 +58,14 @@ public class HomeFragment extends Fragment {
     List<Product_suggestion> product_suggestions_list;
 
 
-    private boolean isLoading;
-    private boolean isLastPage;
-    private  int totalPage = 4;
-    private int currentPage = 0;
+
+    //phan trang
+    private int totalItemCount;
+    private int firstVisibleItem;
+    private int visibleItemCount;
+    private int page = 1;
+    private int previousTotal;
+    private boolean load = true;
 
 
     RecyclerView recyclerViewlist_product_host,recyclerViewlist_product_oder,recyclerViewlist_product_suggestion;
@@ -70,126 +77,34 @@ public class HomeFragment extends Fragment {
         recyclerViewlist_product_host = view.findViewById(R.id.product_hot);
         recyclerViewlist_product_oder = view.findViewById(R.id.recyclerViewlist_product_oder);
         recyclerViewlist_product_suggestion = view.findViewById(R.id.product_suggestion);
+        swipeRefresh = view.findViewById(R.id.swipeRefresh);
+        swipeRefresh.setOnRefreshListener(this);
+        swipeRefresh.setColorSchemeColors(getResources().getColor(R.color.purple_500));
 
-
-
-
+        //silder
         sliderLayout = view.findViewById(R.id.silder);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL);
         sliderLayout.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderLayout.setScrollTimeInSec(2);
 
 
+        data_slider();
         product_hots_list = new ArrayList<>();
-        product_oders_List = new ArrayList<>();
-        setSildetView();
         data_product_host();
+
+
+        product_oders_List = new ArrayList<>();
         data_product_oders();
-        data_product_susggestion();
+
+        product_suggestions_list = new ArrayList<>();
+        data_product_suggestion();
+        pagination_suggestion();
+
         return view;
 
     }
 
 
-    private void data_product_susggestion() {
-
-
-        product_suggestion_adapter = new Product_suggestion_Adapter();
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
-        recyclerViewlist_product_suggestion.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerViewlist_product_suggestion.setLayoutManager(gridLayoutManager);
-        recyclerViewlist_product_suggestion.setAdapter(product_suggestion_adapter);
-
-
-        // gach duoi chan
-//        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
-//        recyclerViewlist_product_suggestion.addItemDecoration(itemDecoration);
-
-        product_suggestions_list = new ArrayList<>();
-        product_suggestions_list = getProduct_suggestions_list();
-        product_suggestion_adapter.setmList_Product_suggestion(product_suggestions_list);
-        if(currentPage < totalPage){
-            product_suggestion_adapter.addFooterLoading();
-        }else{
-            isLastPage = true;
-        }
-        recyclerViewlist_product_suggestion.addOnScrollListener(new PaginnationScrolListent(gridLayoutManager) {
-            @Override
-            // load 5 san pham moi xong cong ra 1 page
-            public void loadMoreItem() {
-                isLoading = true;
-                currentPage +=1;
-                loadNextPage();
-            }
-
-            @Override
-            public boolean isLoading() {
-                return isLoading;
-            }
-
-            @Override
-            public boolean isLastPage() {
-                return isLastPage;
-            }
-        });
-    }
-    private void loadNextPage() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                List<Product_suggestion> list = getProduct_suggestions_list();
-                product_suggestion_adapter.removeFooterLoading();
-                product_suggestions_list.addAll(list);
-                product_suggestion_adapter.notifyDataSetChanged();
-                isLoading = false;
-                if(currentPage < totalPage){
-                    product_suggestion_adapter.addFooterLoading();
-                }else{
-                    isLastPage = true;
-                }
-            }
-        },2000);
-
-    }
-    private List<Product_suggestion> getProduct_suggestions_list() {
-        String URL_GOI_Y_HOM_NAY = "https://tailoha.xyz/?controller=index&action=product_suggestion";
-        List<Product_suggestion> list = new ArrayList<>();
-        list.add(new Product_suggestion(1,"bánh","",30000));
-//        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET,URL_GOI_Y_HOM_NAY, null, new Response.Listener<JSONArray>() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-//                JSONObject jsonObject;
-////                Toast.makeText(getContext(), "AAA"+response, Toast.LENGTH_SHORT).show();
-////                Log.d("AAAC",response.toString());
-////                        Toast.makeText(getContext(), "assa"+response.toString(), Toast.LENGTH_SHORT).show();
-//                for (int i = 0 ; i < response.length();i ++){
-//                    try {
-//                        jsonObject = response.getJSONObject(i);
-//                        DefaultSliderView sliderView = new DefaultSliderView(getContext());
-//                        sliderView.setImageUrl(jsonObject.getString("name"));
-//                        sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
-//                        sliderLayout.addSliderView(sliderView);
-//
-////                        list.add(new Product_suggestion(jsonObject.getInt("id"),jsonObject.getString("name"),jsonObject.getString("image"),j));
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-////                Toast.makeText(getContext(), "error"+error, Toast.LENGTH_SHORT).show();
-//                Log.d("error",error.toString());
-//            }
-//        });
-//        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-//        requestQueue.add(arrayRequest);
-
-        return list;
-    }
 
     private void data_product_oders() {
         product_oders_adapter = new Product_oders_Adapter(this.getContext(),R.layout.item_product_orders,product_oders_List);
@@ -203,15 +118,11 @@ public class HomeFragment extends Fragment {
        }
     }
 
-    private void setSildetView() {
-        String url = "https://tailoha.xyz/?controller=index&action=slider";
-        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET,url, null, new Response.Listener<JSONArray>() {
+    private void data_slider() {
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_SLIDER, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
-//                Toast.makeText(getContext(), "AAA"+response, Toast.LENGTH_SHORT).show();
-//                Log.d("AAAC",response.toString());
-//                        Toast.makeText(getContext(), "assa"+response.toString(), Toast.LENGTH_SHORT).show();
                 for (int i = 0 ; i < response.length();i ++){
                         try {
                             jsonObject = response.getJSONObject(i);
@@ -229,11 +140,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 //                Toast.makeText(getContext(), "error"+error, Toast.LENGTH_SHORT).show();
-                Log.d("error",error.toString());
+//                Log.d("error",error.toString());
             }
         });
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(arrayRequest);
+//        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+//        requestQueue.add(arrayRequest);
+        MySingleton.getInstance(getContext().getApplicationContext()).addToRequestQueue(arrayRequest);
 
     }
     private void data_product_host() {
@@ -249,6 +161,86 @@ public class HomeFragment extends Fragment {
         product_hots_list.add(new Product_hot(1,"Banh Keo","https://static.vietnammm.com/images/restaurants/vn/NNPOQQP/logo_465x320.png"));
         product_hots_list.add(new Product_hot(1,"Keo Ngot","https://static.vietnammm.com/images/restaurants/vn/OP35R111/logo_465x320.png"));
         }
+    private void data_product_suggestion() {
+        recyclerViewlist_product_suggestion.setHasFixedSize(true);
+        layoutManager = new GridLayoutManager(getContext(),2);
+        recyclerViewlist_product_suggestion.setLayoutManager(layoutManager);
+        product_suggestion_adapter = new Product_suggestion_Adapter();
+        product_suggestion_adapter.Product_suggestion_Adapter(this.getContext(),R.layout.item_product_suggestion,product_suggestions_list);
+        recyclerViewlist_product_suggestion.setAdapter(product_suggestion_adapter);
 
 
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_PRODUCT_SUGGESTION+page, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject;
+
+                try {
+                    for (int i = 0 ; i < response.length();i ++){
+                        jsonObject = response.getJSONObject(i);
+                        Log.d("response",jsonObject.getString("name"));
+
+                        product_suggestions_list.add(new Product_suggestion(jsonObject.getString("id"),jsonObject.getString("name"),jsonObject.getString("image"),jsonObject.optString("pirce")));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error",error.toString());
+
+            }
+        });
+        MySingleton.getInstance(getContext().getApplicationContext()).addToRequestQueue(arrayRequest);
+    }
+    private void pagination_suggestion() {
+        recyclerViewlist_product_suggestion.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalItemCount = layoutManager.getChildCount();
+                visibleItemCount = layoutManager.getItemCount();
+                firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+
+                if(load){
+                    if (totalItemCount  >  previousTotal) {
+                        previousTotal = totalItemCount;
+                        page++;
+                        load = false;
+                    }
+                }
+                if( !load && (firstVisibleItem + visibleItemCount) >= totalItemCount){
+                    data_product_suggestion();
+                    load = true;
+                    Log.d("onScrolled", String.valueOf(page));
+                }
+            }
+        });
+
+
+    }
+
+    // refresh page data
+    @Override
+    public void onRefresh() {
+        product_suggestion_adapter.Product_suggestion_Adapter(this.getContext(),R.layout.item_product_suggestion,product_suggestions_list);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefresh.setRefreshing(false);
+            }
+        },3000);
+    }
 }

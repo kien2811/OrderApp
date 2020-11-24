@@ -30,7 +30,7 @@ public class Product_SanPham_Dashboard_Adapter extends RecyclerView.Adapter<Prod
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Product_SanPham_Dashboard_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(layout,null);
         Product_SanPham_Dashboard_Adapter.ViewHolder viewHolder = new Product_SanPham_Dashboard_Adapter.ViewHolder(view);
         return viewHolder;
