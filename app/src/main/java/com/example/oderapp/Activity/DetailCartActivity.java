@@ -19,7 +19,8 @@ import java.text.DecimalFormat;
 
 public class DetailCartActivity extends AppCompatActivity {
     Toolbar toolbarCart;
-    Button btnAddMuaCart,btnAddCart;
+    Button btnAddMuaCart;
+    ImageView btnAddCart;
     TextView txtvDescriptionCart,txtvPriceCart,txtvNameCart;
     ImageView imgAvatarCart;
     @Override
@@ -28,21 +29,11 @@ public class DetailCartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_cart);
         mapping();
         init();
-        btnAddCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(DetailCartActivity.this, ""+v, Toast.LENGTH_SHORT).show();
-            }
-        });
-        btnAddMuaCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
     }
 
     private void init() {
+        //gọi dữ liệu từ Intent
         Intent data = getIntent();
         int id = (int) data.getSerializableExtra("id");
         String name = (String) data.getSerializableExtra("getName");
@@ -50,20 +41,44 @@ public class DetailCartActivity extends AppCompatActivity {
         String description = (String) data.getSerializableExtra("getDescription");
 
 //        String categoryid = (String) data.getSerializableExtra("categoryid");
+//        Log.d("AACCC",name+""+price+""+description);
 
+        // Gán dữ liệu vào view
         txtvNameCart.setText(name);
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         txtvPriceCart.setText("Giá: "+decimalFormat.format(price)+" đ");
-
         txtvDescriptionCart.setText(description);
-
+//        String categoryid = (String) data.getSerializableExtra("categoryid");
         String avatar = (String) data.getSerializableExtra("getAvatar");
         Picasso.get().load(avatar)
                 .placeholder(R.drawable.loader)
                 .error(R.drawable.noimage)
                 .into(imgAvatarCart);
-        Log.d("Cart",data.toString());
-//        Toast.makeText(this, "Cart"+name+avatar+description+categoryid, Toast.LENGTH_SHORT).show();
+
+        // xử lí sự kiện nút bấm
+        btnAddCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        btnAddMuaCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("AACCC",name+""+price+""+description);
+                Toast.makeText(DetailCartActivity.this, ""+name+""+price+""+description, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(DetailCartActivity.this, CartActivity.class);
+                intent.putExtra("id",id);
+                intent.putExtra("getName",name);
+                intent.putExtra("getPrice",price);
+                intent.putExtra("getAvatar",avatar);
+                intent.putExtra("getDescription",description);
+//                intent.putExtra("categoryid",categoryid);
+                startActivity(intent);
+            }
+        });
 
         initActionBar();
     }

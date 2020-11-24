@@ -9,39 +9,6 @@
     android:layout_marginRight="5dp"
     android:layout_marginLeft="5dp"
     android:layout_height="wrap_content">
-<!--    <ImageView-->
-<!--        android:id="@+id/imgproduct_suggestion"-->
-<!--        android:src="@drawable/home"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        android:layout_width="100dp"-->
-<!--        android:layout_height="100dp">-->
-<!--    </ImageView>-->
-<!--    <LinearLayout-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:layout_marginLeft="10dp"-->
-<!--        android:orientation="vertical"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content">-->
-<!--        <TextView-->
-<!--            android:id="@+id/txtproduct_suggestion_name"-->
-<!--            android:text="Tên Sản Phẩm"-->
-<!--            android:textColor="#000000"-->
-<!--            android:textSize="25sp"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--        </TextView>-->
-<!--        <TextView-->
-<!--            android:id="@+id/txtproduct_suggestion_price"-->
-<!--            android:text="Giá Sản Phẩm"-->
-<!--            android:textColor="#FF2525"-->
-<!--            android:textSize="18sp"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--        </TextView>-->
-<!--    </LinearLayout>-->
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
