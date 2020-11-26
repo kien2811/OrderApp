@@ -11,14 +11,14 @@
         android:background="@drawable/background_circle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageView
+<!--        <ImageView-->
 
-            android:layout_gravity="right"
-            android:src="@drawable/cart"
-            android:layout_width="50dp"
-            android:layout_height="50dp">
+<!--            android:layout_gravity="right"-->
+<!--            android:src="@drawable/cart"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp">-->
 
-        </ImageView>
+<!--        </ImageView>-->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
