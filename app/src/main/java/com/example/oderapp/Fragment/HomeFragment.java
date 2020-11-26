@@ -1,5 +1,6 @@
 package com.example.oderapp.Fragment;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -21,10 +22,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.oderapp.Adapter.Product_hot_Adapter;
+import com.example.oderapp.Adapter.Product_New_Adapter;
 import com.example.oderapp.Adapter.Product_oders_Adapter;
 import com.example.oderapp.Adapter.Product_suggestion_Adapter;
-import com.example.oderapp.Model.Product_hot;
+import com.example.oderapp.Model.Product_new;
 import com.example.oderapp.Model.Product_oders;
 import com.example.oderapp.Model.Product_suggestion;
 import com.example.oderapp.MySingleton.MySingleton;
@@ -38,7 +39,6 @@ import com.smarteist.autoimageslider.SliderLayout;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +48,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private SliderLayout sliderLayout;
     private LinearLayoutManager layoutManager;
     SwipeRefreshLayout swipeRefresh;
-    Product_hot_Adapter product_hot_adapter;
-    List<Product_hot> product_hots_list;
+    Product_New_Adapter product_new_adapter;
+    List<Product_new> product_hots_list;
 
     Product_oders_Adapter product_oders_adapter;
     List<Product_oders> product_oders_List;
@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
 
 
-    //phan trang
+    //phan trang cho san pham goi y
     private int totalItemCount;
     private int firstVisibleItem;
     private int visibleItemCount;
@@ -67,8 +67,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private int previousTotal;
     private boolean load = true;
 
-
     RecyclerView recyclerViewlist_product_host,recyclerViewlist_product_oder,recyclerViewlist_product_suggestion;
+
+    @Override
+    public void onDestroyView() {
+
+        super.onDestroyView();
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,25 +85,24 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         swipeRefresh = view.findViewById(R.id.swipeRefresh);
         swipeRefresh.setOnRefreshListener(this);
         swipeRefresh.setColorSchemeColors(getResources().getColor(R.color.purple_500));
-
         //silder
         sliderLayout = view.findViewById(R.id.silder);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL);
         sliderLayout.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        sliderLayout.setScrollTimeInSec(2);
+        sliderLayout.setScrollTimeInSec(4);
 
 
         data_slider();
+        //san pham moi
         product_hots_list = new ArrayList<>();
         data_product_host();
 
-
+        // san pham mua nhieu
         product_oders_List = new ArrayList<>();
         data_product_oders();
-
+        // goi y san pham
         product_suggestions_list = new ArrayList<>();
         data_product_suggestion();
-        pagination_suggestion();
 
         return view;
 
@@ -107,34 +111,28 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
 
     private void data_product_oders() {
-        product_oders_adapter = new Product_oders_Adapter(this.getContext(),R.layout.item_product_orders,product_oders_List);
+        product_oders_adapter = new Product_oders_Adapter();
+        product_oders_adapter.Product_oders_Adapter(this.getContext(),R.layout.item_product_orders,product_oders_List);
         recyclerViewlist_product_oder.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewlist_product_oder.setLayoutManager(layoutManager);
         recyclerViewlist_product_oder.setAdapter(product_oders_adapter);
-
-       for (int i = 0 ;i < 100 ; i ++){
-           product_oders_List.add(new Product_oders(1,"Banh Ngon",2500,"https://image.flaticon.com/icons/png/128/2971/2971975.png"));
-       }
-    }
-
-    private void data_slider() {
-        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_SLIDER, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_PRODUCT_ODER, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
+                product_oders_List.clear();
                 for (int i = 0 ; i < response.length();i ++){
-                        try {
-                            jsonObject = response.getJSONObject(i);
-                            DefaultSliderView sliderView = new DefaultSliderView(getContext());
-                            sliderView.setImageUrl(jsonObject.getString("name"));
-                            sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
-                            sliderLayout.addSliderView(sliderView);
+                    try {
+                        jsonObject = response.getJSONObject(i);
+                        product_oders_List.add(new Product_oders(jsonObject.getInt("id"),"Banh Ngon",jsonObject.getInt("pirce"),jsonObject.getString("image"),jsonObject.getString("details"),jsonObject.getInt("product_id"),jsonObject.getInt("amount")));
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
+            product_oders_adapter.notifyDataSetChanged();
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -143,23 +141,80 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 //                Log.d("error",error.toString());
             }
         });
-//        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-//        requestQueue.add(arrayRequest);
-        MySingleton.getInstance(getContext().getApplicationContext()).addToRequestQueue(arrayRequest);
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(arrayRequest);
 
     }
+
+    private void data_slider() {
+        JsonArrayRequest arrayRequest_slider = new JsonArrayRequest(Request.Method.GET, Api.URl_SLIDER, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject_slider;
+                sliderLayout.clearSliderViews();
+                for (int i = 0 ; i < response.length();i ++){
+                        try {
+                            jsonObject_slider = response.getJSONObject(i);
+                            DefaultSliderView sliderView = new DefaultSliderView(getContext());
+                            sliderView.setImageUrl(jsonObject_slider.getString("image"));
+                            sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
+                            sliderLayout.addSliderView(sliderView);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(getContext(), "error"+error, Toast.LENGTH_SHORT).show();
+//                Log.d("error",error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(arrayRequest_slider);
+//        MySingleton.getInstance(getContext().getApplicationContext()).addToRequestQueue(arrayRequest_slider);
+
+    }
+    // san pham moi
     private void data_product_host() {
-        product_hot_adapter = new Product_hot_Adapter(this.getContext(),R.layout.item_product_hot,product_hots_list);
+        product_new_adapter = new Product_New_Adapter();
+        product_new_adapter.Product_New_Adapter(this.getContext(),R.layout.item_product_hot,product_hots_list);
         recyclerViewlist_product_host.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewlist_product_host.setLayoutManager(layoutManager);
-        recyclerViewlist_product_host.setAdapter(product_hot_adapter);
+        recyclerViewlist_product_host.setAdapter(product_new_adapter);
+        JsonArrayRequest arrayRequest_product_host = new JsonArrayRequest(Request.Method.GET, Api.URl_PRODUCT_NEW, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject_product_host;
+                product_hots_list.clear();
+                for (int i = 0 ; i < response.length();i ++){
+                    try {
+                        jsonObject_product_host = response.getJSONObject(i);
+                        product_hots_list.add(new Product_new(jsonObject_product_host.getInt("id"),jsonObject_product_host.getString("name"),jsonObject_product_host.getString("image"),jsonObject_product_host.getInt("pirce"),jsonObject_product_host.getString("details"),jsonObject_product_host.getInt("product_id"),jsonObject_product_host.getInt("amount")));
 
-        product_hots_list.add(new Product_hot(1,"Banh Ngot","https://static.vietnammm.com/images/restaurants/vn/NPOQPP7/logo_465x320.png"));
-        product_hots_list.add(new Product_hot(1,"Banh Bao","https://static.vietnammm.com/images/restaurants/vn/NRNNQ3O/logo_465x320.png"));
-        product_hots_list.add(new Product_hot(1,"Banh Cuon","https://static.vietnammm.com/images/restaurants/vn/5171R5N/logo_465x320.png"));
-        product_hots_list.add(new Product_hot(1,"Banh Keo","https://static.vietnammm.com/images/restaurants/vn/NNPOQQP/logo_465x320.png"));
-        product_hots_list.add(new Product_hot(1,"Keo Ngot","https://static.vietnammm.com/images/restaurants/vn/OP35R111/logo_465x320.png"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                product_new_adapter.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(getContext(), "error"+error, Toast.LENGTH_SHORT).show();
+//                Log.d("error",error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(arrayRequest_product_host);
+
+
+
         }
     private void data_product_suggestion() {
         recyclerViewlist_product_suggestion.setHasFixedSize(true);
@@ -174,11 +229,14 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
                 try {
+                    product_suggestions_list.clear();
                     for (int i = 0 ; i < response.length();i ++){
                         jsonObject = response.getJSONObject(i);
-                        Log.d("response",jsonObject.getString("name"));
-                        product_suggestions_list.add(new Product_suggestion(jsonObject.getString("id"),jsonObject.getString("name"),jsonObject.getString("image"),jsonObject.optString("pirce")));
+//                        Log.d("response",jsonObject.getString("name"));
+
+                        product_suggestions_list.add(new Product_suggestion(jsonObject.getInt("id"),jsonObject.getString("name"),jsonObject.getString("image"),jsonObject.getInt("pirce"),jsonObject.getString("details"),jsonObject.getInt("product_id"),jsonObject.getInt("amount")));
                     }
+                    product_suggestion_adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -190,9 +248,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
             }
         });
+        pagination_suggestion();
+
         MySingleton.getInstance(getContext().getApplicationContext()).addToRequestQueue(arrayRequest);
     }
+
     private void pagination_suggestion() {
+        // even load data cua san pham goi y
         recyclerViewlist_product_suggestion.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -227,13 +289,15 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     // refresh page data
     @Override
     public void onRefresh() {
-        product_suggestion_adapter.Product_suggestion_Adapter(this.getContext(),R.layout.item_product_suggestion,product_suggestions_list);
+        data_product_suggestion();
+        data_product_oders();
+        data_product_host();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 swipeRefresh.setRefreshing(false);
             }
-        },3000);
+        },2000);
     }
 }

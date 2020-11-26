@@ -57,7 +57,7 @@ public class Product_Dashboard_sanPham_Adapter extends RecyclerView.Adapter<Prod
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean islongClick) {
-                if (islongClick){
+                if (!islongClick){
                     Intent intent = new Intent(context, DetailCartActivity.class);
                     intent.putExtra("id",p.getId());
                     intent.putExtra("getName",p.getName());
@@ -67,19 +67,6 @@ public class Product_Dashboard_sanPham_Adapter extends RecyclerView.Adapter<Prod
                     intent.putExtra("categoryid",p.getCategoryid());
                     context.startActivity(intent);
                     Toast.makeText(context, "long click"+p, Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Intent intent = new Intent(context, DetailCartActivity.class);
-//                    intent.putExtra("id",p.getId());
-//                    intent.putExtra("getName",p.getName());
-//                    intent.putExtra("getPrice",p.getPrice());
-//                    intent.putExtra("getAvatar",p.getAvatar());
-//                    intent.putExtra("getDescription",p.getDescription());
-//                    intent.putExtra("categoryid",p.getCategoryid());
-
-                    intent.putExtra("product", p);
-                    context.startActivity(intent);
-                    Toast.makeText(context, "long"+p, Toast.LENGTH_SHORT).show();
                 }
             }
         });

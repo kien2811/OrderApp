@@ -6,16 +6,9 @@ class Product_oders {
     private String name;
     private int price;
     private String Image;
-
-    @Override
-    public String toString() {
-        return "Product_oders{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", Image='" + Image + '\'' +
-                '}';
-    }
+    private String details;
+    private int product_id;
+    private  int amount;
 
     public int getId() {
         return id;
@@ -49,10 +42,37 @@ class Product_oders {
         Image = image;
     }
 
-    public Product_oders(int id, String name, int price, String image) {
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public int getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public Product_oders(int id, String name, int price, String image, String details, int product_id, int amount) {
         this.id = id;
         this.name = name;
         this.price = price;
         Image = image;
+        this.details = details;
+        this.product_id = product_id;
+        this.amount = amount;
     }
 }
