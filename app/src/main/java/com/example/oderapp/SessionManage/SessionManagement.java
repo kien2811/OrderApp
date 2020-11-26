@@ -21,7 +21,13 @@ public class SessionManagement {
         editor.putBoolean("KEY_LOGIN",login);
         editor.commit();
     }
-
+    public void setIdUser(int idUser){
+        editor.putInt("KEY_ID",idUser);
+        editor.commit();
+    }
+    public int getIduser(int idUser){
+        return sharedPreferences.getInt("KEY_LOGIN",idUser);
+    }
     // create get login method
     public  boolean getLogin(){
         return sharedPreferences.getBoolean("KEY_LOGIN",false);
@@ -31,6 +37,7 @@ public class SessionManagement {
         editor.putString("KEY_USERNAME",username);
         editor.commit();
     }
+
     public  void setToken(String token){
         editor.putString("KEY_TOKEN",token);
         editor.commit();
