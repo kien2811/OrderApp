@@ -68,7 +68,6 @@ public class Product_Dashboard_sanPham_Adapter extends RecyclerView.Adapter<Prod
                     context.startActivity(intent);
                     Toast.makeText(context, "long click"+p, Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }

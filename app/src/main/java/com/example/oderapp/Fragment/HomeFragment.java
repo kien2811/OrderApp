@@ -224,7 +224,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         product_suggestion_adapter.Product_suggestion_Adapter(this.getContext(),R.layout.item_product_suggestion,product_suggestions_list);
         recyclerViewlist_product_suggestion.setAdapter(product_suggestion_adapter);
 
-
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_PRODUCT_SUGGESTION+page, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -240,11 +239,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     product_suggestion_adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
-
-
                 }
-
-
             }
         }, new Response.ErrorListener() {
             @Override

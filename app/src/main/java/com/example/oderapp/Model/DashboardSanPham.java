@@ -1,6 +1,8 @@
 package com.example.oderapp.Model;
 
-public class DashboardSanPham {
+import java.io.Serializable;
+
+public class DashboardSanPham implements Serializable {
     private int id;
     private String name;
     private int price;
