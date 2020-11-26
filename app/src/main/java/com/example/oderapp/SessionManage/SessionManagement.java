@@ -31,6 +31,13 @@ public class SessionManagement {
         editor.putString("KEY_USERNAME",username);
         editor.commit();
     }
+    public  void setToken(String token){
+        editor.putString("KEY_TOKEN",token);
+        editor.commit();
+    }
+    public String getToken(){
+        return sharedPreferences.getString("KEY_TOKEN","");
+    }
     // create get username method
     public String getUsername(){
         return  sharedPreferences.getString("KEY_USERNAME","");

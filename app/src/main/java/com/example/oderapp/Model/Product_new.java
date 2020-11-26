@@ -1,52 +1,53 @@
 package com.example.oderapp.Model;
 
 public
-class Product_suggestion {
-    private int id;
-    private String name;
-    private String image;
-    private int price;
-    private String details;
+class Product_new {
+    private int Id;
+    private String Name;
+    private String Image;
+    private int Price;
+    private String Details;
     private int product_id;
+    private int amount;
 
     public int getId() {
-        return id;
+        return Id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        Id = id;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        Name = name;
     }
 
     public String getImage() {
-        return image;
+        return Image;
     }
 
     public void setImage(String image) {
-        this.image = image;
+        Image = image;
     }
 
     public int getPrice() {
-        return price;
+        return Price;
     }
 
     public void setPrice(int price) {
-        this.price = price;
+        Price = price;
     }
 
     public String getDetails() {
-        return details;
+        return Details;
     }
 
     public void setDetails(String details) {
-        this.details = details;
+        Details = details;
     }
 
     public int getProduct_id() {
@@ -65,17 +66,15 @@ class Product_suggestion {
         this.amount = amount;
     }
 
-    public Product_suggestion(int id, String name, String image, int price, String details, int product_id, int amount) {
-        this.id = id;
-        this.name = name;
-        this.image = image;
-        this.price = price;
-        this.details = details;
+    public Product_new(int id, String name, String image, int price, String details, int product_id, int amount) {
+        Id = id;
+        Name = name;
+        Image = image;
+        Price = price;
+        Details = details;
         this.product_id = product_id;
         this.amount = amount;
     }
-
-    private int amount;
 
 
 }

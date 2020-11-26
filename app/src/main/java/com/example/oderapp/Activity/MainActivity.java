@@ -1,4 +1,5 @@
 package com.example.oderapp.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -79,9 +80,17 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()){
                 case R.id.home:
                     selectFragment = new HomeFragment();
+                    FragmentTransaction home = getSupportFragmentManager().beginTransaction();
+                    home.add(R.id.frame_layout, new HomeFragment());
+                    home.addToBackStack(null);
+                    home.commit();
                     break;
                 case R.id.dashboard:
                     selectFragment = new DashboardFragment();
+                    FragmentTransaction dashboard = getSupportFragmentManager().beginTransaction();
+                    dashboard.add(R.id.frame_layout, new DashboardFragment());
+                    dashboard.addToBackStack(null);
+                    dashboard.commit();
                     break;
                 case R.id.profile:
 
