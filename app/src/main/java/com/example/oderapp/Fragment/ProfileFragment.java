@@ -36,7 +36,7 @@ public class ProfileFragment extends Fragment {
         TxtMessage = view.findViewById(R.id.txtusername);
         sessionManagement = new SessionManagement(getContext());
         //get user name to session
-        String username = sessionManagement.getUsername();
+        String username = sessionManagement.getToken();
         TxtMessage.setText(username);
 
 //        sharedPreferences = getContext().getSharedPreferences(fileName, Context.MODE_PRIVATE);
@@ -58,6 +58,7 @@ public class ProfileFragment extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         sessionManagement.setLogin(false);
                         sessionManagement.setUsername("");
+                        sessionManagement.setToken("");
                         Intent intent = new Intent(getContext().getApplicationContext(),LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         getContext().startActivity(intent);

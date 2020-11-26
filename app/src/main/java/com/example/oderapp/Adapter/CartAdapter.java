@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderapp.Model.Cart_Model;
-import com.example.oderapp.Model.Product_hot;
 import com.example.oderapp.R;
 import com.squareup.picasso.Picasso;
 
