@@ -57,7 +57,7 @@ public class SearchActivity extends AppCompatActivity{
 
 
 
-        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_SEARCH_PRODUCT_SUGGESTION, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_SEARCH, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
@@ -108,7 +108,7 @@ public class SearchActivity extends AppCompatActivity{
         recyclerView.setLayoutManager(new GridLayoutManager(SearchActivity.this,2));
         adapter = new SearchAdapter(SearchActivity.this,R.layout.item_product_suggestion,list);
         recyclerView.setAdapter(adapter);
-        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_SEARCH_PRODUCT_SUGGESTION+keyname, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_SEARCH+keyname, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
