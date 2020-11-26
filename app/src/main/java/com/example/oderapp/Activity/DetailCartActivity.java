@@ -61,17 +61,24 @@ public class DetailCartActivity extends AppCompatActivity {
     private void init() {
         //gọi dữ liệu từ Intent
         Intent intent = getIntent();
-        DashboardSanPham  product = (DashboardSanPham) intent.getSerializableExtra("product");
-        Log.d("AAA",intent.toString());
-        Picasso.get().load(product.getAvatar()).into(imgAvatarCart);
-        txtvNameCart.setText(product.getName());
+//        DashboardSanPham  product = (DashboardSanPham) intent.getSerializableExtra("product");
+//        Log.d("AAA",intent.toString());
+        int id = (int) intent.getSerializableExtra("id");
+        String getName = (String) intent.getSerializableExtra("getName");
+        int getPrice = (int) intent.getSerializableExtra("getPrice");
+        String getAvatar = (String) intent.getSerializableExtra("getAvatar");
+        String getDescription = (String) intent.getSerializableExtra("getDescription");
+        int categoryid = (int) intent.getSerializableExtra("categoryid");
+
+//        Picasso.get().load(getAvatar).into(imgAvatarCart);
+        txtvNameCart.setText(getName);
 
         DecimalFormat formatter = new DecimalFormat("###,###,###");
-        String price = formatter.format(Double.parseDouble(product.getPrice()+""))+" VNĐ";
-        txtvPriceCart.setText("Giá "+price);
+//        String price = formatter.format(Double.parseDouble(getPrice+""))+" VNĐ";
+        txtvPriceCart.setText("Giá "+getPrice);
 
-        txtvDescriptionCart.setText(product.getDescription());
-        Picasso.get().load(product.getAvatar())
+        txtvDescriptionCart.setText(getDescription);
+        Picasso.get().load(getAvatar)
                 .placeholder(R.drawable.loader)
                 .error(R.drawable.noimage)
                 .into(imgAvatarCart);
