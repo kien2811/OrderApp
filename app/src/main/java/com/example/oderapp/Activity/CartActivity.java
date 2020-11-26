@@ -248,7 +248,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     private void deleteCartAuto(int id) {
         String whereClause = ID_FIELD+" = ?";
         String[] whereArgs = {id+""};
-        myDatabase.delete(TABLE_NAME, whereClause, whereArgs);
         mapping();
     }
 
