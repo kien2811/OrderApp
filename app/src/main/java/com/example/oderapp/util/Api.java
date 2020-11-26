@@ -11,11 +11,13 @@ public class Api {
 //    public static final  String URl_LOGIN = "https://"+HOST+"/?username="+username+"&password="+password+"";
 //    public static final  String username = "https://"+HOST+"/?username="+username+"&password="+password+"";
 
+
+
 //    https://tailoha.xyz/?controller=index&action=search_product
 //    https://tailoha.xyz/?controller=index&action=slider
 //    https://tailoha.xyz/?controller=index&action=product_suggestion
 //    https://tailoha.xyz/?controller=index&action=product_oders
 //    https://tailoha.xyz/?controller=index&action=product_new
 //    https://tailoha.xyz/?/OderApp_OOP/public/?username=admin&password=admin
-//    https://tailoha.xyz/?/OderApp_OOP/public/?controller=index&action=decode_token=
+//    https://tailoha.xyz/?controller=index&action=decode_token&token=
 }
