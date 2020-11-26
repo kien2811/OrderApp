@@ -228,7 +228,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
                 try {
-                    product_suggestions_list.clear();
+//                    product_suggestions_list.clear();
                     for (int i = 0 ; i < response.length();i ++){
                         jsonObject = response.getJSONObject(i);
 //                        Log.d("response",jsonObject.getString("name"));
