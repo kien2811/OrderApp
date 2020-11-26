@@ -70,12 +70,14 @@ public class Product_Dashboard_sanPham_Adapter extends RecyclerView.Adapter<Prod
                 }
                 else {
                     Intent intent = new Intent(context, DetailCartActivity.class);
-                    intent.putExtra("id",p.getId());
-                    intent.putExtra("getName",p.getName());
-                    intent.putExtra("getPrice",p.getPrice());
-                    intent.putExtra("getAvatar",p.getAvatar());
-                    intent.putExtra("getDescription",p.getDescription());
-                    intent.putExtra("categoryid",p.getCategoryid());
+//                    intent.putExtra("id",p.getId());
+//                    intent.putExtra("getName",p.getName());
+//                    intent.putExtra("getPrice",p.getPrice());
+//                    intent.putExtra("getAvatar",p.getAvatar());
+//                    intent.putExtra("getDescription",p.getDescription());
+//                    intent.putExtra("categoryid",p.getCategoryid());
+
+                    intent.putExtra("product", p);
                     context.startActivity(intent);
                     Toast.makeText(context, "long"+p, Toast.LENGTH_SHORT).show();
                 }

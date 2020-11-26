@@ -46,6 +46,39 @@
                 android:text="Giá sản phẩm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:weightSum="10"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btnMinus"
+                    android:layout_weight="1.5"
+                    android:backgroundTint="#C5C4C1"
+                    android:padding="0dp"
+                    android:text="-"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"></Button>
+
+                <TextView
+                    android:background="#F4F4F4"
+                    android:id="@+id/txtvQuantity"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="1"
+                    android:layout_weight="7"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"></TextView>
+
+                <Button
+                    android:id="@+id/btnPlus"
+                    android:layout_weight="1.5"
+                    android:backgroundTint="#C5C4C1"
+                    android:padding="0dp"
+                    android:text="+"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"></Button>
+            </LinearLayout>
             <TextView
                 android:id="@+id/txtvDescriptionCart"
                 android:layout_marginTop="20dp"

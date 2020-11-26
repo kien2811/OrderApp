@@ -9,7 +9,7 @@
     tools:context=".Activity.CartActivity">
     <androidx.appcompat.widget.Toolbar
         android:layout_weight="1"
-        android:id="@+id/toolbarCart"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:background="#00FFFFFF"
         android:layout_height="?actionBarSize">
@@ -31,10 +31,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewCart"
+                <ListView
+                    android:id="@+id/lvCart"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"></ListView>
             </LinearLayout>
             <TextView
                 android:text="Có thể bạn sẽ quan tâm"
@@ -93,7 +93,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:backgroundTint="#9EFF0000"
-                android:id="@+id/btnMuahang"
+                android:id="@+id/btnThanhtoan"
                 android:text="thanh toán"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"/>
