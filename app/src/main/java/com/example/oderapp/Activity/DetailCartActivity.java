@@ -43,8 +43,6 @@ public class DetailCartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_cart);
         mapping();
         init();
-
-
     }
     private void quantitySet(String action) {
         int qtt = Integer.parseInt(txtvQuantity.getText().toString());

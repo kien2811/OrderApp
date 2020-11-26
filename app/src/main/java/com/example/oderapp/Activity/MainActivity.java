@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +23,7 @@ import com.example.oderapp.SessionManage.SessionManagement;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-
+    ImageButton imgCart;
     ImageView seartMainActivity,logo;
     SessionManagement sessionManagement;
     long backPressed;
@@ -38,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,SearchActivity.class));
+            }
+        });
+        imgCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -56,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mapping() {
+        imgCart = findViewById(R.id.imgCart);
         seartMainActivity  = findViewById(R.id.seartMainActivity);
         BottomNavigationView btnNav = findViewById(R.id.button_navication_view);
         btnNav.setOnNavigationItemSelectedListener(navListent);

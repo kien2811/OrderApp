@@ -50,7 +50,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     Button btnThanhtoan, btnMuahang;
     ListView lvCart;
     TextView txtvTotal;
-    MyDatabase myDatabase;
     Cursor cursor;
 
     static final String DB_NAME = "db_shop";
@@ -179,6 +178,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     public void UpdateQuantityCart(Cart_Model productCart, String action){
         int quantity = 0;
         cursor = myDatabase.selectData("select * from "+TABLE_NAME+" where id="+productCart.getId());
+
+
+
         if (action.equals("minus")){
             if (cursor.moveToNext()){
                 quantity = (cursor.getInt(4) - 1);
@@ -204,7 +206,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         String[] whereArgs = {productCart.getId()+""};
         int chek = myDatabase.update(TABLE_NAME, cv, whereClause, whereArgs);
         if (chek == 1){
-            DecimalFormat formatter = new DecimalFormat("###,###,##0");
+            DecimalFormat formatter = new DecimalFormat("###,###,###");
             String price = formatter.format(Double.parseDouble(total+""))+" VNĐ";
             txtvTotal.setText(" "+price);
             adapter.notifyDataSetChanged();

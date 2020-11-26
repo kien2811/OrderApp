@@ -20,6 +20,7 @@
             android:src="@drawable/kita"
             android:visibility="visible" />
         <ImageButton
+            android:id="@+id/imgCart"
             android:layout_gravity="right"
             android:layout_marginRight="10dp"
             android:background="#00FFFFFF"
