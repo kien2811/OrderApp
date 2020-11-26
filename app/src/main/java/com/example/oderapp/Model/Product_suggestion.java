@@ -1,7 +1,9 @@
 package com.example.oderapp.Model;
 
+import java.io.Serializable;
+
 public
-class Product_suggestion {
+class Product_suggestion implements Serializable {
     private int id;
     private String name;
     private String image;

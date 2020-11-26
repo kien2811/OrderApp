@@ -58,7 +58,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     List<Product_suggestion> product_suggestions_list;
 
 
-
     //phan trang cho san pham goi y
     private int totalItemCount;
     private int firstVisibleItem;
@@ -276,8 +275,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     }
                 }
                 if( !load && (firstVisibleItem + visibleItemCount) >= totalItemCount){
-                    data_product_suggestion();
+
                     load = true;
+                    data_product_suggestion();
                     Log.d("onScrolled", String.valueOf(page));
                 }
             }
