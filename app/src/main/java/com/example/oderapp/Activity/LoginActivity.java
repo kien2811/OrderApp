@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Vui Lòng Nhập Tài Khoản Mật Khẩu", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        String url = "https://tailoha.xyz/?username=" + username + "&password=" + password + "";
+                        String url = "http://192.168.1.45:8089/OderApp_OOP/public/?username=" + username + "&password=" + password + "";
 
 
 
@@ -73,11 +73,13 @@ public class LoginActivity extends AppCompatActivity {
                                     String username = response.getString("username");
                                     String sussecfully = response.getString("sussecfully");
                                     String token = response.getString("token");
+                                    int id_user = response.getInt("id_user");
 
                                     if(sussecfully.equals("sussecfully")){
                                         sessionManagement.setLogin(true);
                                         sessionManagement.setUsername(username);
                                         sessionManagement.setToken(token);
+                                        sessionManagement.setIdUser(id_user);
                                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
                                         finish();
                                         Log.d("onResponse: ",token);
