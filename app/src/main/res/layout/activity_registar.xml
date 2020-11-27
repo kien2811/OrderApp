@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradientbackground"
+    tools:context=".Activity.RegistarActivity">
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/imageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_above="@+id/edutUsernames"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        app:srcCompat="@drawable/home" />
+    <LinearLayout
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+       <com.google.android.material.textfield.TextInputLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+           <EditText
+               android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
+               android:id="@+id/txtfull_name"
+               android:layout_width="280dp"
+               android:layout_height="55dp"
+               android:layout_gravity="center"
+               android:layout_centerHorizontal="true"
+               android:hint="Họ và Tên"
+               android:gravity="center"
+               android:layout_marginBottom="10dp"
+               android:inputType="textPersonName"
+               android:textSize="16dp" />
+       </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <EditText
+                android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
+                android:id="@+id/txtemail"
+                android:layout_width="280dp"
+                android:layout_height="55dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:hint="Email"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:inputType="textPersonName"
+                android:textSize="16dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <EditText
+                android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
+                android:id="@+id/txtphone"
+                android:layout_width="280dp"
+                android:layout_height="55dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:hint="Số Điện Thoại"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:inputType="textPersonName"
+                android:textSize="16dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="280dp"
+            android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
+            android:layout_height="55dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:id="@+id/password"
+            android:hint="Mật Khẩu"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            app:passwordToggleEnabled="true">
+            <EditText
+                android:id="@+id/txtpassword"
+                android:background="#00FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:inputType="textPersonName"
+                android:textSize="16dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="300dp"
+            app:cardBackgroundColor="#9BA6EA"
+            app:cardCornerRadius="25dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_centerHorizontal="true">
+            <Button
+                android:id="@+id/btn_resigtar"
+                android:background="#9BA6EA"
+                android:text="Đăng Kí"
+                android:layout_centerInParent="true"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </Button>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</LinearLayout>

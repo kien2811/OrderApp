@@ -65,7 +65,7 @@ public class SearchActivity extends AppCompatActivity{
                     for (int i = 0 ; i < response.length();i ++){
                         jsonObject = response.getJSONObject(i);
                         Log.d("response",jsonObject.getString("name"));
-                        list.add(new DashboardSanPham(jsonObject.getInt("id"),jsonObject.getString("name"),jsonObject.getInt("pirce"),jsonObject.getString("image"),jsonObject.getString("details"),jsonObject.getInt("product_id")));
+                        list.add(new DashboardSanPham(jsonObject.getInt("id"),jsonObject.getString("name"),jsonObject.getInt("pirce"),jsonObject.getString("image"),jsonObject.getString("details"),jsonObject.getInt("product_id"),jsonObject.getInt("amount")));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -116,7 +116,7 @@ public class SearchActivity extends AppCompatActivity{
                     for (int i = 0 ; i < response.length();i ++){
                         jsonObject = response.getJSONObject(i);
                         Log.d("response",jsonObject.getString("name"));
-                        list.add(new DashboardSanPham(jsonObject.getInt("id"),jsonObject.getString("name"),jsonObject.getInt("pirce"),jsonObject.getString("image"),jsonObject.getString("details"),jsonObject.getInt("product_id")));
+                        list.add(new DashboardSanPham(jsonObject.getInt("id"),jsonObject.getString("name"),jsonObject.getInt("pirce"),jsonObject.getString("image"),jsonObject.getString("details"),jsonObject.getInt("product_id"),jsonObject.getInt("amount")));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

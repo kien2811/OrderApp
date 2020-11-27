@@ -2,6 +2,7 @@ package com.example.oderapp.Fragment.SanPhamFragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,9 +25,13 @@ import com.example.oderapp.Adapter.Product_SanPham_Dashboard_Adapter;
 import com.example.oderapp.Adapter.Product_oders_Adapter;
 import com.example.oderapp.Model.DashboardSanPham;
 import com.example.oderapp.Model.Product_oders;
+import com.example.oderapp.Model.Product_suggestion;
+import com.example.oderapp.MySingleton.MySingleton;
 import com.example.oderapp.R;
+import com.example.oderapp.util.Api;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,32 +42,94 @@ public class AllSanPhamFragment extends Fragment {
     RecyclerView recyclerViewProductAllSanPham;
     Product_Dashboard_sanPham_Adapter product_sanPham_dashboard_adapter;
     List<DashboardSanPham> list;
-
-
+    LinearLayoutManager linearLayoutManager;
+    //phan trang cho san pham goi y
+    private int totalItemCount;
+    private int firstVisibleItem;
+    private int visibleItemCount;
+    private int page = 1;
+    private int previousTotal;
+    private boolean load = true;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_all_san_pham, container, false);
-        list = new ArrayList<>();
         recyclerViewProductAllSanPham = view.findViewById(R.id.recyclerViewProductAllSanPham);
-        product_sanPham_dashboard_adapter = new Product_Dashboard_sanPham_Adapter(this.getContext(),R.layout.line_sanpham_dashboardsanpham,list);
-        recyclerViewProductAllSanPham.setHasFixedSize(true);
-        recyclerViewProductAllSanPham.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewProductAllSanPham.setAdapter(product_sanPham_dashboard_adapter);
 
-        product_sanPham_dashboard_adapter.notifyDataSetChanged();
-        for (int i = 0 ;i < 10 ; i ++){
-            list.add(new DashboardSanPham(1,"Banh Ngon gì digf hâhha",2500,"https://image.flaticon.com/icons/png/128/2971/2971975.png","Bài văn về thầy giáo cũ gây xúc động\n" +
-                    "\n" +
-                    "Ngày 16/10, Vũ Phương Thảo (lớp 10A1, THPT Định Hóa) được biết đến với bài văn điểm 10 về người thầy có những cảm xúc trong sáng, chân thành.\n" +
-                    "\n" +
-                    "Trong bài văn, Thảo viết: “Máy quay dường như đang chậm lại, từng cảnh từng nét hiện lên rõ ràng. Tôi thấy thầy đang lụi hụi trồng rau, chăm sóc con chó lông trắng đen già khụ, thấy cả chúng tôi ngày đó, trong những ngày vất vả nhưng yên bình. Tôi nghĩ, có lẽ đó là những ngày hạnh phúc và vui vẻ nhất tôi từng có. Sau này, khi bước đi trên đường đời chông gai, có thể sẽ chẳng còn ai chỉ bảo, dạy dỗ tôi tận tình như thầy đã từng, có thể sẽ chẳng có ai lo tôi liệu có ngủ đủ giấc, liệu có stress khi nhồi nhét quá nhiều. Nhưng, cố nhân từng nói, cuộc đời chỉ cần một người khiến ta ngưỡng mộ, để cả đời noi gương, cả đời thương mến. Vậy là quá đủ rồi”.",1));
-        }
+        list = new ArrayList<>();
 
-
-
+        data_all();
 
         return view;
+    }
+
+    private void data_all() {
+        product_sanPham_dashboard_adapter = new Product_Dashboard_sanPham_Adapter(this.getContext(),R.layout.line_sanpham_dashboardsanpham,list);
+        recyclerViewProductAllSanPham.setHasFixedSize(true);
+        linearLayoutManager =new LinearLayoutManager(getContext());
+        recyclerViewProductAllSanPham.setLayoutManager(linearLayoutManager);
+        recyclerViewProductAllSanPham.setAdapter(product_sanPham_dashboard_adapter);
+        String url = "http://192.168.1.45:8089/OderApp_OOP/public/?controller=index&action=all_product&page=";
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url+page, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject;
+                try {
+//                    product_suggestions_list.clear();
+                    for (int i = 0 ; i < response.length();i ++){
+                        jsonObject = response.getJSONObject(i);
+//                        Log.d("response",jsonObject.getString("name"));
+
+                        list.add(new DashboardSanPham(jsonObject.getInt("id"),jsonObject.getString("name"),jsonObject.getInt("pirce"),jsonObject.getString("image"),jsonObject.getString("details"),jsonObject.getInt("product_id"),jsonObject.getInt("amount")));
+                    }
+                    product_sanPham_dashboard_adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error",error.toString());
+
+            }
+        });
+        pagination();
+
+        MySingleton.getInstance(getContext().getApplicationContext()).addToRequestQueue(arrayRequest);
+
+
+    }
+
+    private void pagination() {
+        recyclerViewProductAllSanPham.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalItemCount = linearLayoutManager.getChildCount();
+                visibleItemCount = linearLayoutManager.getItemCount();
+                firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+
+                if(load){
+                    if (totalItemCount  >  previousTotal) {
+                        previousTotal = totalItemCount;
+                        page++;
+                        load = false;
+                    }
+                }
+                if( !load && (firstVisibleItem + visibleItemCount) >= totalItemCount){
+
+                    load = true;
+                    data_all();
+                    Log.d("onScrolled", String.valueOf(page));
+                }
+            }
+        });
     }
 }
