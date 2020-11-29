@@ -19,10 +19,6 @@ public class Cart_Model {
         this.categoryid = categoryid;
     }
 
-    public Cart_Model() {
-
-    }
-
     public int getId() {
         return id;
     }

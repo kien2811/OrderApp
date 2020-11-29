@@ -10,6 +10,19 @@ public class DashboardSanPham implements Serializable {
     private String description;
     private int categoryid;
 
+    public DashboardSanPham(int id, String name, int price, String avatar, String description, int categoryid) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.avatar = avatar;
+        this.description = description;
+        this.categoryid = categoryid;
+    }
+
+    public DashboardSanPham() {
+
+    }
+
     public int getId() {
         return id;
     }

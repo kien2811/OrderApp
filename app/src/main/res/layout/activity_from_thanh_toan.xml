@@ -59,7 +59,7 @@
             android:textStyle="italic"
             android:textSize="12dp"
             android:visibility="gone"
-            android:text="* Nhập email"
+            android:text="* Nhập địa chỉ"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></TextView>
 
@@ -70,7 +70,7 @@
             android:textSize="15dp"
             android:padding="10dp"
             android:background="#FAFAFA"
-            android:hint="Email"
+            android:hint="Địa chỉ"
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></EditText>
@@ -114,7 +114,7 @@
 
         <Button
             android:id="@+id/btnOK"
-            android:backgroundTint="#91D4F3"
+            android:backgroundTint="#C8ED1D1D"
             android:layout_weight="1"
             android:text="Xác nhận"
             android:layout_width="0dp"
@@ -122,10 +122,10 @@
 
         <Button
             android:id="@+id/btnCannel"
-            android:backgroundTint="#91D4F3"
+            android:backgroundTint="#22B9FF"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
-            android:text="Trở về"
+            android:text="Hủy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"></Button>
 

@@ -28,25 +28,10 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewCart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ListView
-                    android:id="@+id/lvCart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"></ListView>
-            </LinearLayout>
-            <TextView
-                android:text="Có thể bạn sẽ quan tâm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
+                android:layout_height="match_parent"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

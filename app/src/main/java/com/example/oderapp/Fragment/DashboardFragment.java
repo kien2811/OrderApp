@@ -1,5 +1,6 @@
 package com.example.oderapp.Fragment;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.oderapp.Activity.MyDatabase;
 import com.example.oderapp.Adapter.ViewMenuSanPhamAdapter;
+import com.example.oderapp.Model.DashboardSanPham;
 import com.example.oderapp.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -18,7 +21,6 @@ import com.google.android.material.tabs.TabLayout;
 public class DashboardFragment extends Fragment {
     private TabLayout SanPhamtableLayout;
     private ViewPager view_page_dashboard;
-
 
     public DashboardFragment() {
     }
@@ -36,6 +38,10 @@ public class DashboardFragment extends Fragment {
         view_page_dashboard.setAdapter(viewMenuSanPhamAdapter);
         SanPhamtableLayout.setupWithViewPager(view_page_dashboard);
         viewMenuSanPhamAdapter.notifyDataSetChanged();
+
+
+
+
         return view;
     }
 

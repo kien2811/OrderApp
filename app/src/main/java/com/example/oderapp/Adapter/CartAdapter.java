@@ -1,26 +1,30 @@
 package com.example.oderapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderapp.Activity.CartActivity;
+import com.example.oderapp.Activity.DetailCartActivity;
 import com.example.oderapp.Model.Cart_Model;
+import com.example.oderapp.Model.DashboardSanPham;
 import com.example.oderapp.R;
+import com.example.oderapp.inteface.ItemClickListener;
 import com.squareup.picasso.Picasso;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
-public class CartAdapter extends  BaseAdapter {
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     CartActivity context;
     int layout;
     List<Cart_Model> list;
@@ -31,59 +35,89 @@ public class CartAdapter extends  BaseAdapter {
         this.list = list;
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        return list.size();
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(layout,null);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(layout, null);
-
-        ImageView imgProduct = convertView.findViewById(R.id.imgCart);
-        TextView txtvName = convertView.findViewById(R.id.txtvName);
-        TextView txtvPrice = convertView.findViewById(R.id.txtvPrice);
-        TextView txtvQuantity = convertView.findViewById(R.id.txtvQuantity);
-
-        Button btnMinus = convertView.findViewById(R.id.btnMinus);
-        Button btnPlus = convertView.findViewById(R.id.btnPlus);
-
-        Cart_Model cart = list.get(position);
-
-        Picasso.get().load(cart.getAvatar()).into(imgProduct);
-        txtvName.setText(cart.getName());
-
-        DecimalFormat formatter = new DecimalFormat("###,###,##0");
-        String price = formatter.format(Double.parseDouble(cart.getPrice()+""))+" VNĐ";
-        txtvPrice.setText("Giá "+price);
-
-        txtvQuantity.setText(cart.getQuantity()+"");
-
-        btnMinus.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Cart_Model cart_model = list.get(position);
+        Picasso.get().load(cart_model.getAvatar())
+                .placeholder(R.drawable.loader)
+                .error(R.drawable.noimage)
+                .into(holder.imgCartCart);
+        holder.txtvCartName.setText(cart_model.getName());
+        holder.txtvCartPrice.setText(cart_model.getPrice()+"đ");
+        holder.txtvCartQuantity.setText(cart_model.getQuantity()+"");
+        holder.btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 context.UpdateQuantityCart(list.get(position), "minus");
             }
         });
 
-        btnPlus.setOnClickListener(new View.OnClickListener() {
+        holder.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 context.UpdateQuantityCart(list.get(position), "plus");
             }
         });
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position, boolean islongClick) {
+                if (!islongClick){
+                    Toast.makeText(context, ""+cart_model.getId(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-        return convertView;
+    }
+
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+        ImageView imgCartCart;
+        TextView txtvCartName,txtvCartPrice,txtvCartQuantity;
+        Button btnMinus,btnPlus;
+
+        private ItemClickListener itemClickListener;
+        public void setItemClickListener(ItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
+        }
+        public ViewHolder(@NonNull View itemView, ItemClickListener itemClickListener) {
+            super(itemView);
+            this.itemClickListener = itemClickListener;
+        }
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            imgCartCart = itemView.findViewById(R.id.imgCartCart);
+            txtvCartName = itemView.findViewById(R.id.txtvCartName);
+            txtvCartPrice = itemView.findViewById(R.id.txtvCartPrice);
+            txtvCartQuantity = itemView.findViewById(R.id.txtvCartQuantity);
+            btnMinus = itemView.findViewById(R.id.btnMinusCart);
+            btnPlus = itemView.findViewById(R.id.btnPlusCart);
+
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onClick(v,getAdapterPosition(),false);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            itemClickListener.onClick(v,getAdapterPosition(),true);
+            return false;
+        }
     }
 }

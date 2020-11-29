@@ -25,6 +25,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         SQLiteDatabase database = getReadableDatabase();
         Cursor cursor = database.rawQuery(selectSQL, selectionArgs);
         return cursor;
+
     }
 
     public long insertData(String table, String nullColumHack, ContentValues values){
