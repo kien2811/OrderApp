@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Vui Lòng Nhập Tài Khoản Mật Khẩu", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        String url = "http://192.168.1.6:8089/OderApp_OOP/public/?username=" + username + "&password=" + password + "";
+                        String url = "http://192.168.1.6:8089/oder_cart_php/public/?username=" + username + "&password=" + password + "";
                         RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
                         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                             @Override

@@ -70,6 +70,7 @@ public class DetailCartActivity extends AppCompatActivity {
         String getDescription = (String) intent.getSerializableExtra("getDescription");
         int categoryid = (int) intent.getSerializableExtra("categoryid");
 
+
 //        Picasso.get().load(getAvatar).into(imgAvatarCart);
         txtvNameCart.setText(getName);
 

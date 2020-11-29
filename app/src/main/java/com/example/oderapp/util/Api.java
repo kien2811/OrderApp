@@ -8,7 +8,10 @@ public class Api {
     public static final  String URl_PRODUCT_NEW = "https://"+HOST+"/?controller=index&action=product_new&page=";
     public static final  String URl_PRODUCT_SUGGESTION = "https://"+HOST+"/?controller=index&action=product_suggestion&page=";
     public static final  String URl_SEARCH = "https://"+HOST+"/?controller=index&action=search_product&search=";
-    public static final  String URl_REGISTER = "http://192.168.1.6:8089/OderApp_OOP/public/?controller=index&action=register";
+    public static final  String URL_IMG_PROFILE = "http://192.168.1.6:8089/oder_cart_php/";
+    public static final  String URl_REGISTER = "http://192.168.1.6:8089/oder_cart_php/public/?controller=index&action=register";
+    public static final  String URl_CHANGE_PROFILE = "http://192.168.1.6:8089/oder_cart_php/public/?controller=index&action=change_profile";
+    public static final  String URl_UPLOAD_IMAGE = "http://192.168.1.6:8089/oder_cart_php/public/?controller=index&action=user_profile&token=";
 //    public static final  String URl_LOGIN = "https://"+HOST+"/?username="+username+"&password="+password+"";
 //    public static final  String username = "https://"+HOST+"/?username="+username+"&password="+password+"";
 
