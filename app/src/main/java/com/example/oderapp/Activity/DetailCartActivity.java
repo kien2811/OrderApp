@@ -185,7 +185,7 @@ public class DetailCartActivity extends AppCompatActivity {
         sessionManagement = new SessionManagement(this);
         String token = sessionManagement.getToken();
         int id_user = sessionManagement.getIduser();
-        String url = "http://192.168.1.11:8888/OderApp_OOP/public/?controller=index&action=select_id_product_order_user&id_user="+id_user+"&id_product="+id_Product+"&token="+token+" ";
+        String url = "http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=select_id_product_order_user&id_user="+id_user+"&id_product="+id_Product+"&token="+token+" ";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -218,12 +218,13 @@ public class DetailCartActivity extends AppCompatActivity {
         String token = sessionManagement.getToken();
         int id_user = sessionManagement.getIduser();
         update_quantily += Integer.parseInt(txtvQuantity.getText().toString());
-        String url = "http://192.168.1.11:8888/OderApp_OOP/public/?controller=index&action=update_id_product_order_user&id_user="+id_user+"&id_product="+id_Product+"&quantily="+update_quantily+"&token="+token+" ";
+        String url = "http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=update_id_product_order_user&id_user="+id_user+"&id_product="+id_Product+"&quantily="+update_quantily+"&token="+token+" ";
         RequestQueue requestQueue = Volley.newRequestQueue(DetailCartActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+
                     String user_oder = response.getString("user_oder");
                     Toast.makeText(DetailCartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
 
@@ -244,7 +245,7 @@ public class DetailCartActivity extends AppCompatActivity {
         String token = sessionManagement.getToken();
         int id_user = sessionManagement.getIduser();
         int quantily = Integer.parseInt(txtvQuantity.getText().toString());
-        String url = "http://192.168.1.11:8888/OderApp_OOP/public/?controller=index&action=search_id_product_order_user&id_user="+id_user+"&id_product="+id_Product+"&quantily="+quantily+"&token="+token+" ";
+        String url = "http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=search_id_product_order_user&id_user="+id_user+"&id_product="+id_Product+"&quantily="+quantily+"&token="+token+" ";
         RequestQueue requestQueue = Volley.newRequestQueue(DetailCartActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override

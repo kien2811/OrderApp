@@ -108,7 +108,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         String token = sessionManagement.getToken();
         int id_user = sessionManagement.getIduser();
 //        Log.d("aac", cart_model.toString());
-        String url = "http://192.168.1.11:8888/OderApp_OOP/public/?controller=index&action=select_id_product_order_user&id_user="+id_user+"&id_product="+cart_model.getId()+"&token="+token+" ";
+        String url = "http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=select_id_product_order_user&id_user="+id_user+"&id_product="+cart_model.getId()+"&token="+token+" ";
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -159,7 +159,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateQuantily(int id, int id_user, int quantity,String token){
-        String url = "http://192.168.1.11:8888/OderApp_OOP/public/?controller=index&action=update_id_product_order_user&id_user="+id_user+"&id_product="+id+"&quantily="+quantity+"&token="+token+" ";
+        String url = "http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=update_id_product_order_user&id_user="+id_user+"&id_product="+id+"&quantily="+quantity+"&token="+token+" ";
         RequestQueue requestQueue = Volley.newRequestQueue(CartActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -197,7 +197,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(DialogInterface dialog, int which) {
                 String token = sessionManagement.getToken();
                 int id_user = sessionManagement.getIduser();
-                String url = "http://192.168.1.11:8888/OderApp_OOP/public/?controller=index&action=delete_id_product_order_user&id_user="+id_user+"&id_product="+id+"&token="+token+"";
+                String url = "http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=delete_id_product_order_user&id_user="+id_user+"&id_product="+id+"&token="+token+"";
                 RequestQueue requestQueue = Volley.newRequestQueue(CartActivity.this);
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
