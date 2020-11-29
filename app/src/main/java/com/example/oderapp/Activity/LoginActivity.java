@@ -1,6 +1,7 @@
 package com.example.oderapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -35,6 +37,8 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     Button btn_login;
+    TextView dangki;
+    CardView cardView;
     EditText edutUsername, editPassword;
     SharedPreferences sharedPreferences;
     SessionManagement sessionManagement;
@@ -46,6 +50,17 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mapping();
         checklogin();
+        evenclick();
+    }
+
+    private void evenclick() {
+        dangki.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this,RegistarActivity.class));
+                finish();
+            }
+        });
     }
 
     private void checklogin() {
@@ -81,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
                                         finish();
                                         Log.d("onResponse: ",token);
-//                                        Toast.makeText(LoginActivity.this, "Thanh Cong", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, "Đăng Nhập Thành Công", Toast.LENGTH_SHORT).show();
                                     }
 
                                 } catch (JSONException e) {
@@ -165,6 +180,8 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login);
         edutUsername = findViewById(R.id.edutUsername);
         editPassword = findViewById(R.id.editPassword);
+        dangki = findViewById(R.id.textView2);
+        cardView = findViewById(R.id.cardView);
 
     }
 

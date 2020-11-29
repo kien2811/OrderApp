@@ -55,27 +55,27 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHoldel
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean islongClick) {
-                if (islongClick){
+                if (!islongClick){
                     Intent intent = new Intent(context, DetailCartActivity.class);
+                    intent.putExtra("id",search.getId());
+                    intent.putExtra("getName",search.getName());
+                    intent.putExtra("getPrice",search.getPrice());
+                    intent.putExtra("getAvatar",search.getAvatar());
+                    intent.putExtra("getDescription",search.getDescription());
+                    context.startActivity(intent);
+//                    Toast.makeText(context, "long click"+search, Toast.LENGTH_SHORT).show();
+                }
+//                else {
+//                    Intent intent = new Intent(context, DetailCartActivity.class);
 //                    intent.putExtra("id",search.getId());
 //                    intent.putExtra("getName",search.getName());
 //                    intent.putExtra("getPrice",search.getPrice());
 //                    intent.putExtra("getAvatar",search.getImage());
 //                    intent.putExtra("getDescription",search.getDetail());
-                    context.startActivity(intent);
-                    Toast.makeText(context, "long click"+search, Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Intent intent = new Intent(context, DetailCartActivity.class);
-//                    intent.putExtra("id",search.getId());
-//                    intent.putExtra("getName",search.getName());
-//                    intent.putExtra("getPrice",search.getPrice());
-//                    intent.putExtra("getAvatar",search.getImage());
-//                    intent.putExtra("getDescription",search.getDetail());
-                    intent.putExtra("product", search);
-                    context.startActivity(intent);
-                    Toast.makeText(context, "long click"+search, Toast.LENGTH_SHORT).show();
-                }
+//                    intent.putExtra("product", search);
+//                    context.startActivity(intent);
+//                    Toast.makeText(context, "long click"+search, Toast.LENGTH_SHORT).show();
+//                }
             }
         });
     }

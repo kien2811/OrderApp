@@ -71,15 +71,24 @@ public class DashboardSanPham implements Serializable {
         this.categoryid = categoryid;
     }
 
-    @Override
-    public String toString() {
-        return "DashboardSanPham{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", avatar='" + avatar + '\'' +
-                ", description='" + description + '\'' +
-                ", categoryid=" + categoryid +
-                '}';
+    public int getAmount() {
+        return amount;
     }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public DashboardSanPham(int id, String name, int price, String avatar, String description, int categoryid, int amount) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.avatar = avatar;
+        this.description = description;
+        this.categoryid = categoryid;
+        this.amount = amount;
+    }
+
+    private int amount;
+
 }

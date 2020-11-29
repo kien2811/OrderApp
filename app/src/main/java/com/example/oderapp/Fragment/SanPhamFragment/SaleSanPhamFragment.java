@@ -40,7 +40,7 @@ public class SaleSanPhamFragment extends Fragment {
 
         product_sanPham_dashboard_adapter.notifyDataSetChanged();
         for (int i = 0 ;i < 10 ; i ++){
-            list.add(new DashboardSanPham(1,"Banh Ngon gì digf hâhha",2500,"https://image.flaticon.com/icons/png/128/2971/2971975.png","haha",1));
+            list.add(new DashboardSanPham(1,"Banh Ngon gì digf hâhha",2500,"https://image.flaticon.com/icons/png/128/2971/2971975.png","haha",1,1));
         }
 
         return view;
