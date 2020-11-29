@@ -14,13 +14,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-<<<<<<< HEAD
-=======
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Base64;
->>>>>>> 430a89a7376550fa73c3db62fed1098bd82c8c9a
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -95,7 +92,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public static String email;
     public static String phones;
     public static String img;
-    private static final String url_up_avtar="http://192.168.1.6:8089/oder_cart_php/public/?controller=index&action=change_profile";
+    private static final String url_up_avtar="http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=change_profile";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

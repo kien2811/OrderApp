@@ -42,7 +42,6 @@ public class DaxemSanphamFragment extends Fragment {
     static final String DESCRIPTION_FIELD = "description";
     static final String CATEGORYID_FIELD = "categoryid";
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
