@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradientbackground"
+    android:background="@drawable/background_tow_color"
     tools:context=".Activity.RegistarActivity">
     <ImageView
         android:layout_gravity="center"
@@ -32,7 +32,7 @@
                android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
                android:id="@+id/txtfull_name"
                android:layout_width="280dp"
-               android:layout_height="55dp"
+               android:layout_height="60dp"
                android:layout_gravity="center"
                android:layout_centerHorizontal="true"
                android:hint="Họ và Tên"
@@ -48,7 +48,7 @@
                 android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
                 android:id="@+id/txtemail"
                 android:layout_width="280dp"
-                android:layout_height="55dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
@@ -65,7 +65,7 @@
                 android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
                 android:id="@+id/txtphone"
                 android:layout_width="280dp"
-                android:layout_height="55dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
@@ -78,7 +78,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="280dp"
             android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
-            android:layout_height="55dp"
+            android:layout_height="60dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:gravity="center"
@@ -86,7 +86,8 @@
             android:hint="Mật Khẩu"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            >
             <EditText
                 android:id="@+id/txtpassword"
                 android:background="#00FFFFFF"
@@ -94,21 +95,22 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:textSize="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
         <androidx.cardview.widget.CardView
             android:layout_width="300dp"
-            app:cardBackgroundColor="#9BA6EA"
+            android:background="@drawable/background_tow_color"
             app:cardCornerRadius="25dp"
-            android:layout_height="55dp"
+            android:layout_height="60dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:layout_centerHorizontal="true">
             <Button
+                android:background="@drawable/background_tow_color"
+
                 android:id="@+id/btn_resigtar"
-                android:background="#9BA6EA"
                 android:text="Đăng Kí"
                 android:layout_centerInParent="true"
                 android:textColor="#fff"
@@ -121,5 +123,29 @@
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Nếu Bạn Có Tài Khoản Vui Lòng Đăng Nhập Ngay :"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:id="@+id/login"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:textColor="#4A60F1"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Đăng Nhập"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+        </TextView>
+    </LinearLayout>
 </LinearLayout>
