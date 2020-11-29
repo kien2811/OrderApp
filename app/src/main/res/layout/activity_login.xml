@@ -22,7 +22,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edutUsernames"
         android:layout_width="280dp"
-        android:layout_height="55dp"
+        android:layout_height="60dp"
         android:layout_above="@+id/editPasswords"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="-15dp"
@@ -46,7 +46,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_marginBottom="80dp"
         android:layout_width="280dp"
-        android:layout_height="55dp"
+        android:layout_height="60dp"
         android:layout_alignBottom="@+id/cardView"
         android:layout_alignLeft="@+id/edutUsernames"
         android:layout_alignStart="@+id/edutUsernames"
@@ -95,6 +95,8 @@
         android:layout_height="wrap_content"
         android:text="Đăng Kí Ngay."
         android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="#3C4EF4"
         android:layout_above="@+id/linearLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp" />

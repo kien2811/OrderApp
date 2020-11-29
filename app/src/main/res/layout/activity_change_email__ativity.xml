@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.Change_email_Ativity">
+    <androidx.appcompat.widget.Toolbar
+
+        android:id="@+id/toolbarCarts"
+        android:layout_width="match_parent"
+        android:background="#00FFFFFF"
+        android:layout_height="?actionBarSize">
+    </androidx.appcompat.widget.Toolbar>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+
+            android:background="#3CDCF1"
+            android:gravity="center"
+            android:id="@+id/txt_change_eamil"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+        </EditText>
+        <Button
+            android:id="@+id/btn_change"
+            android:layout_marginTop="10dp"
+            android:text="Đổi Email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+        </Button>
+    </LinearLayout>
+</LinearLayout>
