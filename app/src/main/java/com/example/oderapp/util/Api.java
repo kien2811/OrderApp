@@ -20,4 +20,11 @@ public class Api {
 //    https://tailoha.xyz/?controller=index&action=product_new
 //    https://tailoha.xyz/?/OderApp_OOP/public/?username=admin&password=admin
 //    https://tailoha.xyz/?controller=index&action=decode_token&token=
+
+
+    public static final  String HOST_COMPUTER = "192.168.1.11";
+    public static final  String URL_CHECK_ID_PRODUCT_CART = "http://"+HOST_COMPUTER+":8888/OderApp_OOP/public/?controller=index&action=search_id_product_order_user&id_user=";
+    public static final String URI_TOKEN_CART = "http://"+HOST_COMPUTER+":8888/OderApp_OOP/public/?controller=index&action=decode_token&token=";
+    public static final String URL_CHECK_LOGIN = "http://"+HOST_COMPUTER+":8888/OderApp_OOP/?username=";
+    public static final String ADD_CART = "http://"+HOST_COMPUTER+":8888/OderApp_OOP/public/?controller=index&action=search_id_product_order_user&id_user=1&id_product=24&quantily=2&token=";
 }

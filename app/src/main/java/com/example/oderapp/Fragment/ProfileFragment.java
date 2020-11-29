@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class ProfileFragment extends Fragment {
         //get user name to session
         String username = sessionManagement.getToken();
         TxtMessage.setText(username);
-
+        Log.d("token",username);
 //        sharedPreferences = getContext().getSharedPreferences(fileName, Context.MODE_PRIVATE);
 //        if(sharedPreferences.contains(Username)){
 //            TxtMessage.setText("Hell"+sharedPreferences.getString(Username,""));

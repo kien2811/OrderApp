@@ -19,6 +19,10 @@ public class DashboardSanPham implements Serializable {
         this.categoryid = categoryid;
     }
 
+    public DashboardSanPham() {
+
+    }
+
     public int getId() {
         return id;
     }

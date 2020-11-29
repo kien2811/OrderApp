@@ -25,8 +25,8 @@ public class SessionManagement {
         editor.putInt("KEY_ID",idUser);
         editor.commit();
     }
-    public int getIduser(int idUser){
-        return sharedPreferences.getInt("KEY_LOGIN",idUser);
+    public int getIduser(){
+        return sharedPreferences.getInt("KEY_ID",0);
     }
     // create get login method
     public  boolean getLogin(){
