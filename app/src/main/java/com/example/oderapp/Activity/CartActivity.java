@@ -29,6 +29,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -52,7 +53,9 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CartActivity extends AppCompatActivity implements View.OnClickListener{
     Toolbar toolbar;
@@ -77,39 +80,32 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         initButton();
         initNotification();
 
-
-        RecyclerView.ItemDecoration  itemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
-        recyclerViewCart.addItemDecoration(itemDecoration);
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-                deleteCart(1);
-                Toast.makeText(CartActivity.this, ""+1, Toast.LENGTH_SHORT).show();
-                adapter.notifyDataSetChanged();
-            }
-        });
-        itemTouchHelper.attachToRecyclerView(recyclerViewCart);
-        adapter.notifyDataSetChanged();
+//
+//        RecyclerView.ItemDecoration  itemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+//        recyclerViewCart.addItemDecoration(itemDecoration);
+//
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//            @Override
+//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//
+//                deleteCart(1);
+//                Toast.makeText(CartActivity.this, ""+1, Toast.LENGTH_SHORT).show();
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
+//        itemTouchHelper.attachToRecyclerView(recyclerViewCart);
+//        adapter.notifyDataSetChanged();
 
 
     }
 
     public void UpdateQuantityCart(Cart_Model cart_model, String action) {
-
-
-        sessionManagement = new SessionManagement(this);
-        String token = sessionManagement.getToken();
-        int id_user = sessionManagement.getIduser();
-//        Log.d("aac", cart_model.toString());
-        String url = "http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=select_id_product_order_user&id_user="+id_user+"&id_product="+cart_model.getId()+"&token="+token+" ";
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,Api.URL_CHECK_ID_PRODUCT_ODER_USER+sessionManagement.getIduser()+"&id_product="+cart_model.getId(), null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
@@ -128,7 +124,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                                 } else if (quantity > 0) {
                                     total -= cart_model.getPrice();
                                     cart_model.setQuantity(quantity);
-                                    updateQuantily(cart_model.getId(),id_user,quantity,token);
+                                    updateQuantily(cart_model.getId(),sessionManagement.getIduser(),quantity);
                                 }
                                 adapter.notifyDataSetChanged();
                         }
@@ -137,7 +133,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                                 Log.d("aac", quantity+"");
                                 total += cart_model.getPrice();
                                 cart_model.setQuantity(quantity);
-                                updateQuantily(cart_model.getId(),id_user,quantity,token);
+                                updateQuantily(cart_model.getId(),sessionManagement.getIduser(),quantity);
                         }
                         getDataCart();
                         adapter.notifyDataSetChanged();
@@ -158,18 +154,17 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         requestQueue.add(jsonArrayRequest);
     }
 
-    private void updateQuantily(int id, int id_user, int quantity,String token){
-        String url = "http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=update_id_product_order_user&id_user="+id_user+"&id_product="+id+"&quantily="+quantity+"&token="+token+" ";
-        RequestQueue requestQueue = Volley.newRequestQueue(CartActivity.this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+    private void updateQuantily(int id, int id_user, int quantity){
+        StringRequest request = new StringRequest(Request.Method.POST, Api.URL_UPDATE_QUANTILY_ORDER_USER, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
                 try {
-                    String user_oder = response.getString("user_oder");
+                    JSONObject jsonObject = new JSONObject(response);
+                    String user_oder = jsonObject.getString("user_oder");
 //                    Toast.makeText(CartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
-                    Toast.makeText(CartActivity.this, "lỗi chưa thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CartActivity.this, "lỗi chưa cập nhật cộng thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
@@ -178,8 +173,16 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
-        requestQueue.add(jsonObjectRequest);
+        }){@Override
+        public Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> map = new HashMap<>();
+            map.put("id_user", sessionManagement.getIduser()+"");
+            map.put("id_product", id+"");
+            map.put("quantily", quantity+"");
+            return map;
+        }};
+        RequestQueue requestQueue = Volley.newRequestQueue(CartActivity.this);
+        requestQueue.add(request);
     }
 
 
@@ -195,20 +198,17 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         builder.setNegativeButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String token = sessionManagement.getToken();
-                int id_user = sessionManagement.getIduser();
-                String url = "http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=delete_id_product_order_user&id_user="+id_user+"&id_product="+id+"&token="+token+"";
                 RequestQueue requestQueue = Volley.newRequestQueue(CartActivity.this);
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                StringRequest request = new StringRequest(Request.Method.POST, Api.URL_DELETE_ID_PRODUCT_ODER_USER, new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(String response) {
                         try {
-                            String user_oder = response.getString("user_oder");
+                            JSONObject jsonObject = new JSONObject(response);
+                            String user_oder = jsonObject.getString("user_oder");
                             Toast.makeText(CartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
-                            getDataCart();
 
                         } catch (JSONException e) {
-                            Toast.makeText(CartActivity.this, "lỗi chưa thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CartActivity.this, "lỗi chưa cập nhật cộng thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     }
@@ -217,8 +217,14 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                     public void onErrorResponse(VolleyError error) {
 
                     }
-                });
-                requestQueue.add(jsonObjectRequest);
+                }){@Override
+                public Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("id_user", sessionManagement.getIduser()+"");
+                    map.put("id_product", id+"");
+                    return map;
+                }};
+                requestQueue.add(request);
 
             }
         });

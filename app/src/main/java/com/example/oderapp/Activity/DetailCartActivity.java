@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oderapp.Model.Cart_Model;
 import com.example.oderapp.Model.DashboardSanPham;
@@ -182,24 +183,21 @@ public class DetailCartActivity extends AppCompatActivity {
     }
 
     private void addCartDatabase() {
-        sessionManagement = new SessionManagement(this);
-        String token = sessionManagement.getToken();
-        int id_user = sessionManagement.getIduser();
-        String url = "http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=select_id_product_order_user&id_user="+id_user+"&id_product="+id_Product+"&token="+token+" ";
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        sessionManagement = new SessionManagement(getApplicationContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,Api.URL_CHECK_ID_PRODUCT_ODER_USER+sessionManagement.getIduser()+"&id_product="+id_Product, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
-                for (int i = 0 ; i < response.length();i ++) {
+                for (int i = 0; i < response.length(); i++) {
                     try {
                         jsonObject = response.getJSONObject(i);
-                        Log.d("aac", jsonObject.toString());
-                        int product_id = jsonObject.getInt("id_product");
+//                        Log.d("aac", jsonObject.toString());
                         int quantily_db = jsonObject.getInt("amount_user_oder");
-                        updateCart(product_id,quantily_db);
+                        int id_product = jsonObject.getInt("id_product");
+                        updateCart(id_product,quantily_db);
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(DetailCartActivity.this, "Giỏ hàng trống !", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailCartActivity.this, "thêm vào giỏ hàng lỗi !", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -207,25 +205,24 @@ public class DetailCartActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 //                Toast.makeText(DetailCartActivity.this, "error"+error, Toast.LENGTH_SHORT).show();
-//                Log.d("error",error.toString());
+                Log.d("error",error.toString());
                 insertCart(id_Product);
-            }
-        });
+                }
+            });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
     private  void updateCart(int id_Product ,int update_quantily){
-        String token = sessionManagement.getToken();
-        int id_user = sessionManagement.getIduser();
+        sessionManagement = new SessionManagement(getApplicationContext());
         update_quantily += Integer.parseInt(txtvQuantity.getText().toString());
-        String url = "http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=update_id_product_order_user&id_user="+id_user+"&id_product="+id_Product+"&quantily="+update_quantily+"&token="+token+" ";
         RequestQueue requestQueue = Volley.newRequestQueue(DetailCartActivity.this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        int finalUpdate_quantily = update_quantily;
+        StringRequest request = new StringRequest(Request.Method.POST, Api.URL_UPDATE_ID_PRODUCT_ORDER_USER, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
                 try {
-
-                    String user_oder = response.getString("user_oder");
+                    JSONObject jsonObject = new JSONObject(response);
+                    String user_oder = jsonObject.getString("user_oder");
                     Toast.makeText(DetailCartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
@@ -233,27 +230,32 @@ public class DetailCartActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }, new Response.ErrorListener() {
+        },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
-        requestQueue.add(jsonObjectRequest);
+        }){@Override
+        public Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> map = new HashMap<>();
+            map.put("id_user", sessionManagement.getIduser()+"");
+            map.put("id_product", id_Product+"");
+            map.put("quantily", finalUpdate_quantily+"");
+            return map;
+        }};
+        RequestQueue requestQueue1 = Volley.newRequestQueue(getApplicationContext());
+        requestQueue1.add(request);
     }
     private void  insertCart(int id_Product){
-        String token = sessionManagement.getToken();
-        int id_user = sessionManagement.getIduser();
+        sessionManagement = new SessionManagement(getApplicationContext());
         int quantily = Integer.parseInt(txtvQuantity.getText().toString());
-        String url = "http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=search_id_product_order_user&id_user="+id_user+"&id_product="+id_Product+"&quantily="+quantily+"&token="+token+" ";
-        RequestQueue requestQueue = Volley.newRequestQueue(DetailCartActivity.this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        StringRequest request = new StringRequest(Request.Method.POST, Api.URL_INSERT_TO_CART_ORDER_USER, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(String response) {
                 try {
-                    String user_oder = response.getString("user_oder");
-                   Toast.makeText(DetailCartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
-
+                    JSONObject jsonObject = new JSONObject(response);
+                    String user_oder = jsonObject.getString("user_oder");
+                    Toast.makeText(DetailCartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     Toast.makeText(DetailCartActivity.this, "lỗi chưa thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -262,10 +264,19 @@ public class DetailCartActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(DetailCartActivity.this, "Lỗi thêm giỏ hàng insertCart"+error, Toast.LENGTH_SHORT).show();
+                Log.d("eross",error.toString());
             }
-        });
-        requestQueue.add(jsonObjectRequest);
+        }){@Override
+        public Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> map = new HashMap<>();
+            map.put("id_user", sessionManagement.getIduser()+"");
+            map.put("id_product", id_Product+"");
+            map.put("quantily", quantily+"");
+            return map;
+        }};
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(request);
     }
     private void initActionBar() {
         setSupportActionBar(toolbarCart);
