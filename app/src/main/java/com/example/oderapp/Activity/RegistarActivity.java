@@ -79,8 +79,6 @@ public class RegistarActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-
                         }
                     }, new Response.ErrorListener() {
                         @Override
