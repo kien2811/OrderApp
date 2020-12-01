@@ -31,9 +31,11 @@ public class Api {
 //    https://tailoha.xyz/?/OderApp_OOP/public/?username=admin&password=admin
 //    https://tailoha.xyz/?controller=index&action=decode_token&token=
 
-
-    public static final  String HOST_COMPUTER = "192.168.1.6:8089";
-    public static final  String URL_CHECK_ID_PRODUCT_CART = "http://"+HOST_COMPUTER+"/oder_cart_php/public/?controller=index&action=search_id_product_order_user&id_user=";
-    public static final String URI_TOKEN_CART = "http://"+HOST_COMPUTER+"/oder_cart_php/public/?controller=index&action=decode_token&token=";
-    public static final String ADD_CART = "http://"+HOST_COMPUTER+"/oder_cart_php/public/?controller=index&action=search_id_product_order_user&id_user=1&id_product=24&quantily=2&token=";
+    public static final  String URL_CHECK_ID_PRODUCT_ODER_USER = "http://"+HOST+"/?controller=index&action=select_id_product_order_user&id_user=";
+    public static final String URL_UPDATE_ID_PRODUCT_ORDER_USER = "http://"+HOST+"/?controller=index&action=update_id_product_order_user";
+    public static final String URL_INSERT_TO_CART_ORDER_USER = "http://"+HOST+"/?controller=index&action=search_id_product_order_user";
+    public static final String URL_UPDATE_QUANTILY_ORDER_USER = "http://"+HOST+"/?controller=index&action=update_id_product_order_user";
+    public static final String URL_DELETE_ID_PRODUCT_ODER_USER = "http://"+HOST+"/?controller=index&action=delete_id_product_order_user";
+    public static final String URI_TOKEN_CART = "http://"+HOST+"/?controller=index&action=user_order_cart&token=";
+    public static final String ADD_CART = "http://"+HOST+"/?controller=index&action=search_id_product_order_user&id_user=1&id_product=24&quantily=2&token=";
 }

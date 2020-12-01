@@ -14,7 +14,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -51,6 +50,7 @@ import com.example.oderapp.Activity.Change_email_Ativity;
 import com.example.oderapp.Activity.Change_password_Activity;
 import com.example.oderapp.Activity.Change_phone_Activity;
 import com.example.oderapp.Activity.LoginActivity;
+import com.example.oderapp.Activity.MainActivity;
 import com.example.oderapp.MySingleton.MySingleton;
 import com.example.oderapp.R;
 import com.example.oderapp.SessionManage.SessionManagement;
@@ -77,7 +77,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     SharedPreferences sharedPreferences;
-    TextView txtusername,txt_email,phone;
+    TextView txtusername,txt_email,phone,txtvCartProfile;
     ImageView imgAva;
     SwipeRefreshLayout swipeRefresh;
     SessionManagement sessionManagement;
@@ -109,6 +109,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         upload_to_sever = view.findViewById(R.id.upload_to_sever);
         phone = view.findViewById(R.id.phone);
         imgAva = view.findViewById(R.id.imgAva);
+        txtvCartProfile = view.findViewById(R.id.txtvCartProfile);
         imageButton_open_file = view.findViewById(R.id.imageButtonupfile);
         swipeRefresh = view.findViewById(R.id.swipeRefreshprofile);
         swipeRefresh.setOnRefreshListener(this);
@@ -118,10 +119,34 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 //        TxtMessage.setText(username);
         load_data_profile();
         onlickData();
+        getDataCart();
         return view;
 
-    }
 
+    }
+    private void getDataCart() {
+        sessionManagement = new SessionManagement(getContext());
+        String token = sessionManagement.getToken();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URI_TOKEN_CART+token, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject;
+                for (int i = 0 ; i < response.length();i ++){
+                    txtvCartProfile.setText("Đang Có "+(i+1)+" Đơn Hàng ");
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(getContext(), "error"+error, Toast.LENGTH_SHORT).show();
+                Log.d("error",error.toString());
+                Toast.makeText(getContext(), "Giỏ hàng của bạn trống !", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(jsonArrayRequest);
+
+    }
     private void load_data_profile() {
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_UPLOAD_IMAGE+sessionManagement.getToken(), null, new Response.Listener<JSONArray>() {
             @Override

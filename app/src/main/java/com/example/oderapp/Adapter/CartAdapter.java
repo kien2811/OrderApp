@@ -74,6 +74,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }
             }
         });
+        holder.deleteCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.deleteCart(cart_model.getId());
+            }
+        });
 
     }
 
@@ -85,7 +91,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         ImageView imgCartCart;
         TextView txtvCartName,txtvCartPrice,txtvCartQuantity;
-        Button btnMinus,btnPlus;
+        Button btnMinus,btnPlus,deleteCart;
 
         private ItemClickListener itemClickListener;
         public void setItemClickListener(ItemClickListener itemClickListener) {
@@ -103,6 +109,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             txtvCartQuantity = itemView.findViewById(R.id.txtvCartQuantity);
             btnMinus = itemView.findViewById(R.id.btnMinusCart);
             btnPlus = itemView.findViewById(R.id.btnPlusCart);
+            deleteCart = itemView.findViewById(R.id.deleteCart);
 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
