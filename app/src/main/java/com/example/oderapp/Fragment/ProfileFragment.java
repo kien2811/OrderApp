@@ -93,7 +93,6 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public static String email;
     public static String phones;
     public static String img;
-    private static final String url_up_avtar="http://192.168.1.11:8888/oder_cart_php/public/?controller=index&action=change_profile";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -287,7 +286,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     private void upload_avtar() {
 
-        StringRequest request_avatar = new StringRequest(Request.Method.POST, url_up_avtar, new Response.Listener<String>() {
+        StringRequest request_avatar = new StringRequest(Request.Method.POST, Api.URL_UPLOAD_AVATAR, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getContext(), "Đổi Avatar Thành Công", Toast.LENGTH_SHORT).show();

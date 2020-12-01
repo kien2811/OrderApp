@@ -56,6 +56,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHoldel
             @Override
             public void onClick(View view, int position, boolean islongClick) {
                 if (!islongClick){
+
                     Intent intent = new Intent(context, DetailCartActivity.class);
 
                     intent.putExtra("id",search.getId());
@@ -64,11 +65,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHoldel
                     intent.putExtra("getAvatar",search.getAvatar());
                     intent.putExtra("getDescription",search.getDescription());
                     intent.putExtra("categoryid",search.getCategoryid());
+
                     context.startActivity(intent);
 
 
-                    
-//                    Toast.makeText(context, "long click"+search, Toast.LENGTH_SHORT).show();
+
                 }
 //                else {
 //                    Intent intent = new Intent(context, DetailCartActivity.class);
