@@ -7,7 +7,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,9 +39,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllSanPhamFragment extends Fragment {
+public class AllSanPhamFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     RecyclerView recyclerViewProductAllSanPham;
+    SwipeRefreshLayout SwipeRefreshLayout_all_product;
     Product_Dashboard_sanPham_Adapter product_sanPham_dashboard_adapter;
     List<DashboardSanPham> list;
     LinearLayoutManager linearLayoutManager;
@@ -56,7 +59,9 @@ public class AllSanPhamFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_all_san_pham, container, false);
         recyclerViewProductAllSanPham = view.findViewById(R.id.recyclerViewProductAllSanPham);
-
+        SwipeRefreshLayout_all_product = view.findViewById(R.id.SwipeRefreshLayout_all_product);
+        SwipeRefreshLayout_all_product.setOnRefreshListener(this);
+        SwipeRefreshLayout_all_product.setColorSchemeColors(getResources().getColor(R.color.purple_500));
         list = new ArrayList<>();
 
         data_all();
@@ -70,8 +75,7 @@ public class AllSanPhamFragment extends Fragment {
         linearLayoutManager =new LinearLayoutManager(getContext());
         recyclerViewProductAllSanPham.setLayoutManager(linearLayoutManager);
         recyclerViewProductAllSanPham.setAdapter(product_sanPham_dashboard_adapter);
-        String url = "http://192.168.1.45:8089/OderApp_OOP/public/?controller=index&action=all_product&page=";
-        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url+page, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URL_ALL_PRODUCT+page, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
@@ -131,5 +135,19 @@ public class AllSanPhamFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        data_all();
+        product_sanPham_dashboard_adapter.notifyDataSetChanged();
+        pagination();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SwipeRefreshLayout_all_product.setRefreshing(false);
+            }
+        },2000);
     }
 }

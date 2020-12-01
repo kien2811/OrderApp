@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -31,12 +33,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class SearchActivity extends AppCompatActivity{
+public class SearchActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
     Toolbar toolbarSearch;
     RecyclerView recyclerView;
     EditText edtSearch;
-
+    SwipeRefreshLayout reseft_layout;
     SearchAdapter adapter;
     List<DashboardSanPham> list;
     @Override
@@ -75,7 +78,7 @@ public class SearchActivity extends AppCompatActivity{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("error",error.toString());
+//                Toast.makeText(SearchActivity.this, "Không Tìm Thấy Kết Quả !", Toast.LENGTH_SHORT).show();
             }
         });
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(arrayRequest);
@@ -126,7 +129,8 @@ public class SearchActivity extends AppCompatActivity{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("error",error.toString());
+            
+                Toast.makeText(SearchActivity.this, "Không Tìm Thấy Kết Quả", Toast.LENGTH_SHORT).show();
             }
         });
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(arrayRequest);
@@ -135,6 +139,10 @@ public class SearchActivity extends AppCompatActivity{
         recyclerView = findViewById(R.id.recyclerViewProduct);
         toolbarSearch = findViewById(R.id.toolbarSearch);
         edtSearch = findViewById(R.id.edtSearch);
+        reseft_layout = findViewById(R.id.reseft_layout);
+        reseft_layout.setOnRefreshListener(this);
+        reseft_layout.setColorSchemeColors(getResources().getColor(R.color.purple_500));
+
     }
     private void initActionBar() {
         setSupportActionBar(toolbarSearch);
@@ -149,4 +157,16 @@ public class SearchActivity extends AppCompatActivity{
         });
     }
 
+    @Override
+    public void onRefresh() {
+        keySearchView();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                reseft_layout.setRefreshing(false);
+            }
+        },2000);
+    }
 }

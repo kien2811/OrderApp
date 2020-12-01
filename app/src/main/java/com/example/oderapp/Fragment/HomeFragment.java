@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         sliderLayout = view.findViewById(R.id.silder);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL);
         sliderLayout.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        sliderLayout.setScrollTimeInSec(4);
+        sliderLayout.setScrollTimeInSec(2);
 
 
         data_slider();
@@ -289,6 +289,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     // refresh page data
     @Override
     public void onRefresh() {
+        data_slider();
         data_product_suggestion();
         data_product_oders();
         data_product_host();

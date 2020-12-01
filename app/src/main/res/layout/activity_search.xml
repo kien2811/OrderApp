@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.SearchActivity">
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarSearch"
         android:layout_width="match_parent"
@@ -19,13 +18,20 @@
             android:hint="Enter name"
             android:textColor="@color/black"
             android:padding="10dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/border_white_gray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </androidx.appcompat.widget.Toolbar>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewProduct"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </androidx.recyclerview.widget.RecyclerView>
+   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+       android:id="@+id/reseft_layout"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/recyclerViewProduct"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+       </androidx.recyclerview.widget.RecyclerView>
+   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

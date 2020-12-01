@@ -1,17 +1,23 @@
 package com.example.oderapp.util;
 
 public class Api {
-    public static final  String HOST = "tailoha.xyz";
+    public static final  String HOST = "192.168.1.6:8089/oder_cart_php/public";
 
-    public static final  String URl_SLIDER = "https://"+HOST+"/?controller=index&action=slider";
-    public static final  String URl_PRODUCT_ODER = "https://"+HOST+"/?controller=index&action=product_oders&page=";
-    public static final  String URl_PRODUCT_NEW = "https://"+HOST+"/?controller=index&action=product_new&page=";
-    public static final  String URl_PRODUCT_SUGGESTION = "https://"+HOST+"/?controller=index&action=product_suggestion&page=";
-    public static final  String URl_SEARCH = "https://"+HOST+"/?controller=index&action=search_product&search=";
-    public static final  String URL_IMG_PROFILE = "http://192.168.1.6:8089/oder_cart_php/";
-    public static final  String URl_REGISTER = "http://192.168.1.6:8089/oder_cart_php/public/?controller=index&action=register";
-    public static final  String URl_CHANGE_PROFILE = "http://192.168.1.6:8089/oder_cart_php/public/?controller=index&action=change_profile";
-    public static final  String URl_UPLOAD_IMAGE = "http://192.168.1.6:8089/oder_cart_php/public/?controller=index&action=user_profile&token=";
+    public static final  String URl_SLIDER = "http://"+HOST+"/?controller=index&action=slider";
+    public static final  String URl_PRODUCT_ODER = "http://"+HOST+"/?controller=index&action=product_oders&page=";
+    public static final  String URl_PRODUCT_NEW = "http://"+HOST+"/?controller=index&action=product_new&page=";
+    public static final  String URl_PRODUCT_SUGGESTION = "http://"+HOST+"/?controller=index&action=product_suggestion&page=";
+    public static final  String URl_SEARCH = "http://"+HOST+"/?controller=index&action=search_product&search=";
+    public static final  String URL_IMG_PROFILE = "http://"+HOST+"/";
+    public static final  String URl_REGISTER = "http://"+HOST+"/?controller=index&action=register";
+    public static final  String URl_CHANGE_PROFILE = "http://"+HOST+"/?controller=index&action=change_profile";
+    public static final  String URl_UPLOAD_IMAGE = "http://"+HOST+"/?controller=index&action=user_profile&token=";
+    public static final  String URl_LOGIN = "http://"+HOST+"/";
+    public static final  String URL_ALL_PRODUCT = "http://"+HOST+"/?controller=index&action=all_product&page=";
+    public static final  String URL_PRODUCT_SALE = "http://"+HOST+"/?controller=index&action=product_sale&page=";
+    public static final  String URL_PRODUCT_HOST = "http://"+HOST+"/?controller=index&action=product_host&page=";
+    public static final   String URL_UPLOAD_AVATAR ="http://192.168.1.6:8089/oder_cart_php/public/?controller=index&action=change_profile";
+
 //    public static final  String URl_LOGIN = "https://"+HOST+"/?username="+username+"&password="+password+"";
 //    public static final  String username = "https://"+HOST+"/?username="+username+"&password="+password+"";
 
@@ -26,9 +32,8 @@ public class Api {
 //    https://tailoha.xyz/?controller=index&action=decode_token&token=
 
 
-    public static final  String HOST_COMPUTER = "192.168.1.11";
-    public static final  String URL_CHECK_ID_PRODUCT_CART = "http://"+HOST_COMPUTER+":8888/OderApp_OOP/public/?controller=index&action=search_id_product_order_user&id_user=";
-    public static final String URI_TOKEN_CART = "http://"+HOST_COMPUTER+":8888/OderApp_OOP/public/?controller=index&action=decode_token&token=";
-    public static final String URL_CHECK_LOGIN = "http://"+HOST_COMPUTER+":8888/OderApp_OOP/?username=";
-    public static final String ADD_CART = "http://"+HOST_COMPUTER+":8888/OderApp_OOP/public/?controller=index&action=search_id_product_order_user&id_user=1&id_product=24&quantily=2&token=";
+    public static final  String HOST_COMPUTER = "192.168.1.6:8089";
+    public static final  String URL_CHECK_ID_PRODUCT_CART = "http://"+HOST_COMPUTER+"/oder_cart_php/public/?controller=index&action=search_id_product_order_user&id_user=";
+    public static final String URI_TOKEN_CART = "http://"+HOST_COMPUTER+"/oder_cart_php/public/?controller=index&action=decode_token&token=";
+    public static final String ADD_CART = "http://"+HOST_COMPUTER+"/oder_cart_php/public/?controller=index&action=search_id_product_order_user&id_user=1&id_product=24&quantily=2&token=";
 }
