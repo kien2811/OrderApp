@@ -272,8 +272,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         recyclerViewCart.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewCart.setAdapter(adapter);
 
-
-
         sessionManagement = new SessionManagement(this);
         String token = sessionManagement.getToken();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URI_TOKEN_CART+token, null, new Response.Listener<JSONArray>() {
@@ -300,14 +298,10 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                         e.printStackTrace();
                         Toast.makeText(CartActivity.this, "Giỏ hàng trống !", Toast.LENGTH_SHORT).show();
                     }
-
                     DecimalFormat formatter = new DecimalFormat("###,###,###");
                     String price1 = formatter.format(Double.parseDouble(total+""))+" VNĐ";
                     txtvTotal.setText(" "+price1);
                     adapter.notifyDataSetChanged();
-
-
-
                 }
 
             }
@@ -388,6 +382,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (check == 0){
                     Toast.makeText(CartActivity.this, "Thanh toán thành công !", Toast.LENGTH_SHORT).show();
+                    uptoInsert_transaction();
                     dialog.dismiss();
                     sendOnChannel();
                 }
@@ -427,6 +422,104 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
         int notificationid = 1;
         this.notificationManagerCompat.notify(notificationid, notification);
+    }
+    private void uptoInsert_transaction(){
+        sessionManagement = new SessionManagement(this);
+        String token = sessionManagement.getToken();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URI_TOKEN_CART+token, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject;
+                for (int i = 0 ; i < response.length();i ++){
+                    try {
+                        jsonObject = response.getJSONObject(i);
+//                        Log.d("aac",jsonObject.toString());
+                        int id_product = jsonObject.getInt("id_product");
+                        int quatily = jsonObject.getInt("amount_user_oder");
+                        Insert_transaction(id_product,quatily);
+                        DeleteCart(id_product);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(CartActivity.this, "Giỏ hàng trống !", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(getContext(), "error"+error, Toast.LENGTH_SHORT).show();
+                Log.d("error",error.toString());
+                Toast.makeText(CartActivity.this, "Giỏ hàng của bạn trống !", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    private void Insert_transaction(int id_product, int quantity) {
+        sessionManagement = new SessionManagement(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(CartActivity.this);
+        StringRequest request = new StringRequest(Request.Method.POST, Api.URL_INSERT_TRANSATION, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String user_oder = jsonObject.getString("user_oder");
+                    Toast.makeText(CartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
+
+                } catch (JSONException e) {
+                    Toast.makeText(CartActivity.this, "lỗi chưa Insert_transaction", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){@Override
+        public Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> map = new HashMap<>();
+            map.put("id_user", sessionManagement.getIduser()+"");
+            map.put("id_product", id_product+"");
+            map.put("quantily", quantity+"");
+            return map;
+        }};
+        requestQueue.add(request);
+    }
+
+    private void DeleteCart(int id_product) {
+        sessionManagement = new SessionManagement(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(CartActivity.this);
+        StringRequest request = new StringRequest(Request.Method.POST, Api.URL_DELETE_ID_PRODUCT_ODER_USER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    getDataCart();
+                    txtvTotal.setText("0đ");
+                    JSONObject jsonObject = new JSONObject(response);
+                    String user_oder = jsonObject.getString("user_oder");
+//                    Toast.makeText(CartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    Toast.makeText(CartActivity.this, "lỗi chưa xóa được giỏ hàng", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){@Override
+        public Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> map = new HashMap<>();
+            map.put("id_user", sessionManagement.getIduser()+"");
+            map.put("id_product", id_product+"");
+            return map;
+        }};
+        requestQueue.add(request);
     }
 
 }
