@@ -38,10 +38,6 @@ public class DashboardFragment extends Fragment {
         view_page_dashboard.setAdapter(viewMenuSanPhamAdapter);
         SanPhamtableLayout.setupWithViewPager(view_page_dashboard);
         viewMenuSanPhamAdapter.notifyDataSetChanged();
-
-
-
-
         return view;
     }
 

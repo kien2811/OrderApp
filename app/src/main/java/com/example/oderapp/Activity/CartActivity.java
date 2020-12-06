@@ -206,6 +206,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                             JSONObject jsonObject = new JSONObject(response);
                             String user_oder = jsonObject.getString("user_oder");
                             Toast.makeText(CartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
+                            getDataCart();
 
                         } catch (JSONException e) {
                             Toast.makeText(CartActivity.this, "lỗi chưa cập nhật cộng thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
@@ -273,6 +274,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         recyclerViewCart.setAdapter(adapter);
 
         sessionManagement = new SessionManagement(this);
+
         String token = sessionManagement.getToken();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URI_TOKEN_CART+token, null, new Response.Listener<JSONArray>() {
             @Override
@@ -352,7 +354,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 String name = edtName.getText().toString();
-                String email = edtEMail.getText().toString();
+                String address = edtEMail.getText().toString();
                 String phone = edtPhone.getText().toString();
 
                 int check = 0;
@@ -364,7 +366,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                     check = 0;
                 }
 
-                if (email.equals("")){
+                if (address.equals("")){
                     txtvErrEmail.setVisibility(View.VISIBLE);
                     check = 1;
                 }else {
@@ -382,7 +384,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (check == 0){
                     Toast.makeText(CartActivity.this, "Thanh toán thành công !", Toast.LENGTH_SHORT).show();
-                    uptoInsert_transaction();
+                    uptoInsert_transaction(name,address,phone);
                     dialog.dismiss();
                     sendOnChannel();
                 }
@@ -423,7 +425,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         int notificationid = 1;
         this.notificationManagerCompat.notify(notificationid, notification);
     }
-    private void uptoInsert_transaction(){
+    private void uptoInsert_transaction(String name, String address, String phone){
         sessionManagement = new SessionManagement(this);
         String token = sessionManagement.getToken();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URI_TOKEN_CART+token, null, new Response.Listener<JSONArray>() {
@@ -436,7 +438,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 //                        Log.d("aac",jsonObject.toString());
                         int id_product = jsonObject.getInt("id_product");
                         int quatily = jsonObject.getInt("amount_user_oder");
-                        Insert_transaction(id_product,quatily);
+                        Insert_transaction(id_product,quatily,name,address,phone);
                         DeleteCart(id_product);
 
                     } catch (JSONException e) {
@@ -458,7 +460,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         requestQueue.add(jsonArrayRequest);
     }
 
-    private void Insert_transaction(int id_product, int quantity) {
+    private void Insert_transaction(int id_product, int quantity,String name, String address, String phone) {
         sessionManagement = new SessionManagement(this);
         RequestQueue requestQueue = Volley.newRequestQueue(CartActivity.this);
         StringRequest request = new StringRequest(Request.Method.POST, Api.URL_INSERT_TRANSATION, new Response.Listener<String>() {
@@ -484,7 +486,10 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             Map<String, String> map = new HashMap<>();
             map.put("id_user", sessionManagement.getIduser()+"");
             map.put("id_product", id_product+"");
-            map.put("quantily", quantity+"");
+            map.put("quantity", quantity+"");
+            map.put("name", name+"");
+            map.put("address", address+"");
+            map.put("phone", phone+"");
             return map;
         }};
         requestQueue.add(request);
@@ -502,6 +507,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                     JSONObject jsonObject = new JSONObject(response);
                     String user_oder = jsonObject.getString("user_oder");
 //                    Toast.makeText(CartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
+                    getDataCart();
                 } catch (JSONException e) {
                     Toast.makeText(CartActivity.this, "lỗi chưa xóa được giỏ hàng", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();

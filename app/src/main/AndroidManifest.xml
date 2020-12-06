@@ -3,7 +3,8 @@
     package="com.example.oderapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/kita"
@@ -13,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OderApp"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Activity.DonMuaActivity" />
         <activity android:name=".Activity.Change_password_Activity" />
         <activity android:name=".Activity.Change_phone_Activity" />
         <activity android:name=".Activity.Change_email_Ativity" />
