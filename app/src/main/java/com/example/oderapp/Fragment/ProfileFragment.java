@@ -15,8 +15,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -33,7 +31,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -46,11 +43,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.oderapp.Activity.CartActivity;
 import com.example.oderapp.Activity.Change_email_Ativity;
 import com.example.oderapp.Activity.Change_password_Activity;
 import com.example.oderapp.Activity.Change_phone_Activity;
+import com.example.oderapp.Activity.DonMuaActivity;
 import com.example.oderapp.Activity.LoginActivity;
-import com.example.oderapp.Activity.MainActivity;
+import com.example.oderapp.Fragment.DonMuaFragment.DaMuaFragment;
+import com.example.oderapp.Fragment.DonMuaFragment.DangGiaoFragment;
 import com.example.oderapp.MySingleton.MySingleton;
 import com.example.oderapp.R;
 import com.example.oderapp.SessionManage.SessionManagement;
@@ -77,11 +77,11 @@ import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     SharedPreferences sharedPreferences;
-    TextView txtusername,txt_email,phone,txtvCartProfile;
+    TextView txtusername,txt_email,phone,txtvCart;
     ImageView imgAva;
     SwipeRefreshLayout swipeRefresh;
     SessionManagement sessionManagement;
-    LinearLayout linr_password,linv_phone,linv_email,linv_cart;
+    LinearLayout linr_password,linv_phone,linv_email,linv_cart,linearLayoutCart,linearLayoutChoXacNhan,linearLayoutDangGiao,linearLayoutDaMua;
     Button btn_logout,upload_to_sever;
     ImageButton imageButton_open_file;
     Bitmap bitmap;
@@ -104,12 +104,17 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         linv_email = view.findViewById(R.id.linv_email);
         linv_phone = view.findViewById(R.id.linv_phone);
         linv_cart = view.findViewById(R.id.linv_cart);
+        linearLayoutCart = view.findViewById(R.id.linearLayoutCart);
+        linearLayoutChoXacNhan = view.findViewById(R.id.linearLayoutChoXacNhan);
+        linearLayoutDangGiao = view.findViewById(R.id.linearLayoutDangGiao);
+        linearLayoutDaMua = view.findViewById(R.id.linearLayoutDaMua);
+
         txtusername = view.findViewById(R.id.txtusername);
         txt_email = view.findViewById(R.id.txt_email);
+        txtvCart = view.findViewById(R.id.txtvCart);
         upload_to_sever = view.findViewById(R.id.upload_to_sever);
         phone = view.findViewById(R.id.phone);
         imgAva = view.findViewById(R.id.imgAva);
-        txtvCartProfile = view.findViewById(R.id.txtvCartProfile);
         imageButton_open_file = view.findViewById(R.id.imageButtonupfile);
         swipeRefresh = view.findViewById(R.id.swipeRefreshprofile);
         swipeRefresh.setOnRefreshListener(this);
@@ -132,7 +137,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
                 for (int i = 0 ; i < response.length();i ++){
-                    txtvCartProfile.setText("Đang Có "+(i+1)+" Đơn Hàng ");
+                    txtvCart.setText(" "+(i+1));
                 }
             }
         }, new Response.ErrorListener() {
@@ -140,7 +145,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             public void onErrorResponse(VolleyError error) {
 //                Toast.makeText(getContext(), "error"+error, Toast.LENGTH_SHORT).show();
                 Log.d("error",error.toString());
-                Toast.makeText(getContext(), "Giỏ hàng của bạn trống !", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Giỏ hàng của bạn trống !", Toast.LENGTH_SHORT).show();
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -280,6 +285,34 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 //                intent.putExtra("phones",phones);
                 startActivity(intent);
 //                openFeedbackDialog(Gravity.CENTER,"");
+            }
+        });
+        linearLayoutCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CartActivity.class);
+                startActivity(intent);
+            }
+        });
+        linearLayoutChoXacNhan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), DonMuaActivity.class);
+                startActivity(intent);
+            }
+        });
+        linearLayoutDangGiao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), DonMuaActivity.class);
+                startActivity(intent);
+            }
+        });
+        linearLayoutDaMua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), DonMuaActivity.class);
+                startActivity(intent);
             }
         });
     }
