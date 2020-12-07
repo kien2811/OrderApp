@@ -1,7 +1,7 @@
 package com.example.oderapp.util;
 
 public class Api {
-    public static final  String HOST = "192.168.1.11:8888/oder_cart_php/public";
+    public static final  String HOST = "192.168.1.6:8089/oder_cart_php/public";
 
     public static final  String URl_SLIDER = "http://"+HOST+"/?controller=index&action=slider";
     public static final  String URl_PRODUCT_ODER = "http://"+HOST+"/?controller=index&action=product_oders&page=";
@@ -16,7 +16,7 @@ public class Api {
     public static final  String URL_ALL_PRODUCT = "http://"+HOST+"/?controller=index&action=all_product&page=";
     public static final  String URL_PRODUCT_SALE = "http://"+HOST+"/?controller=index&action=product_sale&page=";
     public static final  String URL_PRODUCT_HOST = "http://"+HOST+"/?controller=index&action=product_host&page=";
-    public static final   String URL_UPLOAD_AVATAR ="http://"+HOST+"/oder_cart_php/public/?controller=index&action=change_profile";
+    public static final   String URL_UPLOAD_AVATAR ="http://"+HOST+"/?controller=index&action=change_profile";
 
 //    public static final  String URl_LOGIN = "https://"+HOST+"/?username="+username+"&password="+password+"";
 //    public static final  String username = "https://"+HOST+"/?username="+username+"&password="+password+"";

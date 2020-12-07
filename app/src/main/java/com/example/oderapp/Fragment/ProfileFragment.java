@@ -285,7 +285,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     private void upload_avtar() {
-
+        sessionManagement = new SessionManagement(getContext());
         StringRequest request_avatar = new StringRequest(Request.Method.POST, Api.URL_UPLOAD_AVATAR, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
-            android:hint="Số Điện Thoại hoặc Email"
+            android:hint="Nhập Email"
 
             android:inputType="textPersonName"
             android:textSize="16dp" />

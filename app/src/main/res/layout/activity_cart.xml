@@ -79,7 +79,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="#9EFF0000"
                 android:id="@+id/btnThanhtoan"
-                android:text="thanh toán"
+                android:text="Đặt Hàng"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"/>
         </LinearLayout>
