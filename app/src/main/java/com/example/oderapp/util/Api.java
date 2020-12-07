@@ -16,7 +16,7 @@ public class Api {
     public static final  String URL_ALL_PRODUCT = "http://"+HOST+"/?controller=index&action=all_product&page=";
     public static final  String URL_PRODUCT_SALE = "http://"+HOST+"/?controller=index&action=product_sale&page=";
     public static final  String URL_PRODUCT_HOST = "http://"+HOST+"/?controller=index&action=product_host&page=";
-    public static final   String URL_UPLOAD_AVATAR ="http://"+HOST+"/oder_cart_php/public/?controller=index&action=change_profile";
+    public static final   String URL_UPLOAD_AVATAR ="http://"+HOST+"/?controller=index&action=change_profile";
     public static final   String URL_DON_MUA_CHO_XAC_NHAN ="http://"+HOST+"/?controller=index&action=Select_transaction_data_to_id_user_Cho_Xac_Nhan&id_user=";
     public static final   String URL_DON_MUA_DA_HUY ="http://"+HOST+"/?controller=index&action=Select_transaction_data_to_id_user_Da_Huy&id_user=";
     public static final   String URL_DON_MUA_DA_MUA ="http://"+HOST+"/?controller=index&action=Select_transaction_data_to_id_user_Da_Mua&id_user=";
@@ -42,6 +42,6 @@ public class Api {
     public static final String URL_UPDATE_QUANTILY_ORDER_USER = "http://"+HOST+"/?controller=index&action=update_id_product_order_user";
     public static final String URL_DELETE_ID_PRODUCT_ODER_USER = "http://"+HOST+"/?controller=index&action=delete_id_product_order_user";
     public static final String URI_TOKEN_CART = "http://"+HOST+"/?controller=index&action=user_order_cart&token=";
-    public static final String ADD_CART = "http://"+HOST+"/?controller=index&action=search_id_product_order_user&id_user=1&id_product=24&quantily=2&token=";
+//    public static final String ADD_CART = "http://"+HOST+"/?controller=index&action=search_id_product_order_user&id_user=1&id_product=24&quantily=2&token=";
     public static final String URL_INSERT_TRANSATION = "http://"+HOST+"/?controller=index&action=insert_transaction_data_to_user_order";
 }
