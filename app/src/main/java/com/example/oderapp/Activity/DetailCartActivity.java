@@ -174,8 +174,7 @@ public class DetailCartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addCartDatabase();
-                Intent intent = new Intent(DetailCartActivity.this,CartActivity.class);
-                startActivity(intent);
+
             }
         });
 
@@ -195,6 +194,7 @@ public class DetailCartActivity extends AppCompatActivity {
                         int quantily_db = jsonObject.getInt("amount_user_oder");
                         int id_product = jsonObject.getInt("id_product");
                         updateCart(id_product,quantily_db);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(DetailCartActivity.this, "thêm vào giỏ hàng lỗi !", Toast.LENGTH_SHORT).show();
@@ -211,6 +211,7 @@ public class DetailCartActivity extends AppCompatActivity {
             });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
+
     }
     private  void updateCart(int id_Product ,int update_quantily){
         sessionManagement = new SessionManagement(getApplicationContext());
@@ -224,7 +225,8 @@ public class DetailCartActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     String user_oder = jsonObject.getString("user_oder");
                     Toast.makeText(DetailCartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
-
+                    Intent intent = new Intent(DetailCartActivity.this,CartActivity.class);
+                    startActivity(intent);
                 } catch (JSONException e) {
                     Toast.makeText(DetailCartActivity.this, "lỗi chưa thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -253,6 +255,8 @@ public class DetailCartActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
+                    Intent intent = new Intent(DetailCartActivity.this,CartActivity.class);
+                    startActivity(intent);
                     JSONObject jsonObject = new JSONObject(response);
                     String user_oder = jsonObject.getString("user_oder");
                     Toast.makeText(DetailCartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
