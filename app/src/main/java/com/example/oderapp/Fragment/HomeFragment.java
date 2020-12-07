@@ -123,8 +123,11 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 product_oders_List.clear();
                 for (int i = 0 ; i < response.length();i ++){
                     try {
+
                         jsonObject = response.getJSONObject(i);
-                        product_oders_List.add(new Product_oders(jsonObject.getInt("id"),jsonObject.getString("name"),jsonObject.getInt("pirce"),jsonObject.getString("image"),jsonObject.getString("details"),jsonObject.getInt("product_id"),jsonObject.getInt("amount")));
+//                        Log.d("onResponse: ",jsonObject.getString("image").toString());
+
+                        product_oders_List.add(new Product_oders(jsonObject.getInt("id"),jsonObject.getString("name"),jsonObject.getInt("pirce"),Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),jsonObject.getString("details"),jsonObject.getInt("product_id"),jsonObject.getInt("amount")));
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -155,10 +158,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         try {
                             jsonObject_slider = response.getJSONObject(i);
                             DefaultSliderView sliderView = new DefaultSliderView(getContext());
-                            sliderView.setImageUrl(jsonObject_slider.getString("image"));
+                            sliderView.setImageUrl(Api.URL_IMG_PROFILE+"img/"+jsonObject_slider.getString("image"));
                             sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
                             sliderLayout.addSliderView(sliderView);
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -194,7 +196,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 for (int i = 0 ; i < response.length();i ++){
                     try {
                         jsonObject_product_host = response.getJSONObject(i);
-                        product_hots_list.add(new Product_new(jsonObject_product_host.getInt("id"),jsonObject_product_host.getString("name"),jsonObject_product_host.getString("image"),jsonObject_product_host.getInt("pirce"),jsonObject_product_host.getString("details"),jsonObject_product_host.getInt("product_id"),jsonObject_product_host.getInt("amount")));
+                        product_hots_list.add(new Product_new(jsonObject_product_host.getInt("id"),jsonObject_product_host.getString("name"),Api.URL_IMG_PROFILE+"img/"+jsonObject_product_host.getString("image"),jsonObject_product_host.getInt("pirce"),jsonObject_product_host.getString("details"),jsonObject_product_host.getInt("product_id"),jsonObject_product_host.getInt("amount")));
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -233,7 +235,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         jsonObject = response.getJSONObject(i);
 //                        Log.d("response",jsonObject.getString("name"));
 
-                        product_suggestions_list.add(new Product_suggestion(jsonObject.getInt("id"),jsonObject.getString("name"),jsonObject.getString("image"),jsonObject.getInt("pirce"),jsonObject.getString("details"),jsonObject.getInt("product_id"),jsonObject.getInt("amount")));
+                        product_suggestions_list.add(new Product_suggestion(jsonObject.getInt("id"),jsonObject.getString("name"),Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),jsonObject.getInt("pirce"),jsonObject.getString("details"),jsonObject.getInt("product_id"),jsonObject.getInt("amount")));
                     }
                     product_suggestion_adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
