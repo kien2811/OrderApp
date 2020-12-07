@@ -57,7 +57,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CartActivity extends AppCompatActivity implements View.OnClickListener{
+public class    CartActivity extends AppCompatActivity implements View.OnClickListener{
     Toolbar toolbar;
     List<Cart_Model> list;
     CartAdapter adapter;
