@@ -28,6 +28,10 @@ import com.example.oderapp.Model.DashboardSanPham;
 import com.example.oderapp.R;
 import com.example.oderapp.SessionManage.SessionManagement;
 import com.example.oderapp.util.Api;
+import com.smarteist.autoimageslider.DefaultSliderView;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderLayout;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -44,7 +48,7 @@ public class DetailCartActivity extends AppCompatActivity {
     ImageView btnAddCart;
     TextView txtvDescriptionCart,txtvPriceCart,txtvNameCart,txtvQuantity;
     ImageView imgAvatarCart;
-
+    SliderLayout silder;
     SessionManagement sessionManagement;
     int id_Product;
 
@@ -70,7 +74,41 @@ public class DetailCartActivity extends AppCompatActivity {
         initDatabase();
         init();
 
+        silder.setIndicatorAnimation(IndicatorAnimations.FILL);
+        silder.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        silder.setScrollTimeInSec(5);
+        data_slider(id_Product);
     }
+
+    private void data_slider(int id) {
+        JsonArrayRequest arrayRequest_slider = new JsonArrayRequest(Request.Method.GET, Api.URl_SLIDER_PRODUCT+id, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject_slider;
+                silder.clearSliderViews();
+                for (int i = 0 ; i < response.length();i ++){
+                    try {
+                        jsonObject_slider = response.getJSONObject(i);
+                        DefaultSliderView sliderView = new DefaultSliderView(getApplicationContext());
+                        sliderView.setImageUrl(Api.URL_IMG_PROFILE+""+jsonObject_slider.getString("img"));
+                        sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
+                        silder.addSliderView(sliderView);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(getContext(), "error"+error, Toast.LENGTH_SHORT).show();
+//                Log.d("error",error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(arrayRequest_slider);
+    }
+
     private void initDatabase() {
         //gọi database
         myDatabase = new MyDatabase(DetailCartActivity.this, DB_NAME,null, 1);
@@ -134,7 +172,6 @@ public class DetailCartActivity extends AppCompatActivity {
         int categoryid = (int) intent.getSerializableExtra("categoryid");
 
         addSeenDatabase(id_Product, getName, getPrice, getAvatar , getDescription ,categoryid);
-
 //        Picasso.get().load(getAvatar).into(imgAvatarCart);
         txtvNameCart.setText(getName);
 
@@ -143,10 +180,10 @@ public class DetailCartActivity extends AppCompatActivity {
         txtvPriceCart.setText("Giá " + getPrice);
 
         txtvDescriptionCart.setText(getDescription);
-        Picasso.get().load(getAvatar)
-                .placeholder(R.drawable.loader)
-                .error(R.drawable.noimage)
-                .into(imgAvatarCart);
+//        Picasso.get().load(getAvatar)
+//                .placeholder(R.drawable.loader)
+//                .error(R.drawable.noimage)
+//                .into(imgAvatarCart);
 
 
         //Xử lí nút số lượng
@@ -307,7 +344,7 @@ public class DetailCartActivity extends AppCompatActivity {
         txtvDescriptionCart = findViewById(R.id.txtvDescriptionCart);
         txtvNameCart = findViewById(R.id.txtvNameCart);
         txtvPriceCart = findViewById(R.id.txtvPriceCart);
-        imgAvatarCart = findViewById(R.id.imgAvatarCart);
+//        imgAvatarCart = findViewById(R.id.imgAvatarCart);
         btnAddMuaCart = findViewById(R.id.btnAddMuaCart);
         btnAddCart = findViewById(R.id.btnAddCart);
 
@@ -316,5 +353,6 @@ public class DetailCartActivity extends AppCompatActivity {
         btnMinus = findViewById(R.id.btnMinus);
         btnPlus = findViewById(R.id.btnPlus);
         txtvQuantity = findViewById(R.id.txtvQuantity);
+        silder = findViewById(R.id.silder);
     }
 }
