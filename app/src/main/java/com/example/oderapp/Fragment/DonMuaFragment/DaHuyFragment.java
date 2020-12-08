@@ -84,6 +84,7 @@ public class DaHuyFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
                 try {
+                    list.clear();
 //                    product_suggestions_list.clear();
                     for (int i = 0 ; i < response.length();i ++){
                         jsonObject = response.getJSONObject(i);
@@ -92,7 +93,7 @@ public class DaHuyFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                                 jsonObject.getInt("id_product"),
                                 jsonObject.getString("name_product"),
                                 jsonObject.getInt("pirce"),
-                                jsonObject.getString("image"),
+                                Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),
                                 jsonObject.getString("details"),
                                 jsonObject.getInt("quantity"),
                                 jsonObject.getString("name_status")));
@@ -113,6 +114,7 @@ public class DaHuyFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public void onRefresh() {
+        data_all();
         daHuyAdapter.notifyDataSetChanged();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

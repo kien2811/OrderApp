@@ -77,6 +77,7 @@ public class DaMuaFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
                 try {
+                    list.clear();
 //                    product_suggestions_list.clear();
                     for (int i = 0 ; i < response.length();i ++){
                         jsonObject = response.getJSONObject(i);
@@ -85,7 +86,7 @@ public class DaMuaFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                                 jsonObject.getInt("id_product"),
                                 jsonObject.getString("name_product"),
                                 jsonObject.getInt("pirce"),
-                                jsonObject.getString("image"),
+                                Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),
                                 jsonObject.getString("details"),
                                 jsonObject.getInt("quantity"),
                                 jsonObject.getString("name_status")));
@@ -104,17 +105,6 @@ public class DaMuaFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         MySingleton.getInstance(getContext().getApplicationContext()).addToRequestQueue(arrayRequest);
     }
 
-    @Override
-    public void onRefresh() {
-        daMuaAdapter.notifyDataSetChanged();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                SwipeRefreshLayout_all_product.setRefreshing(false);
-            }
-        },2000);
-    }
 
 
 
@@ -217,4 +207,18 @@ public class DaMuaFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(request);
     }
+    @Override
+    public void onRefresh() {
+        data_all();
+
+        daMuaAdapter.notifyDataSetChanged();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SwipeRefreshLayout_all_product.setRefreshing(false);
+            }
+        },2000);
+    }
+
 }
