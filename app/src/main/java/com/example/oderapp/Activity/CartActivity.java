@@ -129,11 +129,15 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
                                 adapter.notifyDataSetChanged();
                         }
                         if (action.equals("plus")) {
-                                quantity = (quantily_db + 1);
-                                Log.d("aac", quantity+"");
-                                total += cart_model.getPrice();
-                                cart_model.setQuantity(quantity);
-                                updateQuantily(cart_model.getId(),sessionManagement.getIduser(),quantity);
+                                if (quantity != cart_model.getAmount()){
+                                    quantity = (quantily_db + 1);
+                                    Log.d("aac", quantity+"");
+                                    total += cart_model.getPrice();
+                                    cart_model.setQuantity(quantity);
+                                    updateQuantily(cart_model.getId(),sessionManagement.getIduser(),quantity);
+                                }else {
+                                    Toast.makeText(CartActivity.this, "Số lượng sản phẩm đã đạt giới hạn", Toast.LENGTH_SHORT).show();
+                                }
                         }
                         getDataCart();
                         adapter.notifyDataSetChanged();
@@ -293,7 +297,8 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
                                 jsonObject.getString("image"),
                                 jsonObject.getString("details"),
                                 jsonObject.getInt("amount_user_oder"),
-                                jsonObject.getInt("product_id")
+                                jsonObject.getInt("product_id"),
+                                jsonObject.getInt("amount")
                                 ));
 
                     } catch (JSONException e) {
@@ -346,6 +351,9 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
         EditText edtName = dialog.findViewById(R.id.edtName);
         EditText edtEMail = dialog.findViewById(R.id.edtEMail);
         EditText edtPhone = dialog.findViewById(R.id.edtPhone);
+        sessionManagement = new SessionManagement(this);
+        edtPhone.setText("0"+sessionManagement.getPhone());
+        edtName.setText(sessionManagement.getFullName()+"");
 
         Button btnOK = dialog.findViewById(R.id.btnOK);
         Button btnCannel = dialog.findViewById(R.id.btnCannel);

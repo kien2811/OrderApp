@@ -47,6 +47,7 @@ import com.example.oderapp.Activity.CartActivity;
 import com.example.oderapp.Activity.Change_email_Ativity;
 import com.example.oderapp.Activity.Change_password_Activity;
 import com.example.oderapp.Activity.Change_phone_Activity;
+import com.example.oderapp.Activity.DetailCartActivity;
 import com.example.oderapp.Activity.DonMuaActivity;
 import com.example.oderapp.Activity.LoginActivity;
 import com.example.oderapp.Fragment.DonMuaFragment.DaMuaFragment;
@@ -77,7 +78,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     SharedPreferences sharedPreferences;
-    TextView txtusername,txt_email,phone,txtvCart;
+    TextView txtusername,txt_email,phone,txtvCart,txtvChoXacNhan,txtvDangGiao,txtvDaMua;
     ImageView imgAva;
     SwipeRefreshLayout swipeRefresh;
     SessionManagement sessionManagement;
@@ -112,6 +113,10 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         txtusername = view.findViewById(R.id.txtusername);
         txt_email = view.findViewById(R.id.txt_email);
         txtvCart = view.findViewById(R.id.txtvCart);
+        txtvChoXacNhan = view.findViewById(R.id.txtvChoXacNhan);
+        txtvDangGiao = view.findViewById(R.id.txtvDangGiao);
+        txtvDaMua = view.findViewById(R.id.txtvDaMua);
+
         upload_to_sever = view.findViewById(R.id.upload_to_sever);
         phone = view.findViewById(R.id.phone);
         imgAva = view.findViewById(R.id.imgAva);
@@ -125,11 +130,13 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         load_data_profile();
         onlickData();
         getDataCart();
+        updateDonMua();
+        updateChoXacNhan();
+        updateDangGiao();
         return view;
-
-
     }
-    private void getDataCart() {
+
+    public void getDataCart() {
         sessionManagement = new SessionManagement(getContext());
         String token = sessionManagement.getToken();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URI_TOKEN_CART+token, null, new Response.Listener<JSONArray>() {
@@ -152,6 +159,97 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         requestQueue.add(jsonArrayRequest);
 
     }
+    private  void updateChoXacNhan(){
+        sessionManagement = new SessionManagement(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        StringRequest request = new StringRequest(Request.Method.POST, Api.URL_SELECT_DON_MUA_PROFILE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String soluong = jsonObject.getString("Count");
+                    txtvChoXacNhan.setText(" "+soluong);
+                } catch (JSONException e) {
+                    Toast.makeText(getContext(), "lỗi chưa hiện số lượng đơn xác nhận", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){@Override
+        public Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> map = new HashMap<>();
+            map.put("id_user", sessionManagement.getIduser()+"");
+            map.put("id_status","0");
+            return map;
+        }};
+        RequestQueue requestQueue1 = Volley.newRequestQueue(getContext());
+        requestQueue1.add(request);
+    }
+    private  void updateDonMua(){
+        sessionManagement = new SessionManagement(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        StringRequest request = new StringRequest(Request.Method.POST, Api.URL_SELECT_DON_MUA_PROFILE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String soluong = jsonObject.getString("Count");
+                    txtvDaMua.setText(" "+soluong);
+                } catch (JSONException e) {
+                    Toast.makeText(getContext(), "lỗi chưa hiện số lượng đơn đã mua", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){@Override
+        public Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> map = new HashMap<>();
+            map.put("id_user", sessionManagement.getIduser()+"");
+            map.put("id_status","2");
+            return map;
+        }};
+        RequestQueue requestQueue1 = Volley.newRequestQueue(getContext());
+        requestQueue1.add(request);
+    }
+    private  void updateDangGiao(){
+        sessionManagement = new SessionManagement(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        StringRequest request = new StringRequest(Request.Method.POST, Api.URL_SELECT_DON_MUA_PROFILE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String soluong = jsonObject.getString("Count");
+                    txtvDangGiao.setText(" "+soluong);
+                } catch (JSONException e) {
+                    Toast.makeText(getContext(), "lỗi chưa hiện số lượng đơn đang giao", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){@Override
+        public Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> map = new HashMap<>();
+            map.put("id_user", sessionManagement.getIduser()+"");
+            map.put("id_status","1");
+            return map;
+        }};
+        RequestQueue requestQueue1 = Volley.newRequestQueue(getContext());
+        requestQueue1.add(request);
+    }
+
     private void load_data_profile() {
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_UPLOAD_IMAGE+sessionManagement.getToken(), null, new Response.Listener<JSONArray>() {
             @Override

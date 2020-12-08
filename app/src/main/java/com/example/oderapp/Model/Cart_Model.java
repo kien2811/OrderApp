@@ -8,8 +8,9 @@ public class Cart_Model {
     private String description;
     private int quantity;
     private int categoryid;
+    private int amount;
 
-    public Cart_Model(int id, String name, int price, String avatar, String description, int quantity, int categoryid) {
+    public Cart_Model(int id, String name, int price, String avatar, String description, int quantity, int categoryid, int amount) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -17,6 +18,7 @@ public class Cart_Model {
         this.description = description;
         this.quantity = quantity;
         this.categoryid = categoryid;
+        this.amount = amount;
     }
 
     public int getId() {
@@ -75,6 +77,14 @@ public class Cart_Model {
         this.categoryid = categoryid;
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     @Override
     public String toString() {
         return "Cart_Model{" +
@@ -85,6 +95,7 @@ public class Cart_Model {
                 ", description='" + description + '\'' +
                 ", quantity=" + quantity +
                 ", categoryid=" + categoryid +
+                ", amount=" + amount +
                 '}';
     }
 }
