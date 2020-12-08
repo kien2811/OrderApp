@@ -67,6 +67,7 @@ public class DangGiaoFragment extends Fragment implements SwipeRefreshLayout.OnR
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
                 try {
+                    list.clear();
 //                    product_suggestions_list.clear();
                     for (int i = 0 ; i < response.length();i ++){
                         jsonObject = response.getJSONObject(i);
@@ -75,7 +76,7 @@ public class DangGiaoFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 jsonObject.getInt("id_product"),
                                 jsonObject.getString("name_product"),
                                 jsonObject.getInt("pirce"),
-                                jsonObject.getString("image"),
+                                Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),
                                 jsonObject.getString("details"),
                                 jsonObject.getInt("quantity"),
                                 jsonObject.getString("name_status")));
@@ -96,6 +97,7 @@ public class DangGiaoFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
+        data_all();
         dangGiaoAdapter.notifyDataSetChanged();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

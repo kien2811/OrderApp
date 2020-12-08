@@ -79,9 +79,11 @@ public class ChoXacNhanFragment extends Fragment implements SwipeRefreshLayout.O
         int id_user = sessionManagement.getIduser();
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URL_DON_MUA_CHO_XAC_NHAN+id_user, null, new Response.Listener<JSONArray>() {
             @Override
+
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
                 try {
+                    list.clear();
 //                    product_suggestions_list.clear();
                     for (int i = 0 ; i < response.length();i ++){
                         jsonObject = response.getJSONObject(i);
@@ -90,7 +92,7 @@ public class ChoXacNhanFragment extends Fragment implements SwipeRefreshLayout.O
                                 jsonObject.getInt("id_product"),
                                 jsonObject.getString("name_product"),
                                 jsonObject.getInt("pirce"),
-                                jsonObject.getString("image"),
+                                Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),
                                 jsonObject.getString("details"),
                                 jsonObject.getInt("quantity"),
                                 jsonObject.getString("name_status")));
@@ -111,6 +113,7 @@ public class ChoXacNhanFragment extends Fragment implements SwipeRefreshLayout.O
 
     @Override
     public void onRefresh() {
+        data_all();
         ChoXacNhanAdapter.notifyDataSetChanged();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
