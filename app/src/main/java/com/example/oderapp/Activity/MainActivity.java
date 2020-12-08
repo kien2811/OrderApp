@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -69,9 +70,17 @@ public class MainActivity extends AppCompatActivity {
 
         getDataCart();
 
-
+        handler.postDelayed(runnable,1000);
     }
+    final Handler handler = new Handler();
+    final Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            getDataCart();
 
+            handler.postDelayed(this,1000);//60 second delay
+        }
+    };
     private void getDataCart() {
         sessionManagement = new SessionManagement(this);
         String token = sessionManagement.getToken();
@@ -88,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 //                Toast.makeText(getContext(), "error"+error, Toast.LENGTH_SHORT).show();
                 Log.d("error",error.toString());
-                Toast.makeText(MainActivity.this, "Giỏ hàng của bạn trống !", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "Giỏ hàng của bạn trống !", Toast.LENGTH_SHORT).show();
+                txtvQuantityCartMain.setText("  0");
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -137,13 +147,10 @@ public class MainActivity extends AppCompatActivity {
                     dashboard.commit();
                     break;
                 case R.id.profile:
-
                     selectFragment = new ProfileFragment();
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.commit();
                     break;
-
-
 
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,selectFragment).commit();

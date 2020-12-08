@@ -189,12 +189,19 @@ public class DetailCartActivity extends AppCompatActivity {
                 JSONObject jsonObject;
                 for (int i = 0; i < response.length(); i++) {
                     try {
+
                         jsonObject = response.getJSONObject(i);
 //                        Log.d("aac", jsonObject.toString());
                         int quantily_db = jsonObject.getInt("amount_user_oder");
+                        int amount = jsonObject.getInt("amount");
                         int id_product = jsonObject.getInt("id_product");
-                        updateCart(id_product,quantily_db);
-
+                        if (quantily_db != amount){
+                            updateCart(id_product,quantily_db);
+                        }else {
+                            Toast.makeText(DetailCartActivity.this, "Số lượng sản phẩm đã đạt giới hạn!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(DetailCartActivity.this,CartActivity.class);
+                            startActivity(intent);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(DetailCartActivity.this, "thêm vào giỏ hàng lỗi !", Toast.LENGTH_SHORT).show();
