@@ -58,7 +58,7 @@ public class DaxemSanphamFragment extends Fragment {
 
         myDatabase = new MyDatabase(getContext(), DB_NAME,null, 1);
         try {
-            cursor = myDatabase.selectData("select * from "+TABLE_NAME);
+            cursor = myDatabase.selectData("select * from "+TABLE_NAME+" ORDER BY id DESC");
             while (cursor.moveToNext()){
                 DashboardSanPham productSeen = new DashboardSanPham();
 

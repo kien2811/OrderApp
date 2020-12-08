@@ -44,4 +44,7 @@ public class Api {
     public static final String URI_TOKEN_CART = "http://"+HOST+"/?controller=index&action=user_order_cart&token=";
 //    public static final String ADD_CART = "http://"+HOST+"/?controller=index&action=search_id_product_order_user&id_user=1&id_product=24&quantily=2&token=";
     public static final String URL_INSERT_TRANSATION = "http://"+HOST+"/?controller=index&action=insert_transaction_data_to_user_order";
+
+
+    public static final String URL_SELECT_DON_MUA_PROFILE = "http://"+HOST+"/?controller=index&action=Select_transaction_data_to_id_user";
 }

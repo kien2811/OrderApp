@@ -49,4 +49,20 @@ public class SessionManagement {
     public String getUsername(){
         return  sharedPreferences.getString("KEY_USERNAME","");
     }
+
+    public void setFullName(String fullname) {
+        editor.putString("KEY_FULLNAME",fullname);
+        editor.commit();
+    }
+    public String getFullName(){
+        return sharedPreferences.getString("KEY_FULLNAME","");
+    }
+
+    public void setPhone(int phone) {
+        editor.putInt("KEY_PHONE",phone);
+        editor.commit();
+    }
+    public int getPhone(){
+        return sharedPreferences.getInt("KEY_PHONE",0);
+    }
 }
