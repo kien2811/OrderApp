@@ -349,11 +349,13 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
         TextView txtvErrPhone = dialog.findViewById(R.id.txtvErrPhone);
 
         EditText edtName = dialog.findViewById(R.id.edtName);
-        EditText edtEMail = dialog.findViewById(R.id.edtEMail);
+        EditText edtadress = dialog.findViewById(R.id.edtEMail);
         EditText edtPhone = dialog.findViewById(R.id.edtPhone);
+
         sessionManagement = new SessionManagement(this);
         edtPhone.setText("0"+sessionManagement.getPhone());
         edtName.setText(sessionManagement.getFullName()+"");
+
 
         Button btnOK = dialog.findViewById(R.id.btnOK);
         Button btnCannel = dialog.findViewById(R.id.btnCannel);
@@ -362,31 +364,24 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onClick(View v) {
                 String name = edtName.getText().toString();
-                String address = edtEMail.getText().toString();
+                String address = edtadress.getText().toString();
                 String phone = edtPhone.getText().toString();
+
 
                 int check = 0;
                 if (name.equals("")){
                     txtvErrName.setVisibility(View.VISIBLE);
                     check = 1;
-                }else {
-                    txtvErrName.setVisibility(View.GONE);
-                    check = 0;
-                }
-
-                if (address.equals("")){
+                }else if (phone.equals("")){
+                    txtvErrPhone.setVisibility(View.VISIBLE);
+                    check = 1;
+                }else if (address.equals("")){
                     txtvErrEmail.setVisibility(View.VISIBLE);
                     check = 1;
                 }else {
-                    txtvErrEmail.setVisibility(View.GONE);
-                    check = 0;
-                }
-
-                if (phone.equals("")){
-                    txtvErrPhone.setVisibility(View.VISIBLE);
-                    check = 1;
-                }else {
+                    txtvErrName.setVisibility(View.GONE);
                     txtvErrPhone.setVisibility(View.GONE);
+                    txtvErrEmail.setVisibility(View.GONE);
                     check = 0;
                 }
 
