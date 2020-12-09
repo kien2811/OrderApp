@@ -161,14 +161,13 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
     private  void updateChoXacNhan(){
         sessionManagement = new SessionManagement(getContext());
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest request = new StringRequest(Request.Method.POST, Api.URL_SELECT_DON_MUA_PROFILE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String soluong = jsonObject.getString("Count");
-                    txtvChoXacNhan.setText(" "+soluong);
+                    txtvChoXacNhan.setText(""+soluong);
                 } catch (JSONException e) {
                     Toast.makeText(getContext(), "lỗi chưa hiện số lượng đơn xác nhận", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -191,7 +190,6 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
     private  void updateDonMua(){
         sessionManagement = new SessionManagement(getContext());
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest request = new StringRequest(Request.Method.POST, Api.URL_SELECT_DON_MUA_PROFILE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -221,7 +219,6 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
     private  void updateDangGiao(){
         sessionManagement = new SessionManagement(getContext());
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest request = new StringRequest(Request.Method.POST, Api.URL_SELECT_DON_MUA_PROFILE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
