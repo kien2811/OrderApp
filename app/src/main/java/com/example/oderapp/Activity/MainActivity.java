@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             getDataCart();
 
-            handler.postDelayed(this,1000);//60 second delay
+            handler.postDelayed(this,2000);//60 second delay
         }
     };
     private void getDataCart() {
