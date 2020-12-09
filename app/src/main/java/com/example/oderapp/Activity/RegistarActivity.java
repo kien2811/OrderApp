@@ -1,5 +1,6 @@
 package com.example.oderapp.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,16 +24,21 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oderapp.R;
 import com.example.oderapp.util.Api;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class RegistarActivity extends AppCompatActivity {
     Button btn_resigtar;
     TextView login;
+     ProgressBar progressBar;
     EditText txt_username,txtphone,txtemail,txtpassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,7 @@ public class RegistarActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         btn_resigtar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,7 +67,8 @@ public class RegistarActivity extends AppCompatActivity {
                 if(fullname.equals("")||phone.equals("")||email.equals("")||password.equals("")){
                     Toast.makeText(RegistarActivity.this, "Vui Lòng Nhập Đầy Đủ Thông Tin !", Toast.LENGTH_SHORT).show();
                 }else{
-
+                    progressBar.setVisibility(View.VISIBLE);
+                    btn_resigtar.setVisibility(View.INVISIBLE);
                     StringRequest request = new StringRequest(Request.Method.POST, Api.URl_REGISTER, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -71,11 +80,46 @@ public class RegistarActivity extends AppCompatActivity {
                                 if(errors.equals("1")){
                                     Toast.makeText(RegistarActivity.this, jsonObject.getString("errors"), Toast.LENGTH_SHORT).show();
                                 }else {
-                                    Toast.makeText(RegistarActivity.this, jsonObject.getString("sucesfull"), Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RegistarActivity.this,LoginActivity.class));
-                                    finish();
-                                }
+//
+                                    PhoneAuthProvider.getInstance().verifyPhoneNumber("+84" + phone, 60, TimeUnit.SECONDS, RegistarActivity.this,
+                                            new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                                                @Override
+                                                public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                                                    progressBar.setVisibility(View.GONE);
+                                                    btn_resigtar.setVisibility(View.VISIBLE);
+                                                }
 
+                                                @Override
+                                                public void onVerificationFailed(@NonNull FirebaseException e) {
+                                                    progressBar.setVisibility(View.GONE);
+                                                    btn_resigtar.setVisibility(View.VISIBLE);
+                                                    Toast.makeText(RegistarActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                                }
+
+                                                @Override
+                                                public void onCodeSent(@NonNull String VeryficationId, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                                                    progressBar.setVisibility(View.GONE);
+                                                    btn_resigtar.setVisibility(View.VISIBLE);
+                                                    try {
+                                                        jsonObject.getString("sucesfull");
+//                                                        Toast.makeText(RegistarActivity.this, , Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(getApplicationContext(), VerifyOTPAcitivity.class);
+                                                        intent.putExtra("phone",phone);
+                                                        intent.putExtra("password",password);
+                                                        intent.putExtra("VeryficationId",VeryficationId);
+                                                        startActivity(intent);
+                                                        finish();
+
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+                                                }
+                                            });
+                                }
+                                progressBar.setVisibility(View.GONE);
+                                btn_resigtar.setVisibility(View.VISIBLE);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -110,5 +154,7 @@ public class RegistarActivity extends AppCompatActivity {
         txtemail = findViewById(R.id.txtemail);
         txtpassword = findViewById(R.id.txtpassword);
         login = findViewById(R.id.login);
+        progressBar = findViewById(R.id.progressBar);
+
     }
 }

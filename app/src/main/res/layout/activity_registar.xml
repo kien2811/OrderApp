@@ -16,82 +16,79 @@
         android:layout_above="@+id/edutUsernames"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        app:srcCompat="@drawable/home" />
+        app:srcCompat="@drawable/kita" />
     <LinearLayout
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-       <com.google.android.material.textfield.TextInputLayout
-           android:layout_width="match_parent"
-           android:layout_height="match_parent">
-           <EditText
-               android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
-               android:id="@+id/txtfull_name"
-               android:layout_width="280dp"
-               android:layout_height="60dp"
-               android:layout_gravity="center"
-               android:layout_centerHorizontal="true"
-               android:hint="Họ và Tên"
-               android:gravity="center"
-               android:layout_marginBottom="10dp"
-               android:inputType="textPersonName"
-               android:textSize="16dp" />
-       </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="60dp">
             <EditText
                 android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
-                android:id="@+id/txtemail"
+                android:id="@+id/txtfull_name"
                 android:layout_width="280dp"
-                android:layout_height="60dp"
-                android:gravity="center"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
-                android:hint="Email"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:hint="Họ và Tên"
+                android:gravity="center"
                 android:inputType="textPersonName"
                 android:textSize="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_marginTop="10dp"
+            android:layout_height="60dp">
+            <EditText
+                android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
+                android:id="@+id/txtemail"
+                android:layout_width="280dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:hint="Email"
+                android:inputType="textPersonName"
+                android:textSize="16dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+
+            android:layout_height="60dp">
             <EditText
                 android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
                 android:id="@+id/txtphone"
                 android:layout_width="280dp"
-                android:layout_height="60dp"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
                 android:hint="Số Điện Thoại"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:inputType="phone"
                 android:textSize="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="280dp"
-            android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
-            android:layout_height="60dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
             android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
             android:hint="Mật Khẩu"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             app:passwordToggleEnabled="true"
+            android:layout_marginTop="10dp"
+
             >
             <EditText
                 android:id="@+id/txtpassword"
-                android:background="#00FFFFFF"
-                android:layout_width="match_parent"
+                android:background="@drawable/bg_yellow_corner_16_top_left_top_right"
+                android:layout_width="280dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_gravity="center"
@@ -102,23 +99,35 @@
             android:layout_width="300dp"
             android:background="@drawable/background_tow_color"
             app:cardCornerRadius="25dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:layout_centerHorizontal="true">
-            <Button
-                android:background="@drawable/background_tow_color"
-
-                android:id="@+id/btn_resigtar"
-                android:text="Đăng Kí"
-                android:layout_centerInParent="true"
-                android:textColor="#fff"
-                android:textSize="18sp"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <Button
+                    android:background="@drawable/background_tow_color"
 
-            </Button>
+                    android:id="@+id/btn_resigtar"
+                    android:text="Đăng Kí"
+                    android:layout_centerInParent="true"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </Button>
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone">
+
+                </ProgressBar>
+            </FrameLayout>
 
         </androidx.cardview.widget.CardView>
 
