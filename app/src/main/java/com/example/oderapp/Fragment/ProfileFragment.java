@@ -144,7 +144,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
                 for (int i = 0 ; i < response.length();i ++){
-                    txtvCart.setText(" "+(i+1));
+                    txtvCart.setText(""+(i+1));
                 }
             }
         }, new Response.ErrorListener() {
@@ -196,7 +196,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String soluong = jsonObject.getString("Count");
-                    txtvDaMua.setText(" "+soluong);
+                    txtvDaMua.setText(""+soluong);
                 } catch (JSONException e) {
                     Toast.makeText(getContext(), "lỗi chưa hiện số lượng đơn đã mua", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -225,7 +225,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String soluong = jsonObject.getString("Count");
-                    txtvDangGiao.setText(" "+soluong);
+                    txtvDangGiao.setText(""+soluong);
                 } catch (JSONException e) {
                     Toast.makeText(getContext(), "lỗi chưa hiện số lượng đơn đang giao", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
