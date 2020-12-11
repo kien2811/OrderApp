@@ -7,290 +7,291 @@
     android:background="@drawable/gradientbackground"
     tools:context=".Fragment.ProfileFragment">
 
-  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-      android:id="@+id/swipeRefreshprofile"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content">
-      <androidx.core.widget.NestedScrollView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent">
-          <LinearLayout
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-              <de.hdodenhof.circleimageview.CircleImageView
-                  android:id="@+id/imgAva"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshprofile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgAva"
 
 
-                  android:layout_gravity="center_horizontal"
-                  android:layout_marginTop="30dp"
-                  android:src="@drawable/ic_launcher_background"
-                  android:layout_width="150dp"
-                  android:layout_height="150dp"
-                  >
-              </de.hdodenhof.circleimageview.CircleImageView>
-              <ImageButton
-                  android:layout_marginTop="-34dp"
-                  android:layout_gravity="center"
-                  android:id="@+id/imageButtonupfile"
-                  android:layout_width="60dp"
-                  android:layout_height="wrap_content"
-                  android:background="#0F000000"
-                  android:src="@android:drawable/ic_menu_camera" />
-              <TextView
-                  android:id="@+id/txtusername"
-                  android:layout_marginTop="10dp"
-                  android:layout_gravity="center_horizontal"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Wiliam Snoe"
-                  android:textColor="#fff"
-                  android:textStyle="bold"
-                  android:textSize="21sp"/>
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    >
+                </de.hdodenhof.circleimageview.CircleImageView>
+                <ImageButton
+                    android:layout_marginTop="-32dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/imageButtonupfile"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:background="#1D000000"
+                    android:src="@android:drawable/ic_menu_camera" />
+                <TextView
+                    android:id="@+id/txtusername"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wiliam Snoe"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:textSize="21sp"/>
 
-              <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:layout_gravity="center"
-                  android:layout_marginTop="20dp">
-                  <Button
-                      android:background="#23A3D8EF"
-                      android:id="@+id/upload_to_sever"
-                      android:text="Đổi Avatar"
-                      android:gravity="center"
-                      android:layout_gravity="center"
-                      android:orientation="horizontal"
-                      android:layout_marginBottom="10dp"
-                      android:layout_width="150dp"
-                      android:layout_height="40dp">
-
-
-                  </Button>
-                  <LinearLayout
-                      android:background="#A8A3D8EF"
-                      android:id="@+id/linv_cart"
-                      android:orientation="horizontal"
-                      android:paddingLeft="25dp"
-                      android:weightSum="7"
-                      android:layout_width="match_parent"
-                      android:layout_height="70dp">
-                      <LinearLayout
-                          android:id="@+id/linearLayoutCart"
-                          android:layout_weight="1"
-                          android:paddingTop="10dp"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content">
-                          <LinearLayout
-                              android:orientation="vertical"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content">
-                              <TextView
-                                  android:background="@drawable/backgournd_white_conner"
-                                  android:id="@+id/txtvCart"
-                                  android:layout_gravity="center_vertical"
-                                  android:layout_width="17dp"
-                                  android:layout_height="17dp"
-                                  android:textSize="15dp"
-                                  android:text=" 0"/>
-                              <ImageView
-                                  android:layout_width="20dp"
-                                  android:layout_height="20dp"
-                                  android:layout_gravity="center_vertical"
-                                  android:src="@drawable/ic_baseline_shopping_cart_24"/>
-                              <TextView
-                                  android:textStyle="bold"
-                                  android:text="Giỏ hàng"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"/>
-                          </LinearLayout>
-                      </LinearLayout>
-                      <LinearLayout
-                          android:id="@+id/linearLayoutChoXacNhan"
-                          android:layout_marginLeft="10dp"
-                          android:layout_weight="1"
-                          android:gravity="center"
-                          android:paddingTop="10dp"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content">
-                          <LinearLayout
-                              android:orientation="vertical"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content">
-                              <TextView
-                                  android:background="@drawable/backgournd_white_conner"
-                                  android:id="@+id/txtvChoXacNhan"
-                                  android:layout_gravity="center_vertical"
-                                  android:layout_width="17dp"
-                                  android:layout_height="17dp"
-                                  android:textSize="15dp"
-                                  android:text=" 0"/>
-                              <ImageView
-                                  android:layout_width="20dp"
-                                  android:layout_height="20dp"
-                                  android:layout_gravity="center_vertical"
-                                  android:src="@drawable/choxacnhan"/>
-                              <TextView
-                                  android:textStyle="bold"
-                                  android:text="Chờ xác nhận"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"/>
-                          </LinearLayout>
-
-                      </LinearLayout>
-                      <LinearLayout
-                          android:id="@+id/linearLayoutDangGiao"
-                          android:layout_marginLeft="10dp"
-                          android:layout_weight="2"
-                          android:paddingTop="10dp"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content">
-                          <LinearLayout
-                              android:orientation="vertical"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content">
-                              <TextView
-                                  android:background="@drawable/backgournd_white_conner"
-                                  android:id="@+id/txtvDangGiao"
-                                  android:layout_gravity="center_vertical"
-                                  android:layout_width="17dp"
-                                  android:layout_height="17dp"
-                                  android:textSize="15dp"
-                                  android:text=" 0"/>
-                              <ImageView
-                                  android:layout_width="20dp"
-                                  android:layout_height="20dp"
-                                  android:layout_gravity="center_vertical"
-                                  android:src="@drawable/danggiao"/>
-                              <TextView
-                                  android:textStyle="bold"
-                                  android:text="đang giao"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"/>
-                          </LinearLayout>
-
-                      </LinearLayout>
-                      <LinearLayout
-                          android:id="@+id/linearLayoutDaMua"
-                          android:layout_marginLeft="10dp"
-                          android:layout_weight="2"
-                          android:paddingTop="10dp"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content">
-                          <LinearLayout
-                              android:orientation="vertical"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content">
-                              <TextView
-                                  android:background="@drawable/backgournd_white_conner"
-                                  android:id="@+id/txtvDaMua"
-                                  android:layout_gravity="center_vertical"
-                                  android:layout_width="17dp"
-                                  android:layout_height="17dp"
-                                  android:textSize="15dp"
-                                  android:text=" 0"/>
-                              <ImageView
-                                  android:layout_width="20dp"
-                                  android:layout_height="20dp"
-                                  android:layout_gravity="center_vertical"
-                                  android:src="@drawable/danhan"/>
-                              <TextView
-                                  android:textStyle="bold"
-                                  android:text="Đã mua"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"/>
-                          </LinearLayout>
-
-                      </LinearLayout>
-                  </LinearLayout>
-                  <LinearLayout
-                      android:background="#A8A3D8EF"
-                      android:layout_marginTop="25dp"
-                      android:id="@+id/linv_email"
-                      android:orientation="horizontal"
-                      android:paddingLeft="25dp"
-                      android:layout_width="match_parent"
-                      android:layout_height="50dp">
-                      <ImageView
-                          android:layout_width="36dp"
-                          android:layout_height="36dp"
-                          android:layout_gravity="center_vertical"
-
-                          android:src="@drawable/ic_baseline_mail_outline_24"/>
-                      <TextView
-                          android:id="@+id/txt_email"
-                          android:textStyle="bold"
-                          android:layout_gravity="center_vertical"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:paddingLeft="20dp"
-                          android:text="Wiliam@gmail.com"/>
-                  </LinearLayout>
-                  <LinearLayout
-                      android:background="#A8A3D8EF"
-
-                      android:id="@+id/linv_phone"
-                      android:layout_marginTop="25dp"
-                      android:orientation="horizontal"
-                      android:paddingLeft="25dp"
-                      android:layout_width="match_parent"
-                      android:layout_height="50dp">
-                      <ImageView
-                          android:layout_width="36dp"
-                          android:layout_height="36dp"
-                          android:layout_gravity="center_vertical"
-
-                          android:src="@drawable/ic_baseline_local_phone_24"/>
-                      <TextView
-                          android:id="@+id/phone"
-                          android:textStyle="bold"
-
-                          android:layout_gravity="center_vertical"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:paddingLeft="20dp"
-                          android:text="+266 225 225"/>
-                  </LinearLayout>
-                  <LinearLayout
-                      android:background="#A8A3D8EF"
-
-                      android:id="@+id/linr_password"
-                      android:layout_marginTop="25dp"
-                      android:orientation="horizontal"
-                      android:paddingLeft="25dp"
-                      android:layout_width="match_parent"
-                      android:layout_height="50dp">
-                      <ImageView
-                          android:layout_gravity="center_vertical"
-
-                          android:layout_width="36dp"
-                          android:layout_height="36dp"
-                          android:src="@drawable/ic_baseline_vpn_key_24"/>
-                      <TextView
-                          android:textStyle="bold"
-
-                          android:layout_gravity="center_vertical"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:paddingLeft="20dp"
-                          android:text="Thay Đổi Mật Khẩu"/>
-                  </LinearLayout>
-                  <Button
-                      android:id="@+id/btn_logout"
-                      android:textColor="#fff"
-                      android:background="@drawable/buttonstyle"
-                      android:layout_marginTop="35dp"
-                      android:layout_gravity="center_horizontal"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="Đăng Xuất"/>
-              </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp">
+                    <Button
+                        android:background="#23A3D8EF"
+                        android:id="@+id/upload_to_sever"
+                        android:text="Đổi Avatar"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp">
 
 
+                    </Button>
+                    <LinearLayout
+                        android:paddingTop="1dp"
+                        android:layout_gravity="center"
+                        android:background="#A8A3D8EF"
+                        android:id="@+id/linv_cart"
+                        android:orientation="horizontal"
+                        android:weightSum="8"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp">
+                        <LinearLayout
+                            android:gravity="center"
 
-          </LinearLayout>
-      </androidx.core.widget.NestedScrollView>
-  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                            android:layout_weight="2"
+                            android:id="@+id/linearLayoutCart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:textColor="#FF0000"
+                                    android:id="@+id/txtvCart"
+                                    android:layout_width="17dp"
+                                    android:layout_height="17dp"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/border_white_gray"
+                                    android:gravity="center"
+                                    android:text="0"
+                                    android:textSize="12dp" />
+
+                                <ImageView
+
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/ic_baseline_shopping_cart_24"/>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_weight="2"
+
+                            android:id="@+id/linearLayoutChoXacNhan"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:textColor="#FF0000"
+
+                                    android:background="@drawable/backgournd_white_conner"
+                                    android:id="@+id/txtvChoXacNhan"
+                                    android:layout_width="17dp"
+                                    android:layout_height="17dp"
+                                    android:textSize="12dp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="0"/>
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/ic_baseline_history_24"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_weight="2"
+                            android:gravity="center"
+
+                            android:id="@+id/linearLayoutDangGiao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:textColor="#FF0000"
+
+                                    android:background="@drawable/backgournd_white_conner"
+                                    android:id="@+id/txtvDangGiao"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:layout_width="17dp"
+                                    android:layout_height="17dp"
+                                    android:textSize="12dp"
+                                    android:text="0"/>
+                                <ImageView
+                                    android:layout_width="55dp"
+                                    android:layout_height="55dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/danggiao"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_weight="2"
+                            android:gravity="center"
+
+                            android:id="@+id/linearLayoutDaMua"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:textColor="#FF0000"
+
+                                    android:background="@drawable/backgournd_white_conner"
+                                    android:id="@+id/txtvDaMua"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"                                  android:layout_width="17dp"
+                                    android:layout_height="17dp"
+                                    android:textSize="12dp"
+                                    android:text="0"/>
+                                <ImageView
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="45dp"
+                                    android:layout_height="45dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/danhan"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:background="#A8A3D8EF"
+                        android:layout_marginTop="25dp"
+                        android:id="@+id/linv_email"
+                        android:orientation="horizontal"
+                        android:paddingLeft="25dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center_vertical"
+
+                            android:src="@drawable/ic_baseline_mail_outline_24"/>
+                        <TextView
+                            android:id="@+id/txt_email"
+                            android:textStyle="bold"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="20dp"
+                            android:text="Wiliam@gmail.com"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:background="#A8A3D8EF"
+
+                        android:id="@+id/linv_phone"
+                        android:layout_marginTop="25dp"
+                        android:orientation="horizontal"
+                        android:paddingLeft="25dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center_vertical"
+
+                            android:src="@drawable/ic_baseline_local_phone_24"/>
+                        <TextView
+                            android:id="@+id/phone"
+                            android:textStyle="bold"
+
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="20dp"
+                            android:text="+266 225 225"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:background="#A8A3D8EF"
+
+                        android:id="@+id/linr_password"
+                        android:layout_marginTop="25dp"
+                        android:orientation="horizontal"
+                        android:paddingLeft="25dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <ImageView
+                            android:layout_gravity="center_vertical"
+
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/ic_baseline_vpn_key_24"/>
+                        <TextView
+                            android:textStyle="bold"
+
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="20dp"
+                            android:text="Thay Đổi Mật Khẩu"/>
+                    </LinearLayout>
+                    <Button
+                        android:id="@+id/btn_logout"
+                        android:textColor="#fff"
+                        android:background="@drawable/buttonstyle"
+                        android:layout_marginTop="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:text="Đăng Xuất"/>
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 
