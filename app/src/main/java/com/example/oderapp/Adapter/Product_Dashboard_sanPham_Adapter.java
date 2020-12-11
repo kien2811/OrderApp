@@ -49,7 +49,8 @@ public class Product_Dashboard_sanPham_Adapter extends RecyclerView.Adapter<Prod
                 .error(R.drawable.noimage)
                 .into(holder.imgSanPhamDashboard);
         holder.txtvName.setText(p.getName());
-        holder.txtvPrice.setText(p.getPrice()+"đ");
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+        holder.txtvPrice.setText(decimalFormat.format(p.getPrice())+"đ");
         holder.txtvDescription.setText(p.getDescription());
 
         int price = p.getPrice();

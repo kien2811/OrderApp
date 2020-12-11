@@ -294,7 +294,7 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
                         list.add(new Cart_Model(jsonObject.getInt("id_product"),
                                 jsonObject.getString("name"),
                                 jsonObject.getInt("pirce"),
-                                jsonObject.getString("image"),
+                                Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),
                                 jsonObject.getString("details"),
                                 jsonObject.getInt("amount_user_oder"),
                                 jsonObject.getInt("product_id"),
