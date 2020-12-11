@@ -22,6 +22,7 @@ import com.example.oderapp.R;
 import com.example.oderapp.inteface.ItemClickListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
@@ -51,7 +52,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 .error(R.drawable.noimage)
                 .into(holder.imgCartCart);
         holder.txtvCartName.setText(cart_model.getName());
-        holder.txtvCartPrice.setText(cart_model.getPrice()+"đ");
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+        holder.txtvCartPrice.setText(decimalFormat.format(cart_model.getPrice())+"đ");
         holder.txtvCartQuantity.setText(cart_model.getQuantity()+"");
         holder.btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +72,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             @Override
             public void onClick(View view, int position, boolean islongClick) {
                 if (!islongClick){
-                    Toast.makeText(context, ""+cart_model.getId(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, ""+cart_model.getAvatar(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

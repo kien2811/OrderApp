@@ -1,7 +1,11 @@
 package com.example.oderapp.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -23,8 +27,14 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.oderapp.Adapter.Product_DongGia_Adapter;
+import com.example.oderapp.Adapter.Product_oders_Adapter;
+import com.example.oderapp.Adapter.Product_suggestion_Adapter;
 import com.example.oderapp.Model.Cart_Model;
 import com.example.oderapp.Model.DashboardSanPham;
+import com.example.oderapp.Model.Product_oders;
+import com.example.oderapp.Model.Product_suggestion;
+import com.example.oderapp.MySingleton.MySingleton;
 import com.example.oderapp.R;
 import com.example.oderapp.SessionManage.SessionManagement;
 import com.example.oderapp.util.Api;
@@ -39,7 +49,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DetailCartActivity extends AppCompatActivity {
@@ -49,6 +61,23 @@ public class DetailCartActivity extends AppCompatActivity {
     TextView txtvDescriptionCart,txtvPriceCart,txtvNameCart,txtvQuantity;
     ImageView imgAvatarCart;
     SliderLayout silder;
+    RecyclerView recyclerView,recyclerView_dongGia;
+
+    Product_suggestion_Adapter product_suggestion_adapter;
+    List<Product_suggestion> product_suggestions_list;
+
+
+    Product_DongGia_Adapter product_dongGia_adapter;
+    List<Product_oders> product_oders_List;
+
+    private LinearLayoutManager layoutManager;
+    private int totalItemCount;
+    private int firstVisibleItem;
+    private int visibleItemCount;
+    private int page = 1;
+    private int previousTotal;
+    private boolean load = true;
+
     SessionManagement sessionManagement;
     int id_Product;
 
@@ -74,10 +103,198 @@ public class DetailCartActivity extends AppCompatActivity {
         initDatabase();
         init();
 
+
         silder.setIndicatorAnimation(IndicatorAnimations.FILL);
         silder.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         silder.setScrollTimeInSec(10);
         data_slider(id_Product);
+    }
+    private void data_product_dong_gia(int price,int id) {
+        product_dongGia_adapter = new Product_DongGia_Adapter();
+        product_dongGia_adapter.Product_oders_Adapter(this,R.layout.item_product_dong_gia,product_oders_List);
+        recyclerView_dongGia.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_dongGia.setLayoutManager(layoutManager);
+        recyclerView_dongGia.setAdapter(product_dongGia_adapter);
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_SELECT_PRODUCT_DONG_GIA+price+"&id_product="+id, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject;
+                product_oders_List.clear();
+                for (int i = 0 ; i < response.length();i ++){
+                    try {
+
+                        jsonObject = response.getJSONObject(i);
+//                        Log.d("onResponse: ",jsonObject.getString("image").toString());
+
+                        product_oders_List.add(new Product_oders(jsonObject.getInt("id")
+                                ,jsonObject.getString("name")
+                                ,jsonObject.getInt("pirce")
+                                ,Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image")
+                                ,jsonObject.getString("details")
+                                ,jsonObject.getInt("product_id")
+                                ,jsonObject.getInt("amount")));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                product_dongGia_adapter.notifyDataSetChanged();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Không có sản phẩm nào đồng giá", Toast.LENGTH_SHORT).show();
+//                Log.d("error",error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(arrayRequest);
+
+    }
+
+    private void data_product_tuongtu(String name,int id) {
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new GridLayoutManager(getApplicationContext(),2);
+        recyclerView.setLayoutManager(layoutManager);
+        product_suggestion_adapter = new Product_suggestion_Adapter();
+        product_suggestion_adapter.Product_suggestion_Adapter(this,R.layout.item_product_suggestion,product_suggestions_list);
+        recyclerView.setAdapter(product_suggestion_adapter);
+
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_SELECT_PRODUCT_TUONG_TU+name+"&id_product="+id+"&page="+page, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject;
+                try {
+//                    product_suggestions_list.clear();
+                    for (int i = 0 ; i < response.length();i ++){
+                        jsonObject = response.getJSONObject(i);
+//                        Log.d("response",jsonObject.getString("name"));
+
+                        product_suggestions_list.add(new Product_suggestion(jsonObject.getInt("id"),jsonObject.getString("name"),Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),jsonObject.getInt("pirce"),jsonObject.getString("details"),jsonObject.getInt("product_id"),jsonObject.getInt("amount")));
+                    }
+                    product_suggestion_adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(getApplicationContext(), "Không có sản phẩm nào tương tự", Toast.LENGTH_SHORT).show();
+                Log.d("error",error.toString());
+                // goi y san pham
+                product_suggestions_list = new ArrayList<>();
+                data_product_suggestion();
+            }
+        });
+        pagination_suggestion(name,id);
+        MySingleton.getInstance(getApplicationContext().getApplicationContext()).addToRequestQueue(arrayRequest);
+    }
+    private void data_product_suggestion() {
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new GridLayoutManager(getApplicationContext(),2);
+        recyclerView.setLayoutManager(layoutManager);
+        product_suggestion_adapter = new Product_suggestion_Adapter();
+        product_suggestion_adapter.Product_suggestion_Adapter(this,R.layout.item_product_suggestion,product_suggestions_list);
+        recyclerView.setAdapter(product_suggestion_adapter);
+
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_PRODUCT_SUGGESTION+page, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject;
+                try {
+//                    product_suggestions_list.clear();
+                    for (int i = 0 ; i < response.length();i ++){
+                        jsonObject = response.getJSONObject(i);
+//                        Log.d("response",jsonObject.getString("name"));
+
+                        product_suggestions_list.add(new Product_suggestion(jsonObject.getInt("id"),jsonObject.getString("name"),Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),jsonObject.getInt("pirce"),jsonObject.getString("details"),jsonObject.getInt("product_id"),jsonObject.getInt("amount")));
+                    }
+                    product_suggestion_adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("error",error.toString());
+
+            }
+        });
+        pagination_suggestions();
+        MySingleton.getInstance(getApplicationContext().getApplicationContext()).addToRequestQueue(arrayRequest);
+    }
+
+    private void pagination_suggestions() {
+        // even load data cua san pham goi y
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalItemCount = layoutManager.getChildCount();
+                visibleItemCount = layoutManager.getItemCount();
+                firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+
+                if(load){
+                    if (totalItemCount  >  previousTotal) {
+                        previousTotal = totalItemCount;
+                        page++;
+                        load = false;
+                    }
+                }
+                if( !load && (firstVisibleItem + visibleItemCount) >= totalItemCount){
+
+                    load = true;
+                    data_product_suggestion();
+                    Log.d("onScrolled", String.valueOf(page));
+                }
+            }
+        });
+    }
+
+
+
+
+    private void pagination_suggestion(String name, int id) {
+        // even load data cua san pham goi y
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalItemCount = layoutManager.getChildCount();
+                visibleItemCount = layoutManager.getItemCount();
+                firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+
+                if(load){
+                    if (totalItemCount  >  previousTotal) {
+                        previousTotal = totalItemCount;
+                        page++;
+                        load = false;
+                    }
+                }
+                if( !load && (firstVisibleItem + visibleItemCount) >= totalItemCount){
+
+                    load = true;
+                    data_product_tuongtu(name,id);
+                    Log.d("onScrolled", String.valueOf(page));
+                }
+            }
+        });
+
+
     }
 
     private void data_slider(int id) {
@@ -185,6 +402,12 @@ public class DetailCartActivity extends AppCompatActivity {
 //                .error(R.drawable.noimage)
 //                .into(imgAvatarCart);
 
+        // san pham mua nhieu
+        product_oders_List = new ArrayList<>();
+        data_product_dong_gia(getPrice,id_Product);
+        // goi y san pham
+        product_suggestions_list = new ArrayList<>();
+        data_product_tuongtu(getName,id_Product);
 
         //Xử lí nút số lượng
         btnMinus.setOnClickListener(new View.OnClickListener() {
@@ -463,5 +686,8 @@ public class DetailCartActivity extends AppCompatActivity {
         btnPlus = findViewById(R.id.btnPlus);
         txtvQuantity = findViewById(R.id.txtvQuantity);
         silder = findViewById(R.id.silder);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView_dongGia = findViewById(R.id.recyclerView_dongGia);
     }
 }

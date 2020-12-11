@@ -48,4 +48,8 @@ public class Api {
 
 
     public static final String URL_SELECT_DON_MUA_PROFILE = "http://"+HOST+"/?controller=index&action=Select_transaction_data_to_id_user";
+// gọi sản phẩm gợi ý tương tự sản phẩm trong chi tiết sản phẩm
+    public static final  String URl_SELECT_PRODUCT_DONG_GIA = "http://"+HOST+"/?controller=index&action=Select_product_dong_gia&price=";
+    //gợi ý tương tự trong màn hình chi tiết
+    public static final  String URl_SELECT_PRODUCT_TUONG_TU = "http://"+HOST+"/?controller=index&action=Select_product_tuong_tu&name=";
 }
