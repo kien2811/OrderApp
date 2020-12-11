@@ -22,6 +22,7 @@
             app:srcCompat="@drawable/ic_home_fish" />
 
         <TextView
+            android:textSize="15dp"
             android:id="@+id/txtproduct_hot"
             android:layout_width="wrap_content"
             android:layout_marginTop="10dp"

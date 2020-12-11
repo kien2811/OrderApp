@@ -7,13 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderapp.Activity.DetailCartActivity;
-import com.example.oderapp.Model.Product_suggestion;
+import com.example.oderapp.Model.Product_oders;
 import com.example.oderapp.R;
 import com.example.oderapp.inteface.ItemClickListener;
 import com.squareup.picasso.Picasso;
@@ -21,60 +20,61 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class Product_suggestion_Adapter extends RecyclerView.Adapter<Product_suggestion_Adapter.ViewHolder> {
+public class Product_DongGia_Adapter extends RecyclerView.Adapter<Product_DongGia_Adapter.ViewHolder> {
     Context context;
     int layout;
-    private List<Product_suggestion> productSuggestionList;
+    List<Product_oders> list;
 
-    public void Product_suggestion_Adapter(Context context, int layout, List<Product_suggestion> productSuggestionList) {
+    public void Product_oders_Adapter(Context context, int layout, List<Product_oders> list) {
         this.context = context;
         this.layout = layout;
-        this.productSuggestionList = productSuggestionList;
+        this.list = list;
     }
 
     @NonNull
     @Override
-    public Product_suggestion_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Product_DongGia_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(layout,null);
-        Product_suggestion_Adapter.ViewHolder viewHolder = new Product_suggestion_Adapter.ViewHolder(view);
+        Product_DongGia_Adapter.ViewHolder viewHolder = new Product_DongGia_Adapter.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Product_suggestion product_suggestion = productSuggestionList.get(position);
-        holder.txtproduct_suggestion_name.setText(product_suggestion.getName());
+        Product_oders p = list.get(position);
+        holder.txtproduct_oder.setText(p.getName());
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        holder.txtproduct_suggestion_price.setText(decimalFormat.format(product_suggestion.getPrice())+"đ");
-        Picasso.get().load(product_suggestion.getImage()).
-                placeholder(R.drawable.loader).
-                error(R.drawable.noimage).
-                into(holder.imgproduct_suggestion);
+        holder.txtvGia.setText(decimalFormat.format(p.getPrice())+"đ");
+        Picasso.get().load(p.getImage())
+                .placeholder(R.drawable.loader)
+                .error(R.drawable.noimage)
+                .into(holder.imgproduct_oder);
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean islongClick) {
                 if(!islongClick){
                     Intent intent = new Intent(context, DetailCartActivity.class);
-                    intent.putExtra("id",product_suggestion.getId());
-                    intent.putExtra("getName",product_suggestion.getName());
-                    intent.putExtra("getPrice",product_suggestion.getPrice());
-                    intent.putExtra("getAvatar",product_suggestion.getImage());
-                    intent.putExtra("getDescription",product_suggestion.getDetails());
-                    intent.putExtra("categoryid",product_suggestion.getProduct_id());
-                    context.startActivity(intent);                    }
+                    intent.putExtra("id",p.getId());
+                    intent.putExtra("getName",p.getName());
+                    intent.putExtra("getPrice",p.getPrice());
+                    intent.putExtra("getAvatar",p.getImage());
+                    intent.putExtra("getDescription",p.getDetails());
+                    intent.putExtra("categoryid",p.getProduct_id());
+                    context.startActivity(intent);
+                }
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return productSuggestionList.size();
+        if(list != null){
+            return list.size();
+        }
+        return 0;
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
-        TextView txtproduct_suggestion_name,txtproduct_suggestion_price;
-        ImageView imgproduct_suggestion;
         private ItemClickListener itemClickListener;
         public void setItemClickListener(ItemClickListener itemClickListener) {
             this.itemClickListener = itemClickListener;
@@ -83,11 +83,13 @@ public class Product_suggestion_Adapter extends RecyclerView.Adapter<Product_sug
             super(itemView);
             this.itemClickListener = itemClickListener;
         }
+        ImageView imgproduct_oder;
+        TextView txtproduct_oder,txtvGia;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtproduct_suggestion_price = itemView.findViewById(R.id.txtproduct_suggestion_price);
-            imgproduct_suggestion = itemView.findViewById(R.id.imgproduct_suggestion);
-            txtproduct_suggestion_name = itemView.findViewById(R.id.txtproduct_suggestion_name);
+            imgproduct_oder = itemView.findViewById(R.id.imgproduct_oder);
+            txtproduct_oder = itemView.findViewById(R.id.txtproduct_oder);
+            txtvGia = itemView.findViewById(R.id.txtvGia);
             itemView.setOnLongClickListener(this);
             itemView.setOnClickListener(this);
         }
@@ -100,5 +102,6 @@ public class Product_suggestion_Adapter extends RecyclerView.Adapter<Product_sug
             itemClickListener.onClick(view,getAdapterPosition(),true);
             return false;
         }
+
     }
 }
