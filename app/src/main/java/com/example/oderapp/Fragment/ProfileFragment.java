@@ -50,6 +50,7 @@ import com.example.oderapp.Activity.Change_phone_Activity;
 import com.example.oderapp.Activity.DetailCartActivity;
 import com.example.oderapp.Activity.DonMuaActivity;
 import com.example.oderapp.Activity.LoginActivity;
+import com.example.oderapp.Activity.OTP.OTPActivity;
 import com.example.oderapp.Fragment.DonMuaFragment.DaMuaFragment;
 import com.example.oderapp.Fragment.DonMuaFragment.DangGiaoFragment;
 import com.example.oderapp.MySingleton.MySingleton;
@@ -357,8 +358,10 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         linv_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), Change_email_Ativity.class);
+                Intent intent = new Intent(getContext(), OTPActivity.class);
                 intent.putExtra("email",email);
+                intent.putExtra("1",2);
+                intent.putExtra("phones",phones);
                 startActivity(intent);
 //                openFeedbackDialog(Gravity.CENTER,email);
             }
@@ -366,7 +369,8 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         linv_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), Change_phone_Activity.class);
+                Intent intent = new Intent(getContext(), OTPActivity.class);
+                intent.putExtra("1",1);
                 intent.putExtra("phones",phones);
                 startActivity(intent);
 //                openFeedbackDialog(Gravity.CENTER,phones);
@@ -376,8 +380,9 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         linr_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), Change_password_Activity.class);
+                Intent intent = new Intent(getContext(), OTPActivity.class);
 //                intent.putExtra("phones",phones);
+                intent.putExtra("1",3);
                 startActivity(intent);
 //                openFeedbackDialog(Gravity.CENTER,"");
             }
