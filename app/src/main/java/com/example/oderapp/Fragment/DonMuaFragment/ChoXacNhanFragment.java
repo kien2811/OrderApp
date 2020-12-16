@@ -79,7 +79,6 @@ public class ChoXacNhanFragment extends Fragment implements SwipeRefreshLayout.O
         int id_user = sessionManagement.getIduser();
         JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URL_DON_MUA_CHO_XAC_NHAN+id_user, null, new Response.Listener<JSONArray>() {
             @Override
-
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
                 try {
@@ -95,7 +94,10 @@ public class ChoXacNhanFragment extends Fragment implements SwipeRefreshLayout.O
                                 Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),
                                 jsonObject.getString("details"),
                                 jsonObject.getInt("quantity"),
-                                jsonObject.getString("name_status")));
+                                jsonObject.getString("name_status"),
+                                jsonObject.getInt("id_size"),
+                                jsonObject.getInt("size"),
+                                jsonObject.getInt("product_id")));
                     }
                     ChoXacNhanAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
@@ -176,5 +178,17 @@ public class ChoXacNhanFragment extends Fragment implements SwipeRefreshLayout.O
         });
 
         dialog.show();
+    }
+
+    public void ChuyenTrang(DonHang donHang) {
+        Intent intent = new Intent(getContext(), DetailCartActivity.class);
+        intent.putExtra("id",donHang.getId_product());
+        intent.putExtra("getName",donHang.getName());
+        intent.putExtra("getPrice",donHang.getPrice());
+        intent.putExtra("getAvatar",donHang.getAvatar());
+        intent.putExtra("getDescription",donHang.getDescription());
+        intent.putExtra("categoryid",donHang.getProduct_id());
+        intent.putExtra("getAmount",donHang.getQuantity());
+        getContext().startActivity(intent);
     }
 }

@@ -7,14 +7,20 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,10 +36,13 @@ import com.android.volley.toolbox.Volley;
 import com.example.oderapp.Adapter.Product_DongGia_Adapter;
 import com.example.oderapp.Adapter.Product_oders_Adapter;
 import com.example.oderapp.Adapter.Product_suggestion_Adapter;
+import com.example.oderapp.Adapter.SizeAdapter;
+import com.example.oderapp.Adapter.ThemVaoGioSizeAdapter;
 import com.example.oderapp.Model.Cart_Model;
 import com.example.oderapp.Model.DashboardSanPham;
 import com.example.oderapp.Model.Product_oders;
 import com.example.oderapp.Model.Product_suggestion;
+import com.example.oderapp.Model.SizeItem;
 import com.example.oderapp.MySingleton.MySingleton;
 import com.example.oderapp.R;
 import com.example.oderapp.SessionManage.SessionManagement;
@@ -56,9 +65,9 @@ import java.util.Map;
 
 public class DetailCartActivity extends AppCompatActivity {
     Toolbar toolbarCart;
-    Button btnAddMuaCart,btnMinus,btnPlus;
+    Button btnAddMuaCart;
     ImageView btnAddCart;
-    TextView txtvDescriptionCart,txtvPriceCart,txtvNameCart,txtvQuantity;
+    TextView txtvDescriptionCart,txtvPriceCart,txtvNameCart;
     ImageView imgAvatarCart;
     SliderLayout silder;
     RecyclerView recyclerView,recyclerView_dongGia;
@@ -69,6 +78,12 @@ public class DetailCartActivity extends AppCompatActivity {
 
     Product_DongGia_Adapter product_dongGia_adapter;
     List<Product_oders> product_oders_List;
+
+    List<SizeItem> sizeItemList = new ArrayList<>();
+
+    TextView txtvkho,txtvQuantity;
+    Button btnMinus,btnPlus,btnDialogMua;
+
 
     private LinearLayoutManager layoutManager;
     private int totalItemCount;
@@ -84,6 +99,8 @@ public class DetailCartActivity extends AppCompatActivity {
     MyDatabase myDatabase;
     DashboardSanPham dashboardSanPham;
     Cursor cursor;
+
+
     static final String DB_NAME = "db_shop";
     static final String TABLE_NAME = "tbl_seen";
     static final String ID_FIELD = "id";
@@ -109,6 +126,193 @@ public class DetailCartActivity extends AppCompatActivity {
         silder.setScrollTimeInSec(10);
         data_slider(id_Product);
     }
+
+
+    private void showFromChonSizeThemVaoGio() {
+        Dialog dialog = new Dialog(this);
+
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.item_form_chon_size);
+
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        ImageView imgSanPham = dialog.findViewById(R.id.imgSanPham);
+        btnMinus = dialog.findViewById(R.id.btnMinus);
+        btnPlus = dialog.findViewById(R.id.btnPlus);
+        txtvQuantity = dialog.findViewById(R.id.txtvQuantity);
+        TextView txtvPrice = dialog.findViewById(R.id.txtvPrice);
+        txtvkho = dialog.findViewById(R.id.txtvkho);
+        RecyclerView recyclerViewSize = dialog.findViewById(R.id.recyclerViewSelect);
+        btnDialogMua = dialog.findViewById(R.id.btnDialogMua);
+
+        Intent intent = getIntent();
+        id_Product = (int) intent.getSerializableExtra("id");
+        String getName = (String) intent.getSerializableExtra("getName");
+        int getPrice = (int) intent.getSerializableExtra("getPrice");
+        int getAmount = (int) intent.getSerializableExtra("getAmount");
+        String getAvatar = (String) intent.getSerializableExtra("getAvatar");
+
+        DecimalFormat formatter = new DecimalFormat("###,###,###");
+        String price = formatter.format(getPrice);
+        txtvPrice.setText("Giá :" + price +"đ");
+        txtvkho.setText("kho : "+getAmount);
+
+
+        Picasso.get().load(getAvatar)
+                .placeholder(R.drawable.loader)
+                .error(R.drawable.noimage)
+                .into(imgSanPham);
+
+        layoutManager = new GridLayoutManager(getApplicationContext(),5);
+        recyclerViewSize.setHasFixedSize(true);
+        recyclerViewSize.setLayoutManager(layoutManager);
+
+        getdataThemVaoGio(recyclerViewSize,id_Product);
+
+        btnDialogMua.setText("Thêm vào giỏ");
+        btnDialogMua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(DetailCartActivity.this, "Bạn chưa chọn Size", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        dialog.show();
+    }
+
+
+    private void showFromChonSize() {
+        Dialog dialog = new Dialog(this);
+
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.item_form_chon_size);
+
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        ImageView imgSanPham = dialog.findViewById(R.id.imgSanPham);
+        btnMinus = dialog.findViewById(R.id.btnMinus);
+        btnPlus = dialog.findViewById(R.id.btnPlus);
+        txtvQuantity = dialog.findViewById(R.id.txtvQuantity);
+        TextView txtvPrice = dialog.findViewById(R.id.txtvPrice);
+        txtvkho = dialog.findViewById(R.id.txtvkho);
+        RecyclerView recyclerViewSize = dialog.findViewById(R.id.recyclerViewSelect);
+        btnDialogMua = dialog.findViewById(R.id.btnDialogMua);
+
+        Intent intent = getIntent();
+        id_Product = (int) intent.getSerializableExtra("id");
+        String getName = (String) intent.getSerializableExtra("getName");
+        int getPrice = (int) intent.getSerializableExtra("getPrice");
+        int getAmount = (int) intent.getSerializableExtra("getAmount");
+        String getAvatar = (String) intent.getSerializableExtra("getAvatar");
+
+        DecimalFormat formatter = new DecimalFormat("###,###,###");
+        String price = formatter.format(getPrice);
+        txtvPrice.setText("Giá :" + price +"đ");
+        txtvkho.setText("kho : "+getAmount);
+
+
+        Picasso.get().load(getAvatar)
+                .placeholder(R.drawable.loader)
+                .error(R.drawable.noimage)
+                .into(imgSanPham);
+
+        layoutManager = new GridLayoutManager(getApplicationContext(),5);
+        recyclerViewSize.setHasFixedSize(true);
+        recyclerViewSize.setLayoutManager(layoutManager);
+
+        getdata(recyclerViewSize,id_Product);
+
+
+        btnDialogMua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(DetailCartActivity.this, "Bạn chưa chọn Size", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+        dialog.show();
+    }
+    private void getdataThemVaoGio(RecyclerView recyclerView, int id_Product) {
+        ThemVaoGioSizeAdapter sizeAdapter = new ThemVaoGioSizeAdapter(this,R.layout.item_size,sizeItemList);
+        recyclerView.setAdapter(sizeAdapter);
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_SELECT_PRODUCT_SIZE+id_Product, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject;
+                sizeItemList.clear();
+                for (int i = 0 ; i < response.length();i ++){
+                    try {
+                        jsonObject = response.getJSONObject(i);
+
+                        sizeItemList.add(new SizeItem(jsonObject.getInt("id")
+                                ,jsonObject.getInt("id_product")
+                                ,jsonObject.getInt("size")
+                                ,jsonObject.getInt("quantity")));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                sizeAdapter.notifyDataSetChanged();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Không có sản phẩm nào đồng giá", Toast.LENGTH_SHORT).show();
+//                Log.d("error",error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(arrayRequest);
+
+    }
+
+    private void getdata(RecyclerView recyclerView, int id_Product) {
+        SizeAdapter sizeAdapter = new SizeAdapter(this,R.layout.item_size,sizeItemList);
+        recyclerView.setAdapter(sizeAdapter);
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, Api.URl_SELECT_PRODUCT_SIZE+id_Product, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject;
+                sizeItemList.clear();
+                for (int i = 0 ; i < response.length();i ++){
+                    try {
+                        jsonObject = response.getJSONObject(i);
+
+                        sizeItemList.add(new SizeItem(jsonObject.getInt("id")
+                                ,jsonObject.getInt("id_product")
+                                ,jsonObject.getInt("size")
+                                ,jsonObject.getInt("quantity")));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                sizeAdapter.notifyDataSetChanged();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Không có sản phẩm nào đồng giá", Toast.LENGTH_SHORT).show();
+//                Log.d("error",error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(arrayRequest);
+
+    }
+
+
     private void data_product_dong_gia(int price,int id) {
         product_dongGia_adapter = new Product_DongGia_Adapter();
         product_dongGia_adapter.Product_oders_Adapter(this,R.layout.item_product_dong_gia,product_oders_List);
@@ -155,6 +359,7 @@ public class DetailCartActivity extends AppCompatActivity {
     }
 
     private void data_product_tuongtu(String name,int id) {
+        product_suggestions_list = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         layoutManager = new GridLayoutManager(getApplicationContext(),2);
         recyclerView.setLayoutManager(layoutManager);
@@ -170,7 +375,7 @@ public class DetailCartActivity extends AppCompatActivity {
 //                    product_suggestions_list.clear();
                     for (int i = 0 ; i < response.length();i ++){
                         jsonObject = response.getJSONObject(i);
-//                        Log.d("response",jsonObject.getString("name"));
+                        Log.d("response",jsonObject.getString("name"));
 
                         product_suggestions_list.add(new Product_suggestion(jsonObject.getInt("id"),jsonObject.getString("name"),Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),jsonObject.getInt("pirce"),jsonObject.getString("details"),jsonObject.getInt("product_id"),jsonObject.getInt("amount")));
                     }
@@ -337,7 +542,7 @@ public class DetailCartActivity extends AppCompatActivity {
     private boolean checkSeen(int id_Product) {
         cursor = myDatabase.selectData("select * from "+TABLE_NAME+" where id="+id_Product);
         if (cursor.moveToNext()){
-                Toast.makeText(this, cursor.getString(1)+" đã có trong đã xem!", Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, cursor.getString(1)+" đã có trong đã xem!", Toast.LENGTH_LONG).show();
                 Log.d("aaa",cursor.getString(1));
             return true;
         }
@@ -355,7 +560,7 @@ public class DetailCartActivity extends AppCompatActivity {
 
             long check = myDatabase.insertData(TABLE_NAME, null, cv);
             if (check > 0){
-                Toast.makeText(this, getName+" được thêm vào đã xem!", Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, getName+" được thêm vào đã xem!", Toast.LENGTH_LONG).show();
                 Log.d("aaa",getName);
             }else {
                 Toast.makeText(this, "Lỗi !", Toast.LENGTH_LONG).show();
@@ -364,17 +569,7 @@ public class DetailCartActivity extends AppCompatActivity {
         }
     }
 
-    private void quantitySet(String action) {
-        int qtt = Integer.parseInt(txtvQuantity.getText().toString());
-        if (action.equals("plus")){
-            qtt += 1;
-        }else if (action.equals("minus")){
-            if (qtt > 1){
-                qtt -= 1;
-            }
-        }
-        txtvQuantity.setText(qtt+"");
-    }
+
 
     private void init() {
         //gọi dữ liệu từ Intent
@@ -393,8 +588,8 @@ public class DetailCartActivity extends AppCompatActivity {
         txtvNameCart.setText(getName);
 
         DecimalFormat formatter = new DecimalFormat("###,###,###");
-//        String price = formatter.format(Double.parseDouble(getPrice+""))+" VNĐ";
-        txtvPriceCart.setText("Giá " + getPrice);
+        String price = formatter.format(getPrice);
+        txtvPriceCart.setText("Giá :" + price +"đ");
 
         txtvDescriptionCart.setText(getDescription);
 //        Picasso.get().load(getAvatar)
@@ -409,163 +604,44 @@ public class DetailCartActivity extends AppCompatActivity {
         product_suggestions_list = new ArrayList<>();
         data_product_tuongtu(getName,id_Product);
 
-        //Xử lí nút số lượng
-        btnMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quantitySet("minus");
-            }
-        });
-        btnPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quantitySet("plus");
-            }
-        });
+//
         // xử lí sự kiện nút bấm
         btnAddCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addCart();
-                finish();
+//                addCart();
+//                finish();
+                showFromChonSizeThemVaoGio();
             }
         });
         btnAddMuaCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addCartDatabase();
-
+//                addCartDatabase();
+                showFromChonSize();
             }
         });
 
         initActionBar();
     }
     //thêm vào giỏ hàng nhưng không chuyển sang màn hình giỏ hàng
-    private void addCart() {
+    private void addCartThemVaoGio(int id_size, int maxQuantity) {
         sessionManagement = new SessionManagement(getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,Api.URL_CHECK_ID_PRODUCT_ODER_USER+sessionManagement.getIduser()+"&id_product="+id_Product, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,Api.URL_CHECK_ID_PRODUCT_ODER_USER+sessionManagement.getIduser()+"&id_product="+id_Product+"&id_size="+id_size, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
                 for (int i = 0; i < response.length(); i++) {
                     try {
-
                         jsonObject = response.getJSONObject(i);
 //                        Log.d("aac", jsonObject.toString());
                         int quantily_db = jsonObject.getInt("amount_user_oder");
                         int amount = jsonObject.getInt("amount");
                         int id_product = jsonObject.getInt("id_product");
-                        if (quantily_db != amount){
-                            updateAddCart(id_product,quantily_db);
+                        if (quantily_db <= maxQuantity){
+                            updateAddCart(id_product,quantily_db,maxQuantity);
                         }else {
-                            Toast.makeText(DetailCartActivity.this, "Số lượng sản phẩm đã đạt giới hạn!", Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(DetailCartActivity.this, "thêm vào giỏ hàng lỗi !", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(DetailCartActivity.this, "error"+error, Toast.LENGTH_SHORT).show();
-                Log.d("error",error.toString());
-                insertAddCart(id_Product);
-            }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonArrayRequest);
-
-    }
-    //thêm vào giỏ hàng nhưng không chuyển sang màn hình giỏ hàng
-    private void updateAddCart(int id_Product ,int update_quantily){
-        sessionManagement = new SessionManagement(getApplicationContext());
-        update_quantily += Integer.parseInt(txtvQuantity.getText().toString());
-        RequestQueue requestQueue = Volley.newRequestQueue(DetailCartActivity.this);
-        int finalUpdate_quantily = update_quantily;
-        StringRequest request = new StringRequest(Request.Method.POST, Api.URL_UPDATE_ID_PRODUCT_ORDER_USER, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String user_oder = jsonObject.getString("user_oder");
-                    Toast.makeText(DetailCartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(DetailCartActivity.this,CartActivity.class);
-                    startActivity(intent);
-                } catch (JSONException e) {
-                    Toast.makeText(DetailCartActivity.this, "lỗi chưa thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
-            }
-        },new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){@Override
-        public Map<String, String> getParams() throws AuthFailureError {
-            Map<String, String> map = new HashMap<>();
-            map.put("id_user", sessionManagement.getIduser()+"");
-            map.put("id_product", id_Product+"");
-            map.put("quantily", finalUpdate_quantily+"");
-            return map;
-        }};
-        RequestQueue requestQueue1 = Volley.newRequestQueue(getApplicationContext());
-        requestQueue1.add(request);
-    }
-    //thêm vào giỏ hàng nhưng không chuyển sang màn hình giỏ hàng
-    private void  insertAddCart(int id_Product){
-        sessionManagement = new SessionManagement(getApplicationContext());
-        int quantily = Integer.parseInt(txtvQuantity.getText().toString());
-        StringRequest request = new StringRequest(Request.Method.POST, Api.URL_INSERT_TO_CART_ORDER_USER, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String user_oder = jsonObject.getString("user_oder");
-                    Toast.makeText(DetailCartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    Toast.makeText(DetailCartActivity.this, "lỗi chưa thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetailCartActivity.this, "Lỗi thêm giỏ hàng insertCart"+error, Toast.LENGTH_SHORT).show();
-                Log.d("eross",error.toString());
-            }
-        }){@Override
-        public Map<String, String> getParams() throws AuthFailureError {
-            Map<String, String> map = new HashMap<>();
-            map.put("id_user", sessionManagement.getIduser()+"");
-            map.put("id_product", id_Product+"");
-            map.put("quantily", quantily+"");
-            return map;
-        }};
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(request);
-    }
-    //thêm vào giỏ hàng và chuyển sang màn hình giỏ hàng
-    private void addCartDatabase() {
-        sessionManagement = new SessionManagement(getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,Api.URL_CHECK_ID_PRODUCT_ODER_USER+sessionManagement.getIduser()+"&id_product="+id_Product, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                JSONObject jsonObject;
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-
-                        jsonObject = response.getJSONObject(i);
-//                        Log.d("aac", jsonObject.toString());
-                        int quantily_db = jsonObject.getInt("amount_user_oder");
-                        int amount = jsonObject.getInt("amount");
-                        int id_product = jsonObject.getInt("id_product");
-                        if (quantily_db != amount){
-                            updateCart(id_product,quantily_db);
-                        }else {
-                            Toast.makeText(DetailCartActivity.this, "Số lượng sản phẩm đã đạt giới hạn!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DetailCartActivity.this, "Số lượng sản phẩm trong giỏ đã đạt giới hạn!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(DetailCartActivity.this,CartActivity.class);
                             startActivity(intent);
                         }
@@ -580,7 +656,121 @@ public class DetailCartActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 //                Toast.makeText(DetailCartActivity.this, "error"+error, Toast.LENGTH_SHORT).show();
                 Log.d("error",error.toString());
-                insertCart(id_Product);
+                insertAddCart(id_Product,id_size);
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+
+    }
+    //thêm vào giỏ hàng nhưng không chuyển sang màn hình giỏ hàng
+    private void updateAddCart(int id_Product ,int update_quantily,int maxQuantity){
+        sessionManagement = new SessionManagement(getApplicationContext());
+        update_quantily += Integer.parseInt(txtvQuantity.getText().toString());
+        if (update_quantily > maxQuantity){
+            Toast.makeText(DetailCartActivity.this, "Số lượng sản phẩm trong giỏ đã đạt giới hạn!", Toast.LENGTH_SHORT).show();
+        }else {
+            int finalUpdate_quantily = update_quantily;
+            StringRequest request = new StringRequest(Request.Method.POST, Api.URL_UPDATE_ID_PRODUCT_ORDER_USER, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        String user_oder = jsonObject.getString("user_oder");
+                        Toast.makeText(DetailCartActivity.this, "" + user_oder, Toast.LENGTH_SHORT).show();
+                        finish();
+                    } catch (JSONException e) {
+                        Toast.makeText(DetailCartActivity.this, "lỗi chưa thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }) {
+                @Override
+                public Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("id_user", sessionManagement.getIduser() + "");
+                    map.put("id_product", id_Product + "");
+                    map.put("quantily", finalUpdate_quantily + "");
+                    return map;
+                }
+            };
+            RequestQueue requestQueue1 = Volley.newRequestQueue(getApplicationContext());
+            requestQueue1.add(request);
+        }
+    }
+    //thêm vào giỏ hàng nhưng không chuyển sang màn hình giỏ hàng
+    private void  insertAddCart(int id_Product, int id_size){
+        sessionManagement = new SessionManagement(getApplicationContext());
+        int quantily = Integer.parseInt(txtvQuantity.getText().toString());
+        StringRequest request = new StringRequest(Request.Method.POST, Api.URL_INSERT_TO_CART_ORDER_USER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String user_oder = jsonObject.getString("user_oder");
+                    Toast.makeText(DetailCartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
+                    finish();
+                } catch (JSONException e) {
+                    Toast.makeText(DetailCartActivity.this, "lỗi chưa thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(DetailCartActivity.this, "Lỗi thêm giỏ hàng insertCart"+error, Toast.LENGTH_SHORT).show();
+                Log.d("eross",error.toString());
+            }
+        }){@Override
+        public Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> map = new HashMap<>();
+            map.put("id_user", sessionManagement.getIduser()+"");
+            map.put("id_product", id_Product+"");
+            map.put("id_size", id_size+"");
+            map.put("quantily", quantily+"");
+            return map;
+        }};
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(request);
+    }
+    //thêm vào giỏ hàng và chuyển sang màn hình giỏ hàng
+    private void addCartDatabase(int id_size,int maxQuantity) {
+        sessionManagement = new SessionManagement(getApplicationContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,Api.URL_CHECK_ID_PRODUCT_ODER_USER+sessionManagement.getIduser()+"&id_product="+id_Product+"&id_size="+id_size, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject;
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        jsonObject = response.getJSONObject(i);
+//                        Log.d("aac", jsonObject.toString());
+                        int quantily_db = jsonObject.getInt("amount_user_oder");
+                        int amount = jsonObject.getInt("amount");
+                        int id_product = jsonObject.getInt("id_product");
+                        if (quantily_db <= maxQuantity){
+                            updateCart(id_product,quantily_db,maxQuantity);
+                        }else {
+                            Toast.makeText(DetailCartActivity.this, "Số lượng sản phẩm trong giỏ đã đạt giới hạn!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(DetailCartActivity.this,CartActivity.class);
+                            startActivity(intent);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(DetailCartActivity.this, "thêm vào giỏ hàng lỗi !", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(DetailCartActivity.this, "error"+error, Toast.LENGTH_SHORT).show();
+                Log.d("error",error.toString());
+                insertCart(id_Product,id_size);
                 }
             });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -588,43 +778,48 @@ public class DetailCartActivity extends AppCompatActivity {
 
     }
     //thêm vào giỏ hàng và chuyển sang màn hình giỏ hàng
-    private void updateCart(int id_Product ,int update_quantily){
+    private void updateCart(int id_Product ,int update_quantily,int maxQuantity){
         sessionManagement = new SessionManagement(getApplicationContext());
         update_quantily += Integer.parseInt(txtvQuantity.getText().toString());
-        RequestQueue requestQueue = Volley.newRequestQueue(DetailCartActivity.this);
-        int finalUpdate_quantily = update_quantily;
-        StringRequest request = new StringRequest(Request.Method.POST, Api.URL_UPDATE_ID_PRODUCT_ORDER_USER, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String user_oder = jsonObject.getString("user_oder");
-                    Toast.makeText(DetailCartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(DetailCartActivity.this,CartActivity.class);
-                    startActivity(intent);
-                } catch (JSONException e) {
-                    Toast.makeText(DetailCartActivity.this, "lỗi chưa thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
+        if (update_quantily > maxQuantity){
+            Toast.makeText(DetailCartActivity.this, "Số lượng sản phẩm trong giỏ đã đạt giới hạn!", Toast.LENGTH_SHORT).show();
+        }else {
+            int finalUpdate_quantily = update_quantily;
+            StringRequest request = new StringRequest(Request.Method.POST, Api.URL_UPDATE_ID_PRODUCT_ORDER_USER, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        String user_oder = jsonObject.getString("user_oder");
+                        Toast.makeText(DetailCartActivity.this, "" + user_oder, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(DetailCartActivity.this, CartActivity.class);
+                        startActivity(intent);
+                    } catch (JSONException e) {
+                        Toast.makeText(DetailCartActivity.this, "lỗi chưa thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
                 }
-            }
-        },new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
 
-            }
-        }){@Override
-        public Map<String, String> getParams() throws AuthFailureError {
-            Map<String, String> map = new HashMap<>();
-            map.put("id_user", sessionManagement.getIduser()+"");
-            map.put("id_product", id_Product+"");
-            map.put("quantily", finalUpdate_quantily+"");
-            return map;
-        }};
-        RequestQueue requestQueue1 = Volley.newRequestQueue(getApplicationContext());
-        requestQueue1.add(request);
+                }
+            }) {
+                @Override
+                public Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("id_user", sessionManagement.getIduser() + "");
+                    map.put("id_product", id_Product + "");
+                    map.put("quantily", finalUpdate_quantily + "");
+                    return map;
+                }
+            };
+            RequestQueue requestQueue1 = Volley.newRequestQueue(getApplicationContext());
+            requestQueue1.add(request);
+        }
     }
     //thêm vào giỏ hàng và chuyển sang màn hình giỏ hàng
-    private void  insertCart(int id_Product){
+    private void  insertCart(int id_Product,int id_size){
         sessionManagement = new SessionManagement(getApplicationContext());
         int quantily = Integer.parseInt(txtvQuantity.getText().toString());
         StringRequest request = new StringRequest(Request.Method.POST, Api.URL_INSERT_TO_CART_ORDER_USER, new Response.Listener<String>() {
@@ -652,6 +847,7 @@ public class DetailCartActivity extends AppCompatActivity {
             Map<String, String> map = new HashMap<>();
             map.put("id_user", sessionManagement.getIduser()+"");
             map.put("id_product", id_Product+"");
+            map.put("id_size", id_size+"");
             map.put("quantily", quantily+"");
             return map;
         }};
@@ -682,12 +878,86 @@ public class DetailCartActivity extends AppCompatActivity {
 
         toolbarCart = findViewById(R.id.toolbarCart);
 
-        btnMinus = findViewById(R.id.btnMinus);
-        btnPlus = findViewById(R.id.btnPlus);
-        txtvQuantity = findViewById(R.id.txtvQuantity);
+
+
         silder = findViewById(R.id.silder);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView_dongGia = findViewById(R.id.recyclerView_dongGia);
+    }
+
+    public void AddMuaNgay(int quantity,int id_size) {
+        txtvkho.setText("Kho : "+quantity);
+        txtvQuantity.setText("1");
+        //Xử lí nút số lượng
+        btnMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                quantitySet("minus");
+                int qtt = Integer.parseInt(txtvQuantity.getText().toString());
+                if (qtt > 1){
+                    qtt -= 1;
+                    txtvQuantity.setText(qtt+"");
+                }
+            }
+        });
+        btnPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                quantitySet("plus");
+                int qtt = Integer.parseInt(txtvQuantity.getText().toString());
+                if (qtt != quantity) {
+                    qtt += 1;
+                    txtvQuantity.setText(qtt + "");
+                }else {
+                    Toast.makeText(DetailCartActivity.this, "Số lượng đã đạt giới hạn", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        btnDialogMua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(DetailCartActivity.this, "đã bấm vào mua", Toast.LENGTH_SHORT).show();
+                addCartDatabase(id_size,quantity);
+            }
+        });
+
+    }
+
+    public void AddVaoGio(int quantity, int id_size) {
+        txtvkho.setText("Kho : "+quantity);
+        txtvQuantity.setText("1");
+        //Xử lí nút số lượng
+        btnMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                quantitySet("minus");
+                int qtt = Integer.parseInt(txtvQuantity.getText().toString());
+                if (qtt > 1){
+                    qtt -= 1;
+                    txtvQuantity.setText(qtt+"");
+                }
+            }
+        });
+        btnPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                quantitySet("plus");
+                int qtt = Integer.parseInt(txtvQuantity.getText().toString());
+                if (qtt != quantity) {
+                    qtt += 1;
+                    txtvQuantity.setText(qtt + "");
+                }else {
+                    Toast.makeText(DetailCartActivity.this, "Số lượng đã đạt giới hạn", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        btnDialogMua.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(DetailCartActivity.this, "đã bấm vào mua", Toast.LENGTH_SHORT).show();
+                addCartThemVaoGio(id_size,quantity);
+            }
+        });
     }
 }

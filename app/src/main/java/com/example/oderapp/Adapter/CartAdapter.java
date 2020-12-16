@@ -55,6 +55,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         holder.txtvCartPrice.setText(decimalFormat.format(cart_model.getPrice())+"đ");
         holder.txtvCartQuantity.setText(cart_model.getQuantity()+"");
+        holder.txtvsize.setText("Size "+cart_model.getName_size());
         holder.btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,14 +73,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             @Override
             public void onClick(View view, int position, boolean islongClick) {
                 if (!islongClick){
-                    Toast.makeText(context, ""+cart_model.getAvatar(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, ""+cart_model.getId(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
         holder.deleteCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.deleteCart(cart_model.getId());
+                context.deleteCart(cart_model.getId(),cart_model.getId_size());
             }
         });
 
@@ -92,7 +93,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         ImageView imgCartCart;
-        TextView txtvCartName,txtvCartPrice,txtvCartQuantity;
+        TextView txtvCartName,txtvCartPrice,txtvCartQuantity,txtvsize;
         Button btnMinus,btnPlus,deleteCart;
 
         private ItemClickListener itemClickListener;
@@ -112,6 +113,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             btnMinus = itemView.findViewById(R.id.btnMinusCart);
             btnPlus = itemView.findViewById(R.id.btnPlusCart);
             deleteCart = itemView.findViewById(R.id.deleteCart);
+            txtvsize = itemView.findViewById(R.id.txtvsize);
 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);

@@ -10,6 +10,17 @@ class Product_suggestion implements Serializable {
     private int price;
     private String details;
     private int product_id;
+    private int amount;
+
+    public Product_suggestion(int id, String name, String image, int price, String details, int product_id, int amount) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+        this.details = details;
+        this.product_id = product_id;
+        this.amount = amount;
+    }
 
     public int getId() {
         return id;
@@ -67,17 +78,16 @@ class Product_suggestion implements Serializable {
         this.amount = amount;
     }
 
-    public Product_suggestion(int id, String name, String image, int price, String details, int product_id, int amount) {
-        this.id = id;
-        this.name = name;
-        this.image = image;
-        this.price = price;
-        this.details = details;
-        this.product_id = product_id;
-        this.amount = amount;
+    @Override
+    public String toString() {
+        return "Product_suggestion{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                ", price=" + price +
+                ", details='" + details + '\'' +
+                ", product_id=" + product_id +
+                ", amount=" + amount +
+                '}';
     }
-
-    private int amount;
-
-
 }

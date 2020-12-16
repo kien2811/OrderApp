@@ -9,18 +9,19 @@ public class DashboardSanPham implements Serializable {
     private String avatar;
     private String description;
     private int categoryid;
+    private int amount;
 
-    public DashboardSanPham(int id, String name, int price, String avatar, String description, int categoryid) {
+    public DashboardSanPham() {
+    }
+
+    public DashboardSanPham(int id, String name, int price, String avatar, String description, int categoryid, int amount) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.avatar = avatar;
         this.description = description;
         this.categoryid = categoryid;
-    }
-
-    public DashboardSanPham() {
-
+        this.amount = amount;
     }
 
     public int getId() {
@@ -79,16 +80,16 @@ public class DashboardSanPham implements Serializable {
         this.amount = amount;
     }
 
-    public DashboardSanPham(int id, String name, int price, String avatar, String description, int categoryid, int amount) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.avatar = avatar;
-        this.description = description;
-        this.categoryid = categoryid;
-        this.amount = amount;
+    @Override
+    public String toString() {
+        return "DashboardSanPham{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", avatar='" + avatar + '\'' +
+                ", description='" + description + '\'' +
+                ", categoryid=" + categoryid +
+                ", amount=" + amount +
+                '}';
     }
-
-    private int amount;
-
 }

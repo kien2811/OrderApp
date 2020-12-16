@@ -60,6 +60,7 @@ public class Product_DongGia_Adapter extends RecyclerView.Adapter<Product_DongGi
                     intent.putExtra("getAvatar",p.getImage());
                     intent.putExtra("getDescription",p.getDetails());
                     intent.putExtra("categoryid",p.getProduct_id());
+                    intent.putExtra("getAmount",p.getAmount());
                     context.startActivity(intent);
                 }
             }

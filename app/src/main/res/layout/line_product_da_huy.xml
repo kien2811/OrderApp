@@ -10,55 +10,71 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/imgChoxacnhan"
-        android:src="@drawable/noimage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
-    <LinearLayout
+        <ImageView
+            android:id="@+id/imgChoxacnhan"
+            android:src="@drawable/noimage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+        <LinearLayout
 
-        android:layout_marginLeft="10dp"
-        android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtvCartName"
+                android:text="Tên sản phẩm"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:weightSum="5"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txtvSize"
+                    android:layout_weight="1"
+                    android:text="Size: 37"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_weight="2"
+                    android:background="#85F4F4F4"
+                    android:id="@+id/txtvCartQuantity"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="x1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/txtvCartPrice"
+                android:textColor="#FF0000"
+                android:text="Giá"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:weightSum="5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/txtvCartName"
-            android:text="Tên sản phẩm"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:background="#85F4F4F4"
-            android:id="@+id/txtvCartQuantity"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:text="x1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:id="@+id/txtvCartPrice"
-            android:textColor="#FF0000"
-            android:text="Giá"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
+            android:layout_weight="2"
             android:id="@+id/txtvsosanpham"
             android:text="1 sản phẩm"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"/>
         <LinearLayout
-            android:gravity="center"
-            android:layout_marginLeft="150dp"
-            android:layout_width="wrap_content"
+            android:layout_weight="3"
+            android:gravity="right"
+            android:layout_width="0dp"
             android:layout_height="wrap_content">
             <TextView
                 android:text="Thành tiền : "
@@ -67,7 +83,7 @@
             <TextView
                 android:id="@+id/txtvTongPrice"
                 android:textColor="#FF0000"
-                android:text="400.000"
+                android:text="2.400.000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

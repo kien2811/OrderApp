@@ -28,23 +28,20 @@
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="250dp">
                 <ImageView
                     android:id="@+id/imgproduct_oder"
                     android:src="@drawable/cart"
                     android:layout_marginTop="10dp"
-
-                    android:layout_width="100dp"
-                    android:layout_height="120dp">
-
+                    android:layout_width="150dp"
+                    android:layout_height="150dp">
                 </ImageView>
                 <TextView
                     android:layout_marginTop="10dp"
                     android:id="@+id/txtproduct_oder"
                     android:textSize="15dp"
-                    android:textColor="#0D41FF"
                     android:text="Ten Product"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content">
 
                 </TextView>

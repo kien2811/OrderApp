@@ -1,7 +1,7 @@
 package com.example.oderapp.util;
 
 public class Api {
-    public static final  String HOST = "192.168.1.6:8089/oder_cart_php/public";
+    public static final  String HOST = "192.168.1.11:8888/oder_cart_php/public";
 
     public static final  String URl_SLIDER = "http://"+HOST+"/?controller=index&action=slider";
     public static final  String URl_SLIDER_PRODUCT = "http://"+HOST+"/?controller=index&action=Select_Slider_Product&id_product=";
@@ -52,4 +52,6 @@ public class Api {
     public static final  String URl_SELECT_PRODUCT_DONG_GIA = "http://"+HOST+"/?controller=index&action=Select_product_dong_gia&price=";
     //gợi ý tương tự trong màn hình chi tiết
     public static final  String URl_SELECT_PRODUCT_TUONG_TU = "http://"+HOST+"/?controller=index&action=Select_product_tuong_tu&name=";
+    // gọi bảng size cho chi tiết sản phẩm
+    public static final  String URl_SELECT_PRODUCT_SIZE = "http://"+HOST+"/?controller=index&action=Select_product_size&id_product=";
 }

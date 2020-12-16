@@ -61,6 +61,7 @@ public class Product_suggestion_Adapter extends RecyclerView.Adapter<Product_sug
                     intent.putExtra("getAvatar",product_suggestion.getImage());
                     intent.putExtra("getDescription",product_suggestion.getDetails());
                     intent.putExtra("categoryid",product_suggestion.getProduct_id());
+                    intent.putExtra("getAmount",product_suggestion.getAmount());
                     context.startActivity(intent);                    }
             }
         });
