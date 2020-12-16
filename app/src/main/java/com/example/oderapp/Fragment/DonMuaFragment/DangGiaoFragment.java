@@ -1,5 +1,6 @@
 package com.example.oderapp.Fragment.DonMuaFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.oderapp.Activity.DetailCartActivity;
 import com.example.oderapp.Adapter.DaMuaAdapter;
 import com.example.oderapp.Adapter.DangGiaoAdapter;
 import com.example.oderapp.Model.DonHang;
@@ -79,7 +81,10 @@ public class DangGiaoFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),
                                 jsonObject.getString("details"),
                                 jsonObject.getInt("quantity"),
-                                jsonObject.getString("name_status")));
+                                jsonObject.getString("name_status"),
+                                jsonObject.getInt("id_size"),
+                                jsonObject.getInt("size"),
+                                jsonObject.getInt("product_id")));
                     }
                     dangGiaoAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
@@ -110,5 +115,17 @@ public class DangGiaoFragment extends Fragment implements SwipeRefreshLayout.OnR
 
 
     public void InsertData(int id) {
+    }
+
+    public void ChuyenTrang(DonHang donHang) {
+        Intent intent = new Intent(getContext(), DetailCartActivity.class);
+        intent.putExtra("id",donHang.getId_product());
+        intent.putExtra("getName",donHang.getName());
+        intent.putExtra("getPrice",donHang.getPrice());
+        intent.putExtra("getAvatar",donHang.getAvatar());
+        intent.putExtra("getDescription",donHang.getDescription());
+        intent.putExtra("categoryid",donHang.getProduct_id());
+        intent.putExtra("getAmount",donHang.getQuantity());
+        getContext().startActivity(intent);
     }
 }

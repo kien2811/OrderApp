@@ -65,6 +65,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHoldel
                     intent.putExtra("getAvatar",search.getAvatar());
                     intent.putExtra("getDescription",search.getDescription());
                     intent.putExtra("categoryid",search.getCategoryid());
+                    intent.putExtra("getAmount",search.getAmount());
 
                     context.startActivity(intent);
 

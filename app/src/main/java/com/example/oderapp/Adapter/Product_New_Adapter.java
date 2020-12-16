@@ -60,6 +60,7 @@ public class Product_New_Adapter extends RecyclerView.Adapter<Product_New_Adapte
                     intent.putExtra("getAvatar",p.getImage());
                     intent.putExtra("getDescription",p.getDetails());
                     intent.putExtra("categoryid",p.getProduct_id());
+                    intent.putExtra("getAmount",p.getAmount());
                     context.startActivity(intent);
 //                    Toast.makeText(context, "long click"+p, Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(context, "click"+p, Toast.LENGTH_SHORT).show();

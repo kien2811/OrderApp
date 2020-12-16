@@ -24,6 +24,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oderapp.Activity.CartActivity;
+import com.example.oderapp.Activity.DetailCartActivity;
 import com.example.oderapp.Adapter.ChoXacNhanAdapter;
 import com.example.oderapp.Adapter.DaHuyAdapter;
 import com.example.oderapp.Adapter.DaMuaAdapter;
@@ -89,7 +90,10 @@ public class DaMuaFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                                 Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),
                                 jsonObject.getString("details"),
                                 jsonObject.getInt("quantity"),
-                                jsonObject.getString("name_status")));
+                                jsonObject.getString("name_status"),
+                                jsonObject.getInt("id_size"),
+                                jsonObject.getInt("size"),
+                                jsonObject.getInt("product_id")));
                     }
                     daMuaAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
@@ -108,9 +112,9 @@ public class DaMuaFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
 
 
-    public void InsertData(int id_Product,int quantily) {
+    public void InsertData(int id_Product,int quantily,int id_size) {
         sessionManagement = new SessionManagement(getContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,Api.URL_CHECK_ID_PRODUCT_ODER_USER+sessionManagement.getIduser()+"&id_product="+id_Product, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,Api.URL_CHECK_ID_PRODUCT_ODER_USER+sessionManagement.getIduser()+"&id_product="+id_Product+"&id_size="+id_size, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
@@ -119,9 +123,16 @@ public class DaMuaFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                         jsonObject = response.getJSONObject(i);
 //                        Log.d("aac", jsonObject.toString());
                         int quantily_db = jsonObject.getInt("amount_user_oder");
+                        int amount = jsonObject.getInt("amount");
                         int id_product = jsonObject.getInt("id_product");
-                        updateCart(id_product,quantily_db,quantily);
-
+                        int maxQuantity = jsonObject.getInt("quantity");
+                        if (quantily_db <= maxQuantity){
+                            updateCart(id_product,quantily,quantily_db,maxQuantity);
+                        }else {
+                            Toast.makeText(getContext(), "Số lượng sản phẩm trong giỏ đã đạt giới hạn!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getContext(),CartActivity.class);
+                            startActivity(intent);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(getContext(), "thêm vào giỏ hàng lỗi !", Toast.LENGTH_SHORT).show();
@@ -133,48 +144,53 @@ public class DaMuaFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             public void onErrorResponse(VolleyError error) {
 //                Toast.makeText(DetailCartActivity.this, "error"+error, Toast.LENGTH_SHORT).show();
                 Log.d("error",error.toString());
-                InsertCart(id_Product,quantily);
+                InsertCart(id_Product,quantily,id_size);
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(jsonArrayRequest);
     }
-    private  void updateCart(int id_Product ,int update_quantily,int quantily){
+    private  void updateCart(int id_Product ,int quantily,int update_quantily,int maxQuantity){
         sessionManagement = new SessionManagement(getContext());
         update_quantily += quantily;
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        int finalUpdate_quantily = update_quantily;
-        StringRequest request = new StringRequest(Request.Method.POST, Api.URL_UPDATE_ID_PRODUCT_ORDER_USER, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String user_oder = jsonObject.getString("user_oder");
-                    Toast.makeText(getContext(), ""+user_oder, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getContext(), CartActivity.class);
-                    startActivity(intent);
-                } catch (JSONException e) {
-                    Toast.makeText(getContext(), "lỗi chưa thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
+        if (update_quantily > maxQuantity){
+            Toast.makeText(getContext(), "Số lượng sản phẩm trong giỏ đã đạt giới hạn!", Toast.LENGTH_SHORT).show();
+        }else {
+            int finalUpdate_quantily = update_quantily;
+            StringRequest request = new StringRequest(Request.Method.POST, Api.URL_UPDATE_ID_PRODUCT_ORDER_USER, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        String user_oder = jsonObject.getString("user_oder");
+                        Toast.makeText(getContext(), "" + user_oder, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(), CartActivity.class);
+                        startActivity(intent);
+                    } catch (JSONException e) {
+                        Toast.makeText(getContext(), "lỗi chưa thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
                 }
-            }
-        },new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
 
-            }
-        }){@Override
-        public Map<String, String> getParams() throws AuthFailureError {
-            Map<String, String> map = new HashMap<>();
-            map.put("id_user", sessionManagement.getIduser()+"");
-            map.put("id_product", id_Product+"");
-            map.put("quantily", finalUpdate_quantily+"");
-            return map;
-        }};
-        RequestQueue requestQueue1 = Volley.newRequestQueue(getContext());
-        requestQueue1.add(request);
+                }
+            }) {
+                @Override
+                public Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("id_user", sessionManagement.getIduser() + "");
+                    map.put("id_product", id_Product + "");
+                    map.put("quantily", finalUpdate_quantily + "");
+                    return map;
+                }
+            };
+            RequestQueue requestQueue1 = Volley.newRequestQueue(getContext());
+            requestQueue1.add(request);
+        }
     }
-    private void InsertCart(int id_Product,int quantily){
+    private void InsertCart(int id_Product,int quantily,int id_size){
         sessionManagement = new SessionManagement(getContext());
         StringRequest request = new StringRequest(Request.Method.POST, Api.URL_INSERT_TO_CART_ORDER_USER, new Response.Listener<String>() {
             @Override
@@ -202,6 +218,7 @@ public class DaMuaFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             map.put("id_user", sessionManagement.getIduser()+"");
             map.put("id_product", id_Product+"");
             map.put("quantily", quantily+"");
+            map.put("id_size", id_size+"");
             return map;
         }};
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -221,4 +238,15 @@ public class DaMuaFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         },2000);
     }
 
+    public void ChuyenTrang(DonHang donHang) {
+        Intent intent = new Intent(getContext(), DetailCartActivity.class);
+        intent.putExtra("id",donHang.getId_product());
+        intent.putExtra("getName",donHang.getName());
+        intent.putExtra("getPrice",donHang.getPrice());
+        intent.putExtra("getAvatar",donHang.getAvatar());
+        intent.putExtra("getDescription",donHang.getDescription());
+        intent.putExtra("categoryid",donHang.getProduct_id());
+        intent.putExtra("getAmount",donHang.getQuantity());
+        getContext().startActivity(intent);
+    }
 }

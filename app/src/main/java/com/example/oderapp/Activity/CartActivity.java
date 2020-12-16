@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +41,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oderapp.Adapter.CartAdapter;
 import com.example.oderapp.Adapter.Product_Dashboard_sanPham_Adapter;
+import com.example.oderapp.Fragment.DonMuaFragment.ChoXacNhanFragment;
 import com.example.oderapp.Model.Cart_Model;
 import com.example.oderapp.R;
 import com.example.oderapp.SessionManage.SessionManagement;
@@ -105,7 +107,7 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void UpdateQuantityCart(Cart_Model cart_model, String action) {
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,Api.URL_CHECK_ID_PRODUCT_ODER_USER+sessionManagement.getIduser()+"&id_product="+cart_model.getId(), null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,Api.URL_CHECK_ID_PRODUCT_ODER_USER+sessionManagement.getIduser()+"&id_product="+cart_model.getId()+"&id_size="+cart_model.getId_size(), null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
@@ -114,12 +116,13 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
                         jsonObject = response.getJSONObject(i);
 //                        Log.d("aac", jsonObject.toString());
                         int quantily_db = jsonObject.getInt("amount_user_oder");
+                        int quantity_DB = jsonObject.getInt("quantity");
 
                         if (action.equals("minus")) {
                                 quantity = (quantily_db - 1);
                                 Log.d("aac", quantity+"");
-                                if (quantity == 0) {
-                                    deleteCart(cart_model.getId());
+                                if (quantity < 1) {
+                                    deleteCart(cart_model.getId(),cart_model.getId_size());
                                     return;
                                 } else if (quantity > 0) {
                                     total -= cart_model.getPrice();
@@ -129,7 +132,7 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
                                 adapter.notifyDataSetChanged();
                         }
                         if (action.equals("plus")) {
-                                if (quantity != cart_model.getAmount()){
+                                if (quantity != quantity_DB){
                                     quantity = (quantily_db + 1);
                                     Log.d("aac", quantity+"");
                                     total += cart_model.getPrice();
@@ -166,6 +169,7 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
                     JSONObject jsonObject = new JSONObject(response);
                     String user_oder = jsonObject.getString("user_oder");
 //                    Toast.makeText(CartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
+                    getDataCart();
 
                 } catch (JSONException e) {
                     Toast.makeText(CartActivity.this, "lỗi chưa cập nhật cộng thêm được giỏ hàng", Toast.LENGTH_SHORT).show();
@@ -190,7 +194,7 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    public void deleteCart(int id){
+    public void deleteCart(int id,int id_size){
         AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
         builder.setMessage("Xóa sản phẩm khỏi giỏ hàng ???");
         builder.setPositiveButton("Không", new DialogInterface.OnClickListener() {
@@ -227,6 +231,7 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
                     Map<String, String> map = new HashMap<>();
                     map.put("id_user", sessionManagement.getIduser()+"");
                     map.put("id_product", id+"");
+                    map.put("id_size", id_size+"");
                     return map;
                 }};
                 requestQueue.add(request);
@@ -284,6 +289,7 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject;
+                list.clear();
                 for (int i = 0 ; i < response.length();i ++){
                     try {
                         jsonObject = response.getJSONObject(i);
@@ -298,7 +304,9 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
                                 jsonObject.getString("details"),
                                 jsonObject.getInt("amount_user_oder"),
                                 jsonObject.getInt("product_id"),
-                                jsonObject.getInt("amount")
+                                jsonObject.getInt("amount"),
+                                jsonObject.getInt("id_size"),
+                                jsonObject.getInt("size")
                                 ));
 
                     } catch (JSONException e) {
@@ -386,7 +394,7 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
                 }
 
                 if (check == 0){
-                    Toast.makeText(CartActivity.this, "Thanh toán thành công !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CartActivity.this, "Đặt hàng thành công !", Toast.LENGTH_SHORT).show();
                     uptoInsert_transaction(name,address,phone);
                     dialog.dismiss();
                     sendOnChannel();
@@ -441,8 +449,9 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
 //                        Log.d("aac",jsonObject.toString());
                         int id_product = jsonObject.getInt("id_product");
                         int quatily = jsonObject.getInt("amount_user_oder");
-                        Insert_transaction(id_product,quatily,name,address,phone);
-                        DeleteCart(id_product);
+                        int id_size = jsonObject.getInt("id_size");
+                        Insert_transaction(id_product,quatily,name,address,phone,id_size);
+                        DeleteCart(id_product,id_size);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -463,7 +472,7 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
         requestQueue.add(jsonArrayRequest);
     }
 
-    private void Insert_transaction(int id_product, int quantity,String name, String address, String phone) {
+    private void Insert_transaction(int id_product, int quantity,String name, String address, String phone,int id_size) {
         sessionManagement = new SessionManagement(this);
         RequestQueue requestQueue = Volley.newRequestQueue(CartActivity.this);
         StringRequest request = new StringRequest(Request.Method.POST, Api.URL_INSERT_TRANSATION, new Response.Listener<String>() {
@@ -472,7 +481,7 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String user_oder = jsonObject.getString("user_oder");
-                    Toast.makeText(CartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
                     Toast.makeText(CartActivity.this, "lỗi chưa Insert_transaction", Toast.LENGTH_SHORT).show();
@@ -493,12 +502,13 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
             map.put("name", name+"");
             map.put("address", address+"");
             map.put("phone", phone+"");
+            map.put("id_size", id_size+"");
             return map;
         }};
         requestQueue.add(request);
     }
 
-    private void DeleteCart(int id_product) {
+    private void DeleteCart(int id_product,int id_size) {
         sessionManagement = new SessionManagement(this);
         RequestQueue requestQueue = Volley.newRequestQueue(CartActivity.this);
         StringRequest request = new StringRequest(Request.Method.POST, Api.URL_DELETE_ID_PRODUCT_ODER_USER, new Response.Listener<String>() {
@@ -510,6 +520,9 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
                     JSONObject jsonObject = new JSONObject(response);
                     String user_oder = jsonObject.getString("user_oder");
 //                    Toast.makeText(CartActivity.this, ""+user_oder, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CartActivity.this, "Sản phẩm đang chờ xác nhận", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(),DonMuaActivity.class);
+                    startActivity(intent);
                     getDataCart();
                 } catch (JSONException e) {
                     Toast.makeText(CartActivity.this, "lỗi chưa xóa được giỏ hàng", Toast.LENGTH_SHORT).show();
@@ -526,6 +539,7 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
             Map<String, String> map = new HashMap<>();
             map.put("id_user", sessionManagement.getIduser()+"");
             map.put("id_product", id_product+"");
+            map.put("id_size", id_size+"");
             return map;
         }};
         requestQueue.add(request);
