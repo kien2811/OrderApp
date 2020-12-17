@@ -11,41 +11,39 @@
         android:background="@drawable/background_circle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-<!--        <ImageView-->
 
-<!--            android:layout_gravity="right"-->
-<!--            android:src="@drawable/cart"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="50dp">-->
-
-<!--        </ImageView>-->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/imgproduct_oder"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/home"
+            android:scaleType="centerCrop"
+            android:layout_width="130dp"
+            android:layout_height="130dp"/>
 
             <LinearLayout
-                android:gravity="center"
-                android:layout_gravity="center"
+                android:background="@drawable/background_circle"
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="250dp">
+                android:layout_width="wrap_content"
+                android:layout_height="180dp">
                 <ImageView
-                    android:id="@+id/imgproduct_oder"
-                    android:src="@drawable/cart"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp">
-                </ImageView>
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/txtproduct_oder"
-                    android:textSize="15dp"
-                    android:text="Ten Product"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content">
 
-                </TextView>
+                    android:src="@drawable/hots"
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"/>
+                <TextView
+                    android:layout_marginTop="110dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:id="@+id/txtproduct_oder"
+                    android:text="Tên Sản Phẩm"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"/>
+
+
+
             </LinearLayout>
-        </FrameLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
