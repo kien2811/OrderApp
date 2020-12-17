@@ -1,7 +1,7 @@
 package com.example.oderapp.util;
 
 public class Api {
-    public static final  String HOST = "192.168.1.6:8089/oder_cart_php/public";
+    public static final  String HOST = "192.168.1.3:8089/oder_cart_php/public";
 
     public static final  String URl_SLIDER = "http://"+HOST+"/?controller=index&action=slider";
     public static final  String URl_SLIDER_PRODUCT = "http://"+HOST+"/?controller=index&action=Select_Slider_Product&id_product=";
@@ -23,6 +23,8 @@ public class Api {
     public static final   String URL_DON_MUA_DA_MUA ="http://"+HOST+"/?controller=index&action=Select_transaction_data_to_id_user_Da_Mua&id_user=";
     public static final   String URL_DON_MUA_DANG_GIAO ="http://"+HOST+"/?controller=index&action=Select_transaction_data_to_id_user_Dang_Giao&id_user=";
     public static final   String URL_UPDATE_ID_TRANSACTION_DATE_TO_HUY_DON_HANG ="http://"+HOST+"/?controller=index&action=Update_transaction_data_to_id_Huy_Don_Hang";
+    public static final   String URL_READ_MESSAGE_USER ="http://"+HOST+"/?controller=index&action=Api_user_read_message&token=";
+    public static final   String URL_SEND_MESSAGE_USER ="http://"+HOST+"/?controller=index&action=Insert_user_message&token=";
 
 //    public static final  String URl_LOGIN = "https://"+HOST+"/?username="+username+"&password="+password+"";
 //    public static final  String username = "https://"+HOST+"/?username="+username+"&password="+password+"";

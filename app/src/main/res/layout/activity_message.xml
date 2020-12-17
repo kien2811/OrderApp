@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/actitviviewgroup"
+    android:layout_height="match_parent"
+    tools:context=".Activity.MessageActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarCartsMEssage"
+        android:layout_width="match_parent"
+        android:background="#00FFFFFF"
+        android:layout_height="?actionBarSize">
+    </androidx.appcompat.widget.Toolbar>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcy_message"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbarCartsMEssage"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+        <LinearLayout
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:weightSum="5"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+            <EditText
+                android:layout_weight="1"
+                android:id="@+id/ed_message"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Nhập Tin Nhắn Bạn Muốn Gửi"
+                android:layout_toStartOf="@id/btn_send"
+                android:layout_marginEnd="10dp"
+                android:layout_centerVertical="true"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+            <Button
+                android:layout_weight="4"
+                android:id="@+id/btn_send"
+                android:text="Gửi"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </Button>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
