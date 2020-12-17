@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,10 +42,11 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
-    ImageButton imgCart;
+    ImageButton imgCart,imgMessage;
     ImageView seartMainActivity,logo;
+    LinearLayout messageLiner;
     SessionManagement sessionManagement;
-    TextView txtvQuantityCartMain;
+    TextView txtvQuantityCartMain,txt_message;
     long backPressed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        messageLiner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MessageActivity.class);
+                startActivity(intent);
+            }
+        });
         getDataCart();
 
         handler.postDelayed(runnable,1000);
@@ -120,7 +128,10 @@ public class MainActivity extends AppCompatActivity {
     private void mapping() {
         imgCart = findViewById(R.id.imgCart);
         txtvQuantityCartMain = findViewById(R.id.txtvQuantityCartMain);
+        messageLiner = findViewById(R.id.messageLiner);
         seartMainActivity  = findViewById(R.id.seartMainActivity);
+        txt_message  = findViewById(R.id.txt_message);
+        imgMessage  = findViewById(R.id.imgMessage);
         BottomNavigationView btnNav = findViewById(R.id.button_navication_view);
         btnNav.setOnNavigationItemSelectedListener(navListent);
 

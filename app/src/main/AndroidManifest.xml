@@ -11,11 +11,12 @@
         android:icon="@drawable/kita"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/kita"
         android:supportsRtl="true"
         android:theme="@style/Theme.OderApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.OTP.OTPActivity"></activity>
+        <activity android:name=".Activity.MessageActivity"></activity>
+        <activity android:name=".Activity.OTP.OTPActivity" />
         <activity android:name=".Activity.VerifyOTPAcitivity" />
         <activity android:name=".Activity.WaitActivity">
             <intent-filter>
