@@ -7,11 +7,11 @@
 
     android:gravity="start">
     <TextView
-        android:background="@drawable/bg_orage_corner_16"
+        android:background="@drawable/buttonstyle"
         android:id="@+id/tv_message_left"
         android:text="add name"
         android:padding="10dp"
-        android:textColor="#000000"
+        android:textColor="#333333"
         android:textSize="18sp"
         android:paddingTop="10dp"
         android:textStyle="bold"

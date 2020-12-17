@@ -85,7 +85,13 @@ public class AllSanPhamFragment extends Fragment implements SwipeRefreshLayout.O
                         jsonObject = response.getJSONObject(i);
 //                        Log.d("response",jsonObject.getString("name"));
 
-                        list.add(new DashboardSanPham(jsonObject.getInt("id"),jsonObject.getString("name"),jsonObject.getInt("pirce"),Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),jsonObject.getString("details"),jsonObject.getInt("product_id"),jsonObject.getInt("amount")));
+                        list.add(new DashboardSanPham(jsonObject.getInt("id"),
+                                jsonObject.getString("name"),
+                                jsonObject.getInt("pirce"),
+                                Api.URL_IMG_PROFILE+"img/"+jsonObject.getString("image"),
+                                jsonObject.getString("details"),
+                                jsonObject.getInt("product_id"),
+                                jsonObject.getInt("amount")));
                     }
                     product_sanPham_dashboard_adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
