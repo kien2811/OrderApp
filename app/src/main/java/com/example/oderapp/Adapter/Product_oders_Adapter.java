@@ -58,6 +58,7 @@ public class Product_oders_Adapter extends RecyclerView.Adapter<Product_oders_Ad
                     intent.putExtra("getAvatar",p.getImage());
                     intent.putExtra("getDescription",p.getDetails());
                     intent.putExtra("categoryid",p.getProduct_id());
+                    intent.putExtra("getAmount",p.getAmount());
                     context.startActivity(intent);
                 }
             }

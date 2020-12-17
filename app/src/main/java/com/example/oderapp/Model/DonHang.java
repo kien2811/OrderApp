@@ -9,8 +9,11 @@ public class DonHang {
     private String description;
     private int quantity;
     private String status;
+    private int id_size;
+    private int name_size;
+    private int product_id;
 
-    public DonHang(int id, int id_product, String name, int price, String avatar, String description, int quantity, String status) {
+    public DonHang(int id, int id_product, String name, int price, String avatar, String description, int quantity, String status, int id_size, int name_size, int product_id) {
         this.id = id;
         this.id_product = id_product;
         this.name = name;
@@ -19,6 +22,9 @@ public class DonHang {
         this.description = description;
         this.quantity = quantity;
         this.status = status;
+        this.id_size = id_size;
+        this.name_size = name_size;
+        this.product_id = product_id;
     }
 
     public int getId() {
@@ -85,6 +91,30 @@ public class DonHang {
         this.status = status;
     }
 
+    public int getId_size() {
+        return id_size;
+    }
+
+    public void setId_size(int id_size) {
+        this.id_size = id_size;
+    }
+
+    public int getName_size() {
+        return name_size;
+    }
+
+    public void setName_size(int name_size) {
+        this.name_size = name_size;
+    }
+
+    public int getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
+
     @Override
     public String toString() {
         return "DonHang{" +
@@ -96,6 +126,9 @@ public class DonHang {
                 ", description='" + description + '\'' +
                 ", quantity=" + quantity +
                 ", status='" + status + '\'' +
+                ", id_size=" + id_size +
+                ", name_size=" + name_size +
+                ", product_id=" + product_id +
                 '}';
     }
 }

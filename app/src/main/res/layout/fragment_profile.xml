@@ -20,8 +20,6 @@
                 android:layout_height="match_parent">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgAva"
-
-
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="30dp"
                     android:src="@drawable/ic_launcher_background"
@@ -122,7 +120,6 @@
                                 android:layout_height="wrap_content">
                                 <TextView
                                     android:textColor="#FF0000"
-
                                     android:background="@drawable/backgournd_white_conner"
                                     android:id="@+id/txtvChoXacNhan"
                                     android:layout_width="17dp"
@@ -136,9 +133,7 @@
                                     android:layout_height="50dp"
                                     android:layout_gravity="center_vertical"
                                     android:src="@drawable/ic_baseline_history_24"/>
-
                             </LinearLayout>
-
                         </LinearLayout>
                         <LinearLayout
                             android:layout_weight="2"

@@ -66,8 +66,9 @@ public class Product_Dashboard_sanPham_Adapter extends RecyclerView.Adapter<Prod
                     intent.putExtra("getAvatar",p.getAvatar());
                     intent.putExtra("getDescription",p.getDescription());
                     intent.putExtra("categoryid",p.getCategoryid());
+                    intent.putExtra("getAmount",p.getAmount());
                     context.startActivity(intent);
-                    Toast.makeText(context, "long click"+p, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "long click"+p, Toast.LENGTH_SHORT).show();
                 }
             }
         });

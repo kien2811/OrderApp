@@ -51,6 +51,7 @@ public class DaMuaAdapter extends RecyclerView.Adapter<DaMuaAdapter.ViewHolder> 
         holder.txtvCartPrice.setText(decimalFormat.format(donHang.getPrice())+"đ");
         holder.txtvCartQuantity.setText("x"+donHang.getQuantity());
         holder.txtvStatus.setText(donHang.getStatus());
+        holder.txtvSize.setText("Size : "+donHang.getName_size());
 
         holder.txtvsosanpham.setText(donHang.getQuantity()+" sản phẩm");
         int gia = donHang.getPrice();
@@ -60,13 +61,13 @@ public class DaMuaAdapter extends RecyclerView.Adapter<DaMuaAdapter.ViewHolder> 
         holder.HuyChoSANPHAM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.InsertData(donHang.getId_product(),donHang.getQuantity());
+                context.InsertData(donHang.getId_product(),donHang.getQuantity(),donHang.getId_size());
             }
         });
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean islongClick) {
-
+                context.ChuyenTrang(donHang);
             }
         });
 
@@ -79,7 +80,7 @@ public class DaMuaAdapter extends RecyclerView.Adapter<DaMuaAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         ImageView imgChoxacnhan;
-        TextView txtvCartName,txtvCartPrice,txtvCartQuantity,txtvStatus,txtvsosanpham,txtvTongPrice;
+        TextView txtvCartName,txtvCartPrice,txtvCartQuantity,txtvStatus,txtvsosanpham,txtvTongPrice,txtvSize;
         Button deleteCart,HuyChoSANPHAM;
 
         private ItemClickListener itemClickListener;
@@ -101,7 +102,7 @@ public class DaMuaAdapter extends RecyclerView.Adapter<DaMuaAdapter.ViewHolder> 
             txtvTongPrice = itemView.findViewById(R.id.txtvTongPrice);
             deleteCart = itemView.findViewById(R.id.deleteCart);
             HuyChoSANPHAM = itemView.findViewById(R.id.HuyChoSANPHAM);
-
+            txtvSize = itemView.findViewById(R.id.txtvSize);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
 

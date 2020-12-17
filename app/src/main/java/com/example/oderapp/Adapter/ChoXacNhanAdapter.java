@@ -54,7 +54,7 @@ public class ChoXacNhanAdapter extends RecyclerView.Adapter<ChoXacNhanAdapter.Vi
         holder.txtvCartPrice.setText(decimalFormat.format(donHang.getPrice())+"đ");
         holder.txtvCartQuantity.setText("x"+donHang.getQuantity());
         holder.txtvStatus.setText(donHang.getStatus());
-
+        holder.txtvSize.setText("Size : "+donHang.getName_size());
         holder.txtvsosanpham.setText(donHang.getQuantity()+" sản phẩm");
         int gia = donHang.getPrice();
         int soluong = donHang.getQuantity();
@@ -62,7 +62,7 @@ public class ChoXacNhanAdapter extends RecyclerView.Adapter<ChoXacNhanAdapter.Vi
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean islongClick) {
-
+                context.ChuyenTrang(donHang);
             }
         });
         holder.txtvTongPrice.setText(decimalFormat.format(tong)+"đ");
@@ -82,7 +82,7 @@ public class ChoXacNhanAdapter extends RecyclerView.Adapter<ChoXacNhanAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         ImageView imgChoxacnhan;
-        TextView txtvCartName,txtvCartPrice,txtvCartQuantity,txtvStatus,txtvsosanpham,txtvTongPrice;
+        TextView txtvCartName,txtvCartPrice,txtvCartQuantity,txtvStatus,txtvsosanpham,txtvTongPrice,txtvSize;
         Button deleteCart,HuyChoSANPHAM;
 
         private ItemClickListener itemClickListener;
@@ -104,6 +104,7 @@ public class ChoXacNhanAdapter extends RecyclerView.Adapter<ChoXacNhanAdapter.Vi
             txtvTongPrice = itemView.findViewById(R.id.txtvTongPrice);
             deleteCart = itemView.findViewById(R.id.deleteCart);
             HuyChoSANPHAM = itemView.findViewById(R.id.HuyChoSANPHAM);
+            txtvSize = itemView.findViewById(R.id.txtvSize);
 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);

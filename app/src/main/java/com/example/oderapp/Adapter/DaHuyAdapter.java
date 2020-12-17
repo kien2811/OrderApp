@@ -1,5 +1,6 @@
 package com.example.oderapp.Adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.oderapp.Activity.DetailCartActivity;
 import com.example.oderapp.Fragment.DonMuaFragment.ChoXacNhanFragment;
 import com.example.oderapp.Fragment.DonMuaFragment.DaHuyFragment;
 import com.example.oderapp.Model.DonHang;
@@ -51,6 +53,7 @@ public class DaHuyAdapter extends RecyclerView.Adapter<DaHuyAdapter.ViewHolder> 
         holder.txtvCartPrice.setText(decimalFormat.format(donHang.getPrice())+"đ");
         holder.txtvCartQuantity.setText("x"+donHang.getQuantity());
         holder.txtvStatus.setText(donHang.getStatus());
+        holder.txtvSize.setText("Size : "+donHang.getName_size());
 
         holder.txtvsosanpham.setText(donHang.getQuantity()+" sản phẩm");
         int gia = donHang.getPrice();
@@ -60,13 +63,13 @@ public class DaHuyAdapter extends RecyclerView.Adapter<DaHuyAdapter.ViewHolder> 
         holder.HuyChoSANPHAM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.InsertData(donHang.getId_product(),donHang.getQuantity());
+                context.InsertData(donHang.getId_product(),donHang.getQuantity(),donHang.getId_size());
             }
         });
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean islongClick) {
-
+                context.ChuyenTrang(donHang);
             }
         });
 
@@ -79,7 +82,7 @@ public class DaHuyAdapter extends RecyclerView.Adapter<DaHuyAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         ImageView imgChoxacnhan;
-        TextView txtvCartName,txtvCartPrice,txtvCartQuantity,txtvStatus,txtvsosanpham,txtvTongPrice;
+        TextView txtvCartName,txtvCartPrice,txtvCartQuantity,txtvStatus,txtvsosanpham,txtvTongPrice,txtvSize;
         Button deleteCart,HuyChoSANPHAM;
 
         private ItemClickListener itemClickListener;
@@ -101,7 +104,7 @@ public class DaHuyAdapter extends RecyclerView.Adapter<DaHuyAdapter.ViewHolder> 
             txtvTongPrice = itemView.findViewById(R.id.txtvTongPrice);
             deleteCart = itemView.findViewById(R.id.deleteCart);
             HuyChoSANPHAM = itemView.findViewById(R.id.HuyChoSANPHAM);
-
+            txtvSize = itemView.findViewById(R.id.txtvSize);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
 

@@ -72,10 +72,10 @@ public class DaxemSanphamFragment extends Fragment {
                 list.add(productSeen);
             }
 //            Log.d("seen",cursor.toString());
-            Toast.makeText(getContext(), "Hế lô"+cursor.getString(1), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "Hế lô"+cursor.getString(1), Toast.LENGTH_SHORT).show();
 
         }catch (Exception e){
-            Toast.makeText(getContext(), "bạn chưa xem sản phẩm nào!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "bạn chưa xem sản phẩm nào!", Toast.LENGTH_SHORT).show();
         }
 
 

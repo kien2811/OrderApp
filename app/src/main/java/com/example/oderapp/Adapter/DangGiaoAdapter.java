@@ -51,6 +51,7 @@ public class DangGiaoAdapter extends RecyclerView.Adapter<DangGiaoAdapter.ViewHo
         holder.txtvCartPrice.setText(decimalFormat.format(donHang.getPrice())+"đ");
         holder.txtvCartQuantity.setText("x"+donHang.getQuantity());
         holder.txtvStatus.setText(donHang.getStatus());
+        holder.txtvSize.setText("Size : "+donHang.getName_size());
 
         holder.txtvsosanpham.setText(donHang.getQuantity()+" sản phẩm");
         int gia = donHang.getPrice();
@@ -60,7 +61,7 @@ public class DangGiaoAdapter extends RecyclerView.Adapter<DangGiaoAdapter.ViewHo
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean islongClick) {
-
+                context.ChuyenTrang(donHang);
             }
         });
 
@@ -73,7 +74,7 @@ public class DangGiaoAdapter extends RecyclerView.Adapter<DangGiaoAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         ImageView imgChoxacnhan;
-        TextView txtvCartName,txtvCartPrice,txtvCartQuantity,txtvStatus,txtvsosanpham,txtvTongPrice;
+        TextView txtvCartName,txtvCartPrice,txtvCartQuantity,txtvStatus,txtvsosanpham,txtvTongPrice,txtvSize;
 
         private ItemClickListener itemClickListener;
         public void setItemClickListener(ItemClickListener itemClickListener) {
@@ -92,7 +93,7 @@ public class DangGiaoAdapter extends RecyclerView.Adapter<DangGiaoAdapter.ViewHo
             txtvStatus = itemView.findViewById(R.id.txtvStatus);
             txtvsosanpham = itemView.findViewById(R.id.txtvsosanpham);
             txtvTongPrice = itemView.findViewById(R.id.txtvTongPrice);
-
+            txtvSize = itemView.findViewById(R.id.txtvSize);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
 
