@@ -30,9 +30,7 @@
             android:layout_height="wrap_content">
         </TextView>
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="10dp"/>
-        <TextView
+            android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:id="@+id/txtproduct_suggestion_price"
             android:text="Giá Sản Phẩm"

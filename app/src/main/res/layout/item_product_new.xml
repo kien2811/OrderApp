@@ -4,38 +4,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:padding="8dp"
     android:layout_height="wrap_content">
-
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        app:cardCornerRadius="10dp"
         android:background="@drawable/background_circle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <ImageView
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/imgproduct_hot"
+        android:src="@drawable/home"
+        android:scaleType="centerCrop"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        tools:ignore="MissingConstraints"/>
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="180dp"
+        android:layout_height="160dp"
         tools:ignore="MissingConstraints">
-
         <ImageView
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/imgproduct_hot"
-            android:src="@drawable/home"
-            android:scaleType="centerCrop"
-            android:layout_width="110dp"
-            android:layout_height="110dp"/>
+            android:id="@+id/news"
+            android:layout_gravity="right"
+            android:src="@drawable/news"
+            android:layout_width="50dp"
+            android:layout_height="20dp"/>
+
 
         <TextView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="100dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:id="@+id/txtproduct_hot"
             android:text="Tên Sản Phẩm"
             android:textColor="#000000"
-            android:textSize="15dp"
+            android:textSize="13dp"
             android:layout_width="120dp"
             android:layout_height="wrap_content">
 
         </TextView>
-
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,6 +54,36 @@ public class Product_Dashboard_sanPham_Adapter extends RecyclerView.Adapter<Prod
         holder.txtvDescription.setText(p.getDescription());
 
         int price = p.getPrice();
+        if (p.getCategoryid() == 1){
+            Picasso.get().load(R.drawable.news)
+                    .placeholder(R.drawable.loader)
+                    .error(R.drawable.noimage)
+                    .into(holder.txtvCategory);
+        }
+        if (p.getCategoryid() == 2){
+            Picasso.get().load(R.drawable.suots)
+                    .placeholder(R.drawable.loader)
+                    .error(R.drawable.noimage)
+                    .into(holder.txtvCategory);
+        }
+        if (p.getCategoryid() == 3){
+            Picasso.get().load(R.drawable.suots)
+                    .placeholder(R.drawable.loader)
+                    .error(R.drawable.noimage)
+                    .into(holder.txtvCategory);
+        }
+        if (p.getCategoryid() == 4){
+            Picasso.get().load(R.drawable.suots)
+                    .placeholder(R.drawable.loader)
+                    .error(R.drawable.noimage)
+                    .into(holder.txtvCategory);
+        }
+        if (p.getCategoryid() == 5){
+            Picasso.get().load(R.drawable.hots)
+                    .placeholder(R.drawable.loader)
+                    .error(R.drawable.noimage)
+                    .into(holder.txtvCategory);
+        }
 
         holder.setItemClickListener(new ItemClickListener() {
             @Override
@@ -68,7 +98,7 @@ public class Product_Dashboard_sanPham_Adapter extends RecyclerView.Adapter<Prod
                     intent.putExtra("categoryid",p.getCategoryid());
                     intent.putExtra("getAmount",p.getAmount());
                     context.startActivity(intent);
-//                    Toast.makeText(context, "long click"+p, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "long click"+p.getCategoryid(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -80,7 +110,7 @@ public class Product_Dashboard_sanPham_Adapter extends RecyclerView.Adapter<Prod
     }
 
     class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener, View.OnLongClickListener {
-        ImageView imgSanPhamDashboard;
+        ImageView imgSanPhamDashboard,txtvCategory;
         TextView txtvName,txtvPrice,txtvDescription;
 
         private ItemClickListener itemClickListener;
@@ -98,6 +128,7 @@ public class Product_Dashboard_sanPham_Adapter extends RecyclerView.Adapter<Prod
             txtvName = itemView.findViewById(R.id.txtvNameDashboard);
             txtvPrice = itemView.findViewById(R.id.txtvPriceDashboard);
             txtvDescription = itemView.findViewById(R.id.txtvDescriptionDashboard);
+            txtvCategory = itemView.findViewById(R.id.txtvCategory);
 
 
             itemView.setOnClickListener(this);

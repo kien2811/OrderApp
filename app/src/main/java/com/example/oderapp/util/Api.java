@@ -1,7 +1,13 @@
 package com.example.oderapp.util;
 
 public class Api {
+<<<<<<< HEAD
     public static final  String HOST = "192.168.1.11:8888/oder_cart_php/public";
+=======
+
+    public static final  String HOST = "192.168.1.11:8888/oder_cart_php/public";
+
+>>>>>>> 5f24dc0c4a0a6ae3e70aeb431af17dd2b7da64fa
 
     public static final  String URl_SLIDER = "http://"+HOST+"/?controller=index&action=slider";
     public static final  String URl_SLIDER_PRODUCT = "http://"+HOST+"/?controller=index&action=Select_Slider_Product&id_product=";

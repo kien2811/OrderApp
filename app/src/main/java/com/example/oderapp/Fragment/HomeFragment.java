@@ -183,7 +183,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     // san pham moi
     private void data_product_host() {
         product_new_adapter = new Product_New_Adapter();
-        product_new_adapter.Product_New_Adapter(this.getContext(),R.layout.item_product_hot,product_hots_list);
+        product_new_adapter.Product_New_Adapter(this.getContext(),R.layout.item_product_new,product_hots_list);
         recyclerViewlist_product_host.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewlist_product_host.setLayoutManager(layoutManager);

@@ -73,7 +73,7 @@ public class MessageActivity extends AppCompatActivity {
                 checkKeyload();
             }
         });
-        handler.postDelayed(runnable,1000);
+        handler.postDelayed(runnable,10000);
 
     }
 
@@ -101,7 +101,6 @@ public class MessageActivity extends AppCompatActivity {
                     messageAdpater.notifyDataSetChanged();
 
                 }
-                handler.postDelayed(runnable,1000);
 
             }
         }, new Response.ErrorListener() {
@@ -147,7 +146,7 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d("onResponse: ",response.toString());
-
+                getData();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                 } catch (JSONException e) {
@@ -184,7 +183,8 @@ public class MessageActivity extends AppCompatActivity {
     final Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            handler.postDelayed(this,2000);//60 second delay
+            getData();
+            handler.postDelayed(this,20000);//60 second delay
         }
     };
     private void mapping() {
