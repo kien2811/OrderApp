@@ -53,15 +53,13 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp">
                     <Button
-                        android:background="#23A3D8EF"
                         android:id="@+id/upload_to_sever"
                         android:text="Đổi Avatar"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="10dp"
-                        android:layout_width="150dp"
-                        android:layout_height="40dp">
+                        android:textColor="#fff"
+                        android:backgroundTint="#5168C6F3"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp">
 
 
                     </Button>
@@ -274,16 +272,13 @@
                     <Button
                         android:id="@+id/btn_logout"
                         android:textColor="#fff"
-                        android:background="@drawable/buttonstyle"
+                        android:backgroundTint="#94FF4D4D"
                         android:layout_marginTop="30dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text="Đăng Xuất"/>
                 </LinearLayout>
-
-
-
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

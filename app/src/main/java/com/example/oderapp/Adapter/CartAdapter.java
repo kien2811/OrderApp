@@ -73,7 +73,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             @Override
             public void onClick(View view, int position, boolean islongClick) {
                 if (!islongClick){
-                    Toast.makeText(context, ""+cart_model.getId(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, ""+cart_model.getId(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

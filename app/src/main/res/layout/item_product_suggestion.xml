@@ -31,7 +31,6 @@
         </TextView>
         <TextView
             android:layout_marginTop="10dp"
-            android:layout_gravity="center"
             android:id="@+id/txtproduct_suggestion_price"
             android:text="Giá Sản Phẩm"
             android:textColor="#FF2525"
