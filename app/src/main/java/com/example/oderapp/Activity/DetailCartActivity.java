@@ -47,6 +47,7 @@ import com.example.oderapp.MySingleton.MySingleton;
 import com.example.oderapp.R;
 import com.example.oderapp.SessionManage.SessionManagement;
 import com.example.oderapp.util.Api;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -66,7 +67,7 @@ import java.util.Map;
 public class DetailCartActivity extends AppCompatActivity {
     Toolbar toolbarCart;
     Button btnAddMuaCart;
-    ImageView btnAddCart;
+    ImageView btnAddCart,Imgchatngay;
     TextView txtvDescriptionCart,txtvPriceCart,txtvNameCart;
     ImageView imgAvatarCart;
     SliderLayout silder;
@@ -129,7 +130,7 @@ public class DetailCartActivity extends AppCompatActivity {
 
 
     private void showFromChonSizeThemVaoGio() {
-        Dialog dialog = new Dialog(this);
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
 
 //        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.item_form_chon_size);
@@ -186,7 +187,7 @@ public class DetailCartActivity extends AppCompatActivity {
 
 
     private void showFromChonSize() {
-        Dialog dialog = new Dialog(this);
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
 
 //        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.item_form_chon_size);
@@ -621,6 +622,13 @@ public class DetailCartActivity extends AppCompatActivity {
                 showFromChonSize();
             }
         });
+        Imgchatngay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(DetailCartActivity.this,MessageActivity.class);
+                startActivity(intent1);
+            }
+        });
 
         initActionBar();
     }
@@ -877,6 +885,7 @@ public class DetailCartActivity extends AppCompatActivity {
         btnAddCart = findViewById(R.id.btnAddCart);
 
         toolbarCart = findViewById(R.id.toolbarCart);
+        Imgchatngay = findViewById(R.id.Imgchatngay);
 
 
 

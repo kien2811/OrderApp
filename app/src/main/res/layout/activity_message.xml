@@ -47,6 +47,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/black"/>
             <Button
+                android:backgroundTint="#FF0E0E"
                 android:layout_weight="4"
                 android:id="@+id/btn_send"
                 android:text="Gửi"
