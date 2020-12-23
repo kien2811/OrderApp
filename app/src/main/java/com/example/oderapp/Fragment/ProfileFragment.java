@@ -383,6 +383,8 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 Intent intent = new Intent(getContext(), OTPActivity.class);
 //                intent.putExtra("phones",phones);
                 intent.putExtra("1",3);
+                intent.putExtra("phones",phones);
+
                 startActivity(intent);
 //                openFeedbackDialog(Gravity.CENTER,"");
             }
