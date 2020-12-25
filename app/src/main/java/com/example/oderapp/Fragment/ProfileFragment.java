@@ -44,6 +44,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.oderapp.Activity.CartActivity;
+import com.example.oderapp.Activity.Change_address_Activity;
 import com.example.oderapp.Activity.Change_email_Ativity;
 import com.example.oderapp.Activity.Change_password_Activity;
 import com.example.oderapp.Activity.Change_phone_Activity;
@@ -79,11 +80,11 @@ import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     SharedPreferences sharedPreferences;
-    TextView txtusername,txt_email,phone,txtvCart,txtvChoXacNhan,txtvDangGiao,txtvDaMua;
+    TextView txtusername,txt_email,phone,txtvCart,txtvChoXacNhan,txtvDangGiao,txtvDaMua,txt_address;
     ImageView imgAva;
     SwipeRefreshLayout swipeRefresh;
     SessionManagement sessionManagement;
-    LinearLayout linr_password,linv_phone,linv_email,linv_cart,linearLayoutCart,linearLayoutChoXacNhan,linearLayoutDangGiao,linearLayoutDaMua;
+    LinearLayout linr_password,linv_phone,linv_email,linv_cart,linearLayoutCart,linearLayoutChoXacNhan,linearLayoutDangGiao,linearLayoutDaMua,linv_address;
     Button btn_logout,upload_to_sever;
     ImageButton imageButton_open_file;
     Bitmap bitmap;
@@ -95,6 +96,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public static String email;
     public static String phones;
     public static String img;
+    public static String address;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -110,6 +112,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         linearLayoutChoXacNhan = view.findViewById(R.id.linearLayoutChoXacNhan);
         linearLayoutDangGiao = view.findViewById(R.id.linearLayoutDangGiao);
         linearLayoutDaMua = view.findViewById(R.id.linearLayoutDaMua);
+        linv_address = view.findViewById(R.id.linv_address);
 
         txtusername = view.findViewById(R.id.txtusername);
         txt_email = view.findViewById(R.id.txt_email);
@@ -117,6 +120,8 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         txtvChoXacNhan = view.findViewById(R.id.txtvChoXacNhan);
         txtvDangGiao = view.findViewById(R.id.txtvDangGiao);
         txtvDaMua = view.findViewById(R.id.txtvDaMua);
+        txt_address = view.findViewById(R.id.txt_address);
+
 
         upload_to_sever = view.findViewById(R.id.upload_to_sever);
         phone = view.findViewById(R.id.phone);
@@ -258,6 +263,8 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     full_name =  jsonObject.getString("full_name");
                      email =  jsonObject.getString("email");
                     phones =  jsonObject.getString("Phone");
+                    address = jsonObject.getString("address");
+                    sessionManagement.setAddress(address);
                      img =  Api.URL_IMG_PROFILE+jsonObject.getString("img");
 //                    Log.d("onResponse: ",img);
 //                    Log.d("onResponse: ",sessionManagement.getToken());
@@ -267,8 +274,10 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                             .error(R.drawable.noimage)
                             .into(imgAva);
                     txt_email.setText(email);
+                    txt_address.setText(address);
                     phone.setText(phones);
                     phone.clearFocus();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -389,6 +398,18 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 //                openFeedbackDialog(Gravity.CENTER,"");
             }
         });
+        linv_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Change_address_Activity.class);
+//                intent.putExtra("phones",phones);
+                intent.putExtra("1",4);
+                intent.putExtra("address",address);
+
+                startActivity(intent);
+//                openFeedbackDialog(Gravity.CENTER,"");
+            }
+        });
         linearLayoutCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -407,6 +428,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), DonMuaActivity.class);
+                intent.putExtra("DANGGIAO","OK");
                 startActivity(intent);
             }
         });
@@ -414,6 +436,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), DonMuaActivity.class);
+                intent.putExtra("DAMUA","OK");
                 startActivity(intent);
             }
         });

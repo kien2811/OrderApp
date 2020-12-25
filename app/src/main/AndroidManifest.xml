@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OderApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.MessageActivity"></activity>
+        <activity android:name=".Activity.Change_address_Activity"></activity>
+        <activity android:name=".Activity.MessageActivity" />
         <activity android:name=".Activity.OTP.OTPActivity" />
         <activity android:name=".Activity.VerifyOTPAcitivity" />
         <activity android:name=".Activity.WaitActivity">

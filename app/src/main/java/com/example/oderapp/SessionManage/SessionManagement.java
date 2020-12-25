@@ -65,4 +65,12 @@ public class SessionManagement {
     public int getPhone(){
         return sharedPreferences.getInt("KEY_PHONE",0);
     }
+
+    public void setAddress(String address) {
+        editor.putString("KEY_ADDRESS",address);
+        editor.commit();
+    }
+    public String getAddress(){
+        return sharedPreferences.getString("KEY_ADDRESS","");
+    }
 }

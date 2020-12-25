@@ -1,4 +1,5 @@
 package com.example.oderapp.Activity;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -78,6 +80,22 @@ public class MainActivity extends AppCompatActivity {
         });
         getDataCart();
 
+//        Intent intent = getIntent();
+//        if (intent != null){
+//            String getName = (String) intent.getSerializableExtra("cart");
+//            if (getName != null && getName.equals("OK")){
+//                Toast.makeText(this, "Có dữ liệu", Toast.LENGTH_SHORT).show();
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                ft.commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new ProfileFragment()).commit();
+//            }else {
+//                Toast.makeText(this, "K dữ liệu", Toast.LENGTH_SHORT).show();
+//            }
+//        }else {
+//            Toast.makeText(this, "Không", Toast.LENGTH_SHORT).show();
+//        }
+
+
         handler.postDelayed(runnable,1000);
     }
     final Handler handler = new Handler();
@@ -136,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         btnNav.setOnNavigationItemSelectedListener(navListent);
 
     }
-
+    
     private  BottomNavigationView.OnNavigationItemSelectedListener navListent = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         //even tuong click từng màn hình
