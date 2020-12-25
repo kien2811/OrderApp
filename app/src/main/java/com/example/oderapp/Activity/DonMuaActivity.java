@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -24,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.oderapp.Adapter.ChoXacNhanAdapter;
 import com.example.oderapp.Adapter.ViewMenuDonMuaAdapter;
 import com.example.oderapp.Adapter.ViewMenuSanPhamAdapter;
+import com.example.oderapp.Fragment.ProfileFragment;
 import com.example.oderapp.Model.Cart_Model;
 import com.example.oderapp.R;
 import com.example.oderapp.SessionManage.SessionManagement;
@@ -53,6 +55,28 @@ public class DonMuaActivity extends AppCompatActivity {
         Don_muatabLayout.setupWithViewPager(view_page_Don_Mua);
         viewMenuDonMuaAdapter.notifyDataSetChanged();
         initActionBar();
+
+
+        Intent intent = getIntent();
+        if (intent != null){
+            String DANGGIAO = (String) intent.getSerializableExtra("DANGGIAO");
+            if (DANGGIAO != null && DANGGIAO.equals("OK")){
+//                Toast.makeText(this, "Có dữ liệu", Toast.LENGTH_SHORT).show();
+                view_page_Don_Mua.setCurrentItem(1);
+            }else {
+//                Toast.makeText(this, "K dữ liệu", Toast.LENGTH_SHORT).show();
+            }
+            String DAMUA = (String) intent.getSerializableExtra("DAMUA");
+            if (DAMUA != null && DAMUA.equals("OK")){
+//                Toast.makeText(this, "Có dữ liệu", Toast.LENGTH_SHORT).show();
+                view_page_Don_Mua.setCurrentItem(2);
+            }else {
+//                Toast.makeText(this, "K dữ liệu", Toast.LENGTH_SHORT).show();
+            }
+        }else {
+//            Toast.makeText(this, "Không", Toast.LENGTH_SHORT).show();
+        }
+
     }
     private void initActionBar() {
         setSupportActionBar(toolbar);

@@ -200,6 +200,28 @@
                     <LinearLayout
                         android:background="#A8A3D8EF"
                         android:layout_marginTop="25dp"
+                        android:id="@+id/linv_address"
+                        android:orientation="horizontal"
+                        android:paddingLeft="25dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_baseline_location_on_24"/>
+                        <TextView
+                            android:id="@+id/txt_address"
+                            android:textStyle="bold"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="20dp"
+                            android:text="Hà Nội, Việt Nam"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:background="#A8A3D8EF"
+                        android:layout_marginTop="25dp"
                         android:id="@+id/linv_email"
                         android:orientation="horizontal"
                         android:paddingLeft="25dp"

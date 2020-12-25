@@ -87,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String sussecfully = response.getString("sussecfully");
                                     String token = response.getString("token");
                                     String fullname = response.getString("full_name");
+                                    String address = response.getString("address");
                                     int id_user = response.getInt("id_user");
                                     int Phone = response.getInt("phone");
 
@@ -97,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                                         sessionManagement.setToken(token);
                                         sessionManagement.setIdUser(id_user);
                                         sessionManagement.setFullName(fullname);
+                                        sessionManagement.setAddress(address);
                                         sessionManagement.setPhone(Phone);
                                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
                                         finish();

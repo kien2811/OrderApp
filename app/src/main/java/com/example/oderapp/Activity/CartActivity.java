@@ -1,6 +1,7 @@
 package com.example.oderapp.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -39,9 +40,11 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.oderapp.Activity.OTP.OTPActivity;
 import com.example.oderapp.Adapter.CartAdapter;
 import com.example.oderapp.Adapter.Product_Dashboard_sanPham_Adapter;
 import com.example.oderapp.Fragment.DonMuaFragment.ChoXacNhanFragment;
+import com.example.oderapp.Fragment.ProfileFragment;
 import com.example.oderapp.Model.Cart_Model;
 import com.example.oderapp.R;
 import com.example.oderapp.SessionManage.SessionManagement;
@@ -346,6 +349,15 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
                 break;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 111){
+            showFromThanhToan();
+        }
+    }
+
     private void showFromThanhToan() {
         Dialog dialog = new Dialog(this);
         dialog.setCanceledOnTouchOutside(false);
@@ -364,6 +376,20 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
         edtPhone.setText("0"+sessionManagement.getPhone());
         edtName.setText(sessionManagement.getFullName()+"");
 
+        if (sessionManagement.getAddress() == ""){
+//            Intent intent = new Intent(CartActivity.this, MainActivity.class);
+//            intent.putExtra("cart","OK");
+//            startActivity(intent);
+            dialog.dismiss();
+            Intent intent = new Intent(CartActivity.this, Change_address_Activity.class);
+//                intent.putExtra("phones",phones);
+            intent.putExtra("address",sessionManagement.getAddress());
+            startActivityForResult(intent,111);
+
+        }else {
+//            Toast.makeText(this, "Có giá trị"+sessionManagement.getAddress(), Toast.LENGTH_SHORT).show();
+            edtadress.setText(sessionManagement.getAddress());
+        }
 
         Button btnOK = dialog.findViewById(R.id.btnOK);
         Button btnCannel = dialog.findViewById(R.id.btnCannel);

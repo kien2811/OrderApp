@@ -55,6 +55,7 @@ public class OTPActivity extends AppCompatActivity {
     public static  String phone;
     public static  int id_render;
     public static  String email;
+    public static  String address;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +76,7 @@ public class OTPActivity extends AppCompatActivity {
         Verification = getIntent().getStringExtra("VeryficationId");
         email = (String) intent.getSerializableExtra("email");
         phone = (String) intent.getSerializableExtra("phones");
+        address = (String) intent.getSerializableExtra("address");
         id_render = (int) intent.getSerializableExtra("1");
 //        String password = (String) getIntent().getSerializableExtra("password");
 //        textMobile.setText(phone);
