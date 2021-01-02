@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -51,9 +52,11 @@ import com.example.oderapp.Activity.Change_phone_Activity;
 import com.example.oderapp.Activity.DetailCartActivity;
 import com.example.oderapp.Activity.DonMuaActivity;
 import com.example.oderapp.Activity.LoginActivity;
+import com.example.oderapp.Activity.MyDatabase;
 import com.example.oderapp.Activity.OTP.OTPActivity;
 import com.example.oderapp.Fragment.DonMuaFragment.DaMuaFragment;
 import com.example.oderapp.Fragment.DonMuaFragment.DangGiaoFragment;
+import com.example.oderapp.Model.DashboardSanPham;
 import com.example.oderapp.MySingleton.MySingleton;
 import com.example.oderapp.R;
 import com.example.oderapp.SessionManage.SessionManagement;
@@ -350,6 +353,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         getContext().startActivity(intent);
                         getActivity().finish();
+                        clearMySQLite();
                     }
                 });
 //set negative button
@@ -440,6 +444,20 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 startActivity(intent);
             }
         });
+    }
+    MyDatabase myDatabase;
+    Cursor cursor;
+    static final String DB_NAME = "db_shop";
+    static final String TABLE_NAME = "tbl_seen";
+    static final String ID_FIELD = "id";
+    static final String NAME_FIELD = "name";
+    static final String PRICE_FIELD = "price";
+    static final String AVATAR_FIELD = "avatar";
+    static final String DESCRIPTION_FIELD = "description";
+    static final String CATEGORYID_FIELD = "categoryid";
+    private void clearMySQLite() {
+        myDatabase = new MyDatabase(getContext(), DB_NAME,null, 1);
+        myDatabase.delete(TABLE_NAME,null,null);
     }
 
     private void upload_avtar() {

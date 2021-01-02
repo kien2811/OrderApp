@@ -13,6 +13,8 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/kita"
         android:supportsRtl="true"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:theme="@style/Theme.OderApp"
         android:usesCleartextTraffic="true">
         <activity android:name=".Activity.Change_address_Activity"></activity>
