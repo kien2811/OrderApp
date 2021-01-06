@@ -398,8 +398,49 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onClick(View v) {
                 String name = edtName.getText().toString();
-                String address = edtadress.getText().toString();
                 String phone = edtPhone.getText().toString();
+
+                String address = edtadress.getText().toString().trim();
+                if(address.equals("")){
+
+                }else{
+                    StringRequest request = new StringRequest(Request.Method.POST, Api.URl_CHANGE_PROFILE, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String errors = jsonObject.getString("1");
+                                Log.d("onResponse: ",errors);
+                                if(errors.equals("1")){
+                                    Toast.makeText(CartActivity.this, jsonObject.getString("errors"), Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(CartActivity.this, jsonObject.getString("sucesfull"), Toast.LENGTH_SHORT).show();
+                                    sessionManagement.setAddress(address);
+                                    finish();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("error: ",error.toString());
+                        }
+                    }){@Override
+                    public Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> map = new HashMap<>();
+                        map.put("address", address);
+                        map.put("token", sessionManagement.getToken());
+
+                        return map;
+                    }};
+                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                    requestQueue.add(request);
+                }
 
 
                 int check = 0;
@@ -410,21 +451,54 @@ public class    CartActivity extends AppCompatActivity implements View.OnClickLi
                     txtvErrPhone.setVisibility(View.VISIBLE);
                     check = 1;
                 }else if (address.equals("")){
+                    Toast.makeText(CartActivity.this, "Bạn Chưa Nhập Thông Tin Địa Chỉ", Toast.LENGTH_SHORT).show();
                     txtvErrEmail.setVisibility(View.VISIBLE);
                     check = 1;
                 }else {
-                    txtvErrName.setVisibility(View.GONE);
-                    txtvErrPhone.setVisibility(View.GONE);
-                    txtvErrEmail.setVisibility(View.GONE);
-                    check = 0;
+                    StringRequest request = new StringRequest(Request.Method.POST, Api.URl_CHECK_ADDRESS, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String errors = jsonObject.getString("1");
+                                Log.d("onResponse: ",errors);
+                                if(errors.equals("1")){
+                                    Toast.makeText(CartActivity.this, jsonObject.getString("errors"), Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(CartActivity.this, jsonObject.getString("sucesfull"), Toast.LENGTH_SHORT).show();
+                                    sessionManagement.setAddress(address);
+                                    txtvErrName.setVisibility(View.GONE);
+                                    txtvErrPhone.setVisibility(View.GONE);
+                                    txtvErrEmail.setVisibility(View.GONE);
+                                    Toast.makeText(CartActivity.this, "Đặt hàng thành công !", Toast.LENGTH_SHORT).show();
+                                    uptoInsert_transaction(name,address,phone);
+                                    dialog.dismiss();
+                                    sendOnChannel();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("error: ",error.toString());
+                        }
+                    }){@Override
+                    public Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> map = new HashMap<>();
+                        map.put("address", address);
+                        map.put("token", sessionManagement.getToken());
+
+                        return map;
+                    }};
+                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                    requestQueue.add(request);
                 }
 
-                if (check == 0){
-                    Toast.makeText(CartActivity.this, "Đặt hàng thành công !", Toast.LENGTH_SHORT).show();
-                    uptoInsert_transaction(name,address,phone);
-                    dialog.dismiss();
-                    sendOnChannel();
-                }
 
             }
         });
